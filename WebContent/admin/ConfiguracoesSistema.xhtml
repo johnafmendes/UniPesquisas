@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Gerenciamento de Configurações do Sistema</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="salvar">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Gerenciamento de Configurações do Sistema">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<h:panelGrid columns="3" id="grid">
+			
+			<p:outputLabel value="SMTP:" style="float: right;" for="smtp" />
+			<p:inputText id="smtp" value="#{configuracoesSistemaBean.cs.emailsmtp}"
+				required="#{param['validation']=='true'}" style="width: 400px;" />
+			<p:message id="smtpMessage" for="smtp" />
+			
+			<p:outputLabel value="Email From:" style="float: right;" for="emailfrom" />
+			<p:inputText id="emailfrom" value="#{configuracoesSistemaBean.cs.emailfrom}"
+				required="#{param['validation']=='true'}" style="width: 400px;" />
+			<p:message id="emailfromMessage" for="emailfrom" />
+			
+			<p:outputLabel value="Email Login:" style="float: right;" for="emaillogin" />
+			<p:inputText id="emaillogin" value="#{configuracoesSistemaBean.cs.emaillogin}"
+				required="#{param['validation']=='true'}" style="width: 400px;" />
+			<p:message id="emailloginMessage" for="emaillogin" />
+			
+			<p:outputLabel value="Senha Email:" style="float: right;" for="emailsenha" />
+			<p:inputText id="emailsenha" value="#{configuracoesSistemaBean.cs.emailsenha}"
+				required="#{param['validation']=='true'}" style="width: 400px;" />
+			<p:message id="emailsenhaMessage" for="emailsenha" />
+			
+			<p:outputLabel value="Porta SMTP:" style="float: right;" for="portasmtp" />
+			<p:inputText id="portasmtp" value="#{configuracoesSistemaBean.cs.emailsmtpporta}"
+				required="#{param['validation']=='true'}" style="width: 400px;" />
+			<p:message id="portasmtpMessage" for="portasmtp" />
+						
+			<p:outputLabel value="Usar SSL:" style="float: right;" for="ssl" />
+			<p:selectOneRadio id="ssl" value="#{configuracoesSistemaBean.cs.emailssl}" 
+				required="#{param['validation']=='true'}" >
+				<f:selectItem itemLabel="Usar" itemValue="1" />  
+          		<f:selectItem itemLabel="Não Usar" itemValue="0" />  	
+			</p:selectOneRadio>
+			<p:message id="sslMessage" for="ssl" />
+			
+			<p:outputLabel value="Usar TLS:" style="float: right;" for="tls" />
+			<p:selectOneRadio id="tls" value="#{configuracoesSistemaBean.cs.emailtls}" 
+				required="#{param['validation']=='true'}" >
+				<f:selectItem itemLabel="Usar" itemValue="1" />  
+          		<f:selectItem itemLabel="Não Usar" itemValue="0" />  	
+			</p:selectOneRadio>
+			<p:message id="tlsMessage" for="tls" />
+			
+			<p:outputLabel value="Autenticar SMTP:" style="float: right;" for="autenticar" />
+			<p:selectOneRadio id="autenticar" value="#{configuracoesSistemaBean.cs.emailautenticacaosmtp}" 
+				required="#{param['validation']=='true'}" >
+				<f:selectItem itemLabel="Autenticar" itemValue="1" />  
+          		<f:selectItem itemLabel="Não Autenticar" itemValue="0" />  	
+			</p:selectOneRadio>
+			<p:message id="autenticarMessage" for="autenticar" />
+			
+			<p:outputLabel value="Status Sistema:" style="float: right;" for="status" />
+			<p:selectOneRadio id="status" value="#{configuracoesSistemaBean.cs.status}" 
+				required="#{param['validation']=='true'}" >
+				<f:selectItem itemLabel="onLine" itemValue="1" />  
+          		<f:selectItem itemLabel="offLine" itemValue="0" />  	
+			</p:selectOneRadio>
+			<p:message id="statusMessage" for="status" />
+			
+
+		</h:panelGrid>
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk" update="grid, messages" action="#{configuracoesSistemaBean.salvar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			xxx
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

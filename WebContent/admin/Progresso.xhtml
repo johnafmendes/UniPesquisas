@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Gerenciamento de Progressos</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar, pesquisar, limpar, limpar2, pesquisar2, dataTablePesquisaCandidatos, dataTablePesquisaCandidatos2">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Gerenciamento de Progressos">
+		<div id="divCorpo" style="padding: 7px;">
+			<h:panelGrid columns="1" id="grid0">
+				<h:panelGrid columns="2" id="grid3" rendered="#{progressoBean.progresso.idprogressodetalhado == null}">
+					<p:outputLabel value="Pesquisar Estudantes por:" style="float: right;" />
+					<p:selectOneRadio id="tipoPesquisa" value="#{progressoBean.tipoPesquisaCandidato}" >
+						<f:selectItem itemLabel="Código" itemValue="1" />  
+			      		<f:selectItem itemLabel="Nome" itemValue="0" /> 
+					</p:selectOneRadio>
+				</h:panelGrid>
+				<h:column rendered="#{progressoBean.progresso.idprogressodetalhado == null}" id="pesquisaCandidato">
+					<p:inputText id="codigoPesquisa" value="#{progressoBean.idNomeCandidato}" style="width: 350px;" />
+					<p:commandButton actionListener="#{progressoBean.pesquisarCandidato}" title="Buscar" id="pesquisar" 
+						value="Pesquisar" icon="ui-icon-search" update="messages, dataTablePesquisaCandidatos" 
+						onclick="atualizarSessao();" />
+					<p:commandButton actionListener="#{progressoBean.listarTudoCandidato}" id="limpar" 
+						value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTablePesquisaCandidatos" 
+						onclick="atualizarSessao();" />
+				</h:column>
+				
+				<p:dataTable id="dataTablePesquisaCandidatos" var="c" value="#{progressoBean.listaCandidatos}"
+					paginator="true" rows="10" selectionMode="single" selection="#{progressoBean.candidato}" 
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+					{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+					paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+					rowsPerPageTemplate="10,20,40" rowKey="#{c.idcandidato}"
+					rendered="#{progressoBean.progresso.idprogressodetalhado == null}">
+					<f:facet name="header">  
+		            	Estudantes
+		        	</f:facet>
+		
+					<p:column style="width: 60px;" headerText="Código">
+						<h:outputText value="#{c.idcandidato}" />
+					</p:column>
+		
+					<p:column headerText="Nome">
+						<h:outputText value="#{c.nome}" />
+					</p:column>
+		
+					<p:column style="width: 80px;" headerText="Nascimento">
+						<h:outputText value="#{c.datanascimento}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>				
+				</p:dataTable>			
+			</h:panelGrid>
+		<h:panelGrid columns="3" id="grid">
+			
+			<p:outputLabel value="ID:" style="float: right;" rendered="#{progressoBean.progresso.idprogressodetalhado != null}" />
+			<p:inputText value="#{progressoBean.progresso.idprogressodetalhado}" id="id" readonly="true" 
+				style="width: 60px;" rendered="#{progressoBean.progresso.idprogressodetalhado != null}"/>	
+			<p:message id="idMessage" for="id" rendered="#{progressoBean.progresso.idprogressodetalhado != null}"/>
+			
+			<p:outputLabel value="Nome:" style="float: right;" rendered="#{progressoBean.progresso.candidato.idcandidato != null}"/>
+			<p:outputLabel id="nomeCandidato" value="#{progressoBean.progresso.candidato.nome}" 
+				rendered="#{progressoBean.progresso.candidato.idcandidato != null}" />
+			<p:outputLabel value="" rendered="#{progressoBean.progresso.candidato.idcandidato != null}" />
+
+			
+			
+			<p:outputLabel value="Progresso:" style="float: right;" for="progresso" />
+			<p:inputTextarea id="progresso" value="#{progressoBean.progresso.observacao}" scrollable="true"  
+			maxlength="5000" rows="10" counter="caracteres" autoResize="false"
+				required="#{param['validation']=='true'}" style="width: 350px; height: 200px;" />
+			<p:message id="progressoMessage" for="progresso" />
+			
+			<p:outputLabel value="Restantes" />
+			<p:outputLabel value=":" id="caracteres" />
+
+		</h:panelGrid>
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+
+		<h:panelGrid columns="2" id="grid4">
+			<p:outputLabel value="Pesquisar Estudantes por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa2" value="#{progressoBean.tipoPesquisaCandidato2}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Nome" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoPesquisa2" value="#{progressoBean.idNomeCandidato2}" style="width: 350px;" />
+			<p:commandButton actionListener="#{progressoBean.pesquisarCandidato2}" title="Buscar" id="pesquisar2" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTablePesquisaCandidatos2" 
+				onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{progressoBean.listarTudoCandidato2}" id="limpar2" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTablePesquisaCandidatos2" 
+				onclick="atualizarSessao();" />
+		</h:column>
+		
+		<p:dataTable id="dataTablePesquisaCandidatos2" var="c" value="#{progressoBean.listaCandidatos2}"
+				paginator="true" rows="10" selectionMode="single" selection="#{progressoBean.candidato2}" 
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+				paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+				rowsPerPageTemplate="10,20,40" rowKey="#{c.idcandidato}">
+				<f:facet name="header">  
+	            	Estudantes
+	        	</f:facet>
+	
+				<p:column style="width: 60px;" headerText="Código">
+					<h:outputText value="#{c.idcandidato}" />
+				</p:column>
+	
+				<p:column headerText="Nome">
+					<h:outputText value="#{c.nome}" />
+				</p:column>
+	
+				<p:column style="width: 80px;" headerText="Nascimento">
+					<h:outputText value="#{c.datanascimento}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>				
+				
+				<p:column style="width: 85px;" headerText="Ação">
+					<p:commandButton actionListener="#{progressoBean.filtraProgressoPorCandidato(c.idcandidato)}" 
+						title="Filtrar" icon="ui-icon-search" update=":form:dataTableProgresso" 
+						onclick="atualizarSessao();" value="Filtrar" >
+						<f:param name="validation" value="false" />
+					</p:commandButton>				
+
+				</p:column>
+			</p:dataTable>
+		
+		<p:dataTable id="dataTableProgresso" var="p" value="#{progressoBean.listaProgressos}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" >
+			<f:facet name="header">  
+            	Progressos do Estudante: #{p.candidato.idcandidato}
+        	</f:facet>
+
+			<p:column style="width: 60px;" headerText="Código">
+				<h:outputText value="#{p.idprogressodetalhado}" />
+			</p:column>
+			
+			<p:column headerText="Estudante">
+				<h:outputText value="#{p.candidato.nome}" />
+			</p:column>
+
+			<p:column headerText="Data" style="width: 80px;" >
+				<h:outputText value="#{p.data}" >
+					<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="Usuário">
+				<h:outputText value="#{p.usuario.nome}" />
+			</p:column>
+			
+			<p:column style="width: 70px;" headerText="Ações">
+				<p:commandButton actionListener="#{progressoBean.alterar(p.idprogressodetalhado)}" 
+					title="Editar" icon="ui-icon-pencil" 
+					update=":form:grid, :form:dataTablePesquisaCandidatos, :form:grid0" 
+					onclick="atualizarSessao();" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton action="#{progressoBean.excluir(p.idprogressodetalhado)}" title="Excluir" 
+					onclick="return excluir(); atualizarSessao();" 
+					icon="ui-icon-trash" update=":form:dataTableProgresso" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				
+			</p:column>
+		</p:dataTable>
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" 
+					update="grid, messages, grid0" 
+					action="#{progressoBean.limpar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk" 
+					update="grid, messages, grid0" action="#{progressoBean.salvar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Novo</b>: Usado para limpar os campos para serem preenchidos por novos dados.
+			<br/>
+			- <b>Botão Salvar</b>: Usado para gravar os dados no banco de dados.
+			<br/>
+			- <b>Botão Editar</b>: Usado para poder alterar se o estudante esta ou não matriculado no curso.
+			<br/>
+			- <b>Botão Excluir</b>: Usado para excluir o registro do banco de dados. Caso uma mensagem de Impossível Excluir
+			apareça, isso ocorre quando o registro esta vinculado a outros dados, o que impossibilita a sua devida exclusão.
+			<br/>
+			- <b>Botão Pesquisar</b>: Usado para poder pesquisar os dados referente ao campo Estudante.
+			<br/>
+			- <b>Botão Filtrar</b>: Usado para filtrar ou selecionar os contatos/progressos realizados referente a um estudante.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

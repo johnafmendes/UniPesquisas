@@ -1,0 +1,10 @@
+Candidatos
+ - Lista Candidatos Responderam ou Não Pesquisas
+ - Lista de Candidatos com suas respectivas respostas por pesquisa.
+Progresso
+
+Pesquisa
+ - Lista
+
+Email/SMS Marketing
+ - Envio para Candidatos que responderam ou não a pesquisa.

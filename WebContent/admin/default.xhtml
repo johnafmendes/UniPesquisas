@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>UniPesquisas</title>
+	<h:outputStylesheet name="StylesDefault.css" library="css" />
+
+</h:head>
+<h:body>
+	<h:form>
+		<div class="wrapper">
+			<div class="google-header-bar">
+				<div class="logoWrap">
+					<h:graphicImage name="0.gif" alt="UniPesquisas por EngSoftware"
+						id="logoUniPesquisa" library="logos" width="150" />
+				</div>
+			</div>
+			<div class="main content clearfix">
+				<div class="sign-in">
+					<div class="signin-box">
+						<h2>Login</h2>
+						<div>
+							<label for="Email"><strong class="email-label">e-Mail</strong></label>
+							<p:inputText value="#{autenticacaoBean.usuario.email}"
+								id="Email" label="e-Mail" />
+						</div>
+						<div>
+							<label for="Passwd"><strong class="passwd-label">Senha</strong></label>
+							<p:password value="#{autenticacaoBean.usuario.password}"
+								id="Passwd" label="Senha" />
+						</div>
+						<h:commandButton id="signIn" value="Login" styleClass="g-button g-button-submit"
+							actionListener="#{autenticacaoBean.login}" />
+
+							<ul>
+								<li><a id="link-forgot-passwd"
+									href=""> 
+									Esqueci minha senha! </a></li>
+							</ul> 
+							<p:messages id="messages" showDetail="true" closable="true"
+								showSummary="false" globalOnly="true" /> 
+							<h:outputText value="#{param['msg']}" style="color: red" />
+					</div>
+				</div>
+				<div>
+					<div class="product-headers">
+						<h1 class="redtext">UniPesquisas</h1>
+					</div>
+					<div class="mail-hero">
+						<div class="mail-hero-left">
+							<h4 class="mail-hero-heading">Bem vindo ao portal de gerenciamento do CRM UniPesquisas.</h4>
+							<div class="mail-buttons"></div>
+						</div>
+						<div class="mail-hero-right">
+							<h:graphicImage name="#{defaultBean.empresa.logomarca}"
+								id="logomarca" library="logos" styleClass="mail-hero-img" />
+						</div>
+					</div>
+					
+				</div>
+
+			</div>
+			<div class="google-footer-bar">
+				<div class="footer content clearfix">
+					<ul>
+						<li>© 2013 EngSoftware</li>						
+					</ul>
+				</div>
+			</div>
+		</div>
+
+	</h:form>
+</h:body>
+</html>

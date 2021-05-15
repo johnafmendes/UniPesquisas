@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Gerenciamento de Configurações do Sistema</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="salvar">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Gerenciamento de Configurações do Sistema">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<h:panelGrid columns="1" id="grid">
+			<p:outputLabel value="Status Padrão:" for="status" />
+			<p:selectOneListbox id="status" value="#{configuracoesEmpresaBean.ce.statuscandidato.idstatuscandidato}" 
+				style="width: 350px; height:100px;"	>
+				<f:selectItems value="#{configuracoesEmpresaBean.listaStatusCandidato}" var="s" itemValue="#{s.idstatuscandidato}" 
+					itemLabel="#{s.status}" />
+			</p:selectOneListbox>			
+
+		</h:panelGrid>
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk" update="grid, messages" 
+				action="#{configuracoesEmpresaBean.salvar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<b>Status Padrão:</b> É o status que os os estudantes que se cadastrarem no sistema UniPesquisas receberão 
+			automaticamente.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

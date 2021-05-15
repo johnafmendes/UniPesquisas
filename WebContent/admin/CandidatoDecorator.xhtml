@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<p:outputLabel value="ID:" style="float: right;" />
+	<p:inputText value="#{candidatoBean.candidato.idcandidato}" id="id" readonly="true" style="width: 60px;"/>	
+	<p:message id="idMessage" for="id" />
+	
+	<p:outputLabel value="Código:" style="float: right;" for="codigo" rendered="#{candidatoBean.diversos.getAdmin() == 1}" />
+	<p:inputText value="#{candidatoBean.candidatoEmpresa.codigo}" id="codigo" style="width: 60px;" rendered="#{candidatoBean.diversos.getAdmin() == 1}"/>	
+	<p:message id="codigoMessage" for="codigo" rendered="#{candidatoBean.diversos.getAdmin() == 1}"/>
+
+	<p:outputLabel value="Nome:" style="float: right;" for="nome" />
+	<p:inputText id="nome" value="#{candidatoBean.candidato.nome}" maxlength="50"
+		required="#{param['validation']=='true'}" style="width: 350px;" />
+	<p:message id="nomeMessage" for="nome" />
+
+	<p:outputLabel value="Data de Nascimento:" style="float: right;" for="data" />
+	<p:calendar id="data" value="#{candidatoBean.candidato.datanascimento}" navigator="true" 
+		required="#{param['validation']=='true'}" pattern="dd/MM/yyyy" />
+	<p:message id="dataMessage" for="data" />
+	
+	<p:outputLabel value="Sexo:" style="float: right;" for="sexo" />
+	<p:selectOneRadio id="sexo" value="#{candidatoBean.candidato.sexo}" 
+		required="#{param['validation']=='true'}" >
+		<f:selectItem itemLabel="Masculino" itemValue="M" />  
+          	<f:selectItem itemLabel="Feminino" itemValue="F" />  	
+	</p:selectOneRadio>
+	<p:message id="sexoMessage" for="sexo" />
+	
+	<p:outputLabel value="Telefone Residencial:" style="float: right;" for="telefoneres" />
+	<h:column>
+		<p:inputText id="dddres" value="#{candidatoBean.candidato.dddres}"
+			style="width: 20px;" maxlength="2"/>
+		<p:inputText id="telefoneres" value="#{candidatoBean.candidato.telefoneres}"
+			style="width: 100px;" maxlength="9"/>
+	</h:column>
+	<h:column>
+		<p:message id="telefoneresMessage" for="telefoneres" />
+		<p:message id="dddresMessage" for="dddres" />
+	</h:column>
+
+	<p:outputLabel value="Telefone celular:" style="float: right;" for="telefonecel" />
+	<h:column>
+		<p:inputText id="dddcel" value="#{candidatoBean.candidato.dddcel}"
+			style="width: 20px;" maxlength="2"/>
+		<p:inputText id="telefonecel" value="#{candidatoBean.candidato.telefonecel}"
+			style="width: 100px;" maxlength="9"/>
+	</h:column>
+	<h:column>
+		<p:message id="telefonecelMessage" for="telefonecel" />
+		<p:message id="dddcelMessage" for="dddcel" />
+	</h:column>
+	
+	<p:outputLabel value="e-Mail:" style="float: right;" for="email" />
+	<p:inputText id="email" value="#{candidatoBean.candidato.email}"
+		style="width: 350px;" maxlength="255"
+		required="#{param['validation']=='true'}"/>
+	<p:message id="emailMessage" for="email" />
+	
+	<p:outputLabel value="Senha:" style="float: right;" for="senha1" />
+	<p:password id="senha1" value="#{candidatoBean.candidato.password}"
+		style="width: 100px;" feedback="true"/>
+	<p:message id="senha1Message" for="senha1" />
+
+	<p:outputLabel value="Confirmação da Senha:" style="float: right;" for="senha2" />
+	<p:password id="senha2" value="#{candidatoBean.senha}"
+		style="width: 100px;" />
+	<p:message id="senha2Message" for="senha2" />
+	
+	<p:outputLabel value="Manter Senha:" style="float: right;" for="manterSenha" 
+		rendered="#{candidatoBean.candidato.idcandidato != null}" />
+	<p:selectBooleanCheckbox value="#{candidatoBean.manterSenha}" id="manterSenha" 
+		disabled="#{param['desabilitarManterSenha']=='true'}" 
+		rendered="#{candidatoBean.candidato.idcandidato != null}"/>
+	<p:message id="manterSenhaMessage" for="manterSenha" rendered="#{candidatoBean.candidato.idcandidato != null}" />
+	
+	<p:outputLabel value="Escolaridade:" style="float: right;" for="escolaridade" />
+	<p:selectOneListbox id="escolaridade" value="#{candidatoBean.candidato.escolaridade.idescolaridade}" style="width: 350px; height:100px;" 
+		required="#{param['validation']=='true'}">
+		<f:selectItems value="#{candidatoBean.listaEscolaridades}" var="e" itemValue="#{e.idescolaridade}" itemLabel="#{e.escolaridade}" />
+	</p:selectOneListbox>
+	<p:message id="escolaridadeMessage" for="escolaridade" />
+	
+	<p:outputLabel value="Status:" style="float: right;" for="status" rendered="#{candidatoBean.diversos.getAdmin() == 1}"/>
+	<p:selectOneListbox id="status" value="#{candidatoBean.candidatoEmpresa.statuscandidato.idstatuscandidato}" style="width: 350px; height:100px;" 
+		required="#{param['validation']=='true'}" rendered="#{candidatoBean.diversos.getAdmin() == 1}">
+		<f:selectItems value="#{candidatoBean.listaStatusCandidato}" var="s" itemValue="#{s.idstatuscandidato}" itemLabel="#{s.status}" />
+	</p:selectOneListbox>
+	<p:message id="statusMessage" for="status" rendered="#{candidatoBean.diversos.getAdmin() == 1}"/>
+	
+	<p:outputLabel value="Receber e-Mail:" style="float: right;" for="receberEmail" />
+	<p:selectOneRadio id="receberEmail" value="#{candidatoBean.candidatoEmpresa.receberemail}" 
+		required="#{param['validation']=='true'}" >
+		<f:selectItem itemLabel="Receber" itemValue="1" />  
+        <f:selectItem itemLabel="Não Receber" itemValue="0" />  	
+	</p:selectOneRadio>
+	<p:message id="receberEmailMessage" for="receberEmail" />
+	
+	<p:outputLabel value="Receber SMS:" style="float: right;" for="sms" rendered="false" />
+	<p:selectOneRadio id="sms" value="#{candidatoBean.candidatoEmpresa.recebersms}" 
+		required="#{param['validation']=='true'}" rendered="false" >
+		<f:selectItem itemLabel="Receber" itemValue="1" />  
+        <f:selectItem itemLabel="Não Receber" itemValue="0" />  	
+	</p:selectOneRadio>
+	<p:message id="smsMessage" for="sms" rendered="false"/>
+	
+	<ui:insert />
+</ui:composition>
+</html>

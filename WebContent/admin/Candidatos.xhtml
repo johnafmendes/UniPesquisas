@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Gerenciamento de Estudantes</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar, pesquisar, limpar, dataTable">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Gerenciamento de Estudantes">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<h:panelGrid columns="3" id="grid">
+			<ui:decorate template="CandidatoDecorator.xhtml" />			
+		</h:panelGrid>
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+
+		<h:panelGrid columns="2" id="grid2">
+			<p:outputLabel value="Pesquisar Estudantes por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa" value="#{candidatoBean.tipoPesquisaCandidato}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Nome" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoCandidato" value="#{candidatoBean.idNomeCandidato}" style="width: 350px;" />
+			<p:commandButton actionListener="#{candidatoBean.pesquisarCandidato}" title="Buscar" id="pesquisar" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTable" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{candidatoBean.listarTudo}" id="limpar" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTable" onclick="atualizarSessao();" />
+		</h:column>
+		
+		<p:dataTable id="dataTable" var="c" value="#{candidatoBean.listaCandidatos}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" >
+			<f:facet name="header">  
+            	Estudantes
+        	</f:facet>
+
+			<p:column headerText="Código" style="width: 60px;">
+				<h:outputText value="#{c.idcandidato}" />
+			</p:column>
+			
+			<p:column headerText="Nome">
+				<h:outputText value="#{c.nome}" />
+			</p:column>
+
+			<p:column headerText="e-Mail">
+				<h:outputText value="#{c.email}" />
+			</p:column>
+
+			<p:column headerText="Telefone Res." style="width: 100px;" >
+				<h:outputText value="(#{c.dddres}) #{c.telefoneres}" />
+			</p:column>
+			
+			<p:column style="width: 80px;" headerText="Ações">
+				<p:commandButton actionListener="#{candidatoBean.alterar(c.idcandidato)}" title="Alterar" 
+					icon="ui-icon-pencil" update=":form:grid" onclick="atualizarSessao();" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton action="#{candidatoBean.excluir(c.idcandidato)}" title="Excluir" 
+					onclick="return excluir(); atualizarSessao();" icon="ui-icon-trash" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" update="grid, messages" action="#{candidatoBean.limpar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk" update="grid, messages, dataTable" action="#{candidatoBean.salvar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Novo</b>: Usado para limpar os campos para serem preenchidos por novos dados.
+			<br/>
+			- <b>Botão Salvar</b>: Usado para gravar os dados no banco de dados.
+			<br/>
+			- <b>Botão Editar</b>: Usado para poder alterar se o estudante esta ou não matriculado no curso.
+			<br/>
+			- <b>Botão Excluir</b>: Usado para excluir o registro do banco de dados. Caso uma mensagem de Impossível Excluir
+			apareça, isso ocorre quando o registro esta vinculado a outros dados, o que impossibilita a sua devida exclusão.
+			<br/>
+			- <b>Campo Manter Senha</b>: Usado para permitir alterar os dados sem que seja necessário digitar a senha novamente.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

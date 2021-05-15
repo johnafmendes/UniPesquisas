@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListaCandidatos" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a1d958c9-3d0f-426c-a3c6-f341d1235a3f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="candidatosds" uuid="7c63ff48-e27a-4041-850e-2c74936cb2e6">
+		<parameter name="idEmpresa" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dataInicio" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dataFim" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     candidato.`idcandidato`,
+     candidato.`nome`,
+     candidato.`email`,
+     candidato.`telefonecel`,
+     candidato.`telefoneres`,
+     count(progresso.`data`) as Total
+FROM
+     `candidato` candidato INNER JOIN `progresso` progresso ON candidato.`idcandidato` = progresso.`idcandidato`
+WHERE
+ progresso.`idempresa` = $P{idEmpresa} AND
+ progresso.data between $P{dataInicio} AND $P{dataFim}
+GROUP BY
+ candidato.idcandidato
+ORDER BY
+     candidato.nome ASC]]>
+		</queryString>
+		<field name="idcandidato" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="nome" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="email" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="telefonecel" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="telefoneres" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Total" class="java.lang.Long"/>
+		<group name="nome">
+			<groupExpression><![CDATA[$F{nome}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="idEmpresa" class="java.lang.String"/>
+	<parameter name="dataInicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataFim" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     candidato.`idcandidato`,
+     candidato.`nome`,
+     candidato.`email`,
+     candidato.`telefonecel`,
+     candidato.`telefoneres`,
+     count(progresso.`data`) as Total
+FROM
+     `candidato` candidato INNER JOIN `progresso` progresso ON candidato.`idcandidato` = progresso.`idcandidato`
+WHERE
+ progresso.`idempresa` = $P{idEmpresa} AND
+ progresso.data between $P{dataInicio} AND $P{dataFim}
+GROUP BY
+ candidato.idcandidato
+ORDER BY
+     candidato.nome ASC]]>
+	</queryString>
+	<field name="idcandidato" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefonecel" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefoneres" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Total" class="java.lang.Long"/>
+	<variable name="idEmpresa" class="java.lang.String"/>
+	<group name="Data">
+		<groupExpression><![CDATA[$P{dataInicio}]]></groupExpression>
+		<groupHeader>
+			<band height="27">
+				<staticText>
+					<reportElement uuid="94437a60-1672-401c-afa5-21be7547b111" x="0" y="0" width="85" height="27"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Data Início:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3eb04a53-6723-4c23-ad9c-0a4af3121646" x="200" y="0" width="69" height="27"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Data Fim:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement uuid="0115e708-1e2a-422b-b568-672c3471e684" x="85" y="0" width="115" height="27"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{dataInicio}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement uuid="103079cd-3e84-4399-abd1-d5f586024399" x="269" y="0" width="118" height="27"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{dataFim}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement uuid="5b0375ca-b9df-4187-86e5-becb60951cf4" mode="Opaque" x="0" y="-20" width="802" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement uuid="44a83f4b-549a-4482-aa9d-2b2c3279d758" x="20" y="20" width="451" height="43" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Progresso dos Candidatos]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement uuid="f4d05931-99eb-447b-8f1a-2f24dda6922a" mode="Opaque" x="0" y="0" width="61" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="66480064-22d4-46ef-8048-93c6169409b1" x="0" y="20" width="802" height="1" forecolor="#666666"/>
+			</line>
+			<staticText>
+				<reportElement uuid="96747f98-e0d9-4e40-a2c0-c95c26f0cd40" mode="Opaque" x="61" y="0" width="224" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0abff14b-9443-4831-9fb9-8bc00215341a" mode="Opaque" x="285" y="0" width="80" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tel. Res.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="067258f0-3af4-47fe-bffb-a94adfcfd48a" mode="Opaque" x="365" y="0" width="80" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tel. Cel.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fab152c2-c0f1-42dc-a475-0f90e686f316" mode="Opaque" x="445" y="0" width="170" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[e-Mail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a7954e3a-1b55-418b-90b6-f93ff3d11c8a" mode="Opaque" x="615" y="0" width="187" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de Contatos]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement uuid="5d321b63-839e-4770-8801-fd7b0fd3c7d6" positionType="FixRelativeToBottom" x="0" y="19" width="802" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="525aa6a9-2eae-4cb2-8052-efe0593b06a5" x="0" y="0" width="61" height="19"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{idcandidato}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="965e57c4-0a83-4f33-91f0-32461bed415c" x="365" y="0" width="80" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{telefonecel}]]></textFieldExpression>
+			</textField>
+			<textField pattern="(99) 0000-0000">
+				<reportElement uuid="e2b4757e-cf31-4eaa-b21a-99ba59b5a37f" x="285" y="0" width="80" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{telefoneres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="29b6463c-7cd1-4667-be02-324dade8eec7" x="445" y="0" width="170" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="19ba75ae-1927-48d8-88b8-8cc9030e669c" x="61" y="0" width="224" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4d503d38-3a20-4ebd-8291-367aad743e72" x="615" y="0" width="187" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement uuid="29bd926a-1ad9-4b4f-832a-06ec3c840848" mode="Opaque" x="0" y="4" width="762" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="2dfcc204-7c91-488a-a172-bd60d52211a5" mode="Opaque" x="762" y="4" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="0697813a-9a07-4034-bfdd-90dda7d1c87c" x="0" y="4" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Publicar Pesquisa por Instituição</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar, dataTable, pesquisar, pesquisar1, pesquisar2, limpar, limpar1, limpar2, dataTablePesquisas, dataTableInstituicoes">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Publicar Pesquisa por Instituição">
+		
+		
+		<div id="divCorpo" style="padding: 7px;">
+			<p:outputLabel value="Status:" for="status" />
+			<p:selectOneListbox id="status" value="#{publicarPesquisaInstituicaoBean.idStatusCandidato}" 
+				style="width: 350px; height:100px;"	>
+				<f:selectItem itemValue="0" itemLabel="Todos Status" />
+				<f:selectItems value="#{publicarPesquisaInstituicaoBean.listaStatusCandidato}" var="s" itemValue="#{s.idstatuscandidato}" 
+					itemLabel="#{s.status}" />
+			</p:selectOneListbox>
+			<h:panelGrid columns="2" id="grid2">
+				<p:outputLabel value="Pesquisar Pesquisa por:" style="float: right;" />
+				<p:selectOneRadio id="tipoPesquisa" value="#{publicarPesquisaInstituicaoBean.tipoPesquisaPesquisa}" >
+					<f:selectItem itemLabel="Código" itemValue="1" />  
+		      		<f:selectItem itemLabel="Título" itemValue="0" /> 
+				</p:selectOneRadio>
+			</h:panelGrid>
+			<h:column>
+				<p:inputText id="codigoPesquisa" value="#{publicarPesquisaInstituicaoBean.idTituloPesquisa}" style="width: 350px;" />
+				<p:commandButton actionListener="#{publicarPesquisaInstituicaoBean.pesquisarPesquisa}" title="Buscar" id="pesquisar" 
+					value="Pesquisar" icon="ui-icon-search" update="messages, dataTablePesquisas" onclick="atualizarSessao();" />
+				<p:commandButton actionListener="#{publicarPesquisaInstituicaoBean.listarTudoPesquisa}" id="limpar" 
+					value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTablePesquisas" onclick="atualizarSessao();" />
+			</h:column>
+		
+			<p:dataTable id="dataTablePesquisas" var="p" value="#{publicarPesquisaInstituicaoBean.listaPesquisas}"
+				paginator="true" rows="10" selectionMode="single" selection="#{publicarPesquisaInstituicaoBean.pesquisa}" 
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+				paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+				rowsPerPageTemplate="10,20,40" rowKey="#{p.idpesquisa}">
+				<f:facet name="header">  
+	            	Pesquisas
+	        	</f:facet>
+	
+				<p:column style="width: 60px;" headerText="Código">
+					<h:outputText value="#{p.idpesquisa}" />
+				</p:column>
+	
+				<p:column headerText="Título">
+					<h:outputText value="#{p.titulo}" />
+				</p:column>
+	
+				<p:column style="width: 90px;" headerText="Data">
+					<h:outputText value="#{p.data}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				
+			</p:dataTable>
+
+			<h:panelGrid columns="2" id="grid3">
+				<p:outputLabel value="Pesquisar Instituição por:" style="float: right;" />
+				<p:selectOneRadio id="tipoPesquisa1" value="#{publicarPesquisaInstituicaoBean.tipoPesquisaInstituicao}" >
+					<f:selectItem itemLabel="Código" itemValue="1" />  
+		      		<f:selectItem itemLabel="Instituição" itemValue="0" /> 
+				</p:selectOneRadio>
+			</h:panelGrid>
+			<h:column>
+				<p:inputText id="codigoInstituicao" value="#{publicarPesquisaInstituicaoBean.idTituloInstituicao}" style="width: 350px;" />
+				<p:commandButton actionListener="#{publicarPesquisaInstituicaoBean.pesquisarInstituicao}" title="Buscar" id="pesquisar1" 
+					value="Pesquisar" icon="ui-icon-search" update="messages, dataTableInstituicoes" onclick="atualizarSessao();" />
+				<p:commandButton actionListener="#{publicarPesquisaInstituicaoBean.listarTudoInstituicao}" id="limpar1" 
+					value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTableInstituicoes" onclick="atualizarSessao();" />
+			</h:column>
+			
+			<p:dataTable id="dataTableInstituicoes" var="i" value="#{publicarPesquisaInstituicaoBean.listaInstituicoes}"
+				paginator="true" rows="10" selectionMode="single" selection="#{publicarPesquisaInstituicaoBean.instituicao}" 
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+				paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+				rowsPerPageTemplate="10,20,40" rowKey="#{i.idinstituicao}">
+				<f:facet name="header">  
+	            	Instituições
+	        	</f:facet>
+	
+				<p:column style="width: 60px;" headerText="Código">
+					<h:outputText value="#{i.idinstituicao}" />
+				</p:column>
+	
+				<p:column headerText="Instituição">
+					<h:outputText value="#{i.instituicao}" />
+				</p:column>
+	
+			</p:dataTable>
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+
+		<h:panelGrid columns="2" id="grid4">
+			<p:outputLabel value="Pesquisar Publicações por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa2" value="#{publicarPesquisaInstituicaoBean.tipoPesquisaPublicacao}" >
+				<f:selectItem itemLabel="Cód Pesquisa" itemValue="1" />  
+	      		<f:selectItem itemLabel="Pesquisa" itemValue="0" /> 
+	      		<f:selectItem itemLabel="Cód Instituição" itemValue="2" />
+	      		<f:selectItem itemLabel="Instituição" itemValue="3" />
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoPublicacao" value="#{publicarPesquisaInstituicaoBean.idTituloPublicacao}" style="width: 350px;" />
+			<p:commandButton actionListener="#{publicarPesquisaInstituicaoBean.pesquisarPublicacao}" title="Buscar" id="pesquisar2" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTable" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{publicarPesquisaInstituicaoBean.listarTudoPublicacao}" id="limpar2" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTable" onclick="atualizarSessao();" />
+		</h:column>
+		
+		<p:dataTable id="dataTable" var="pi" value="#{publicarPesquisaInstituicaoBean.listaPesquisaInstituicao}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" >
+			<f:facet name="header">  
+            	Pesquisa/Instituição Publicadas
+        	</f:facet>
+
+			<p:column headerText="Cod. Pes." style="width: 60px;" >
+				<h:outputText value="#{pi.pesquisa.idpesquisa}" />
+			</p:column>
+			
+			<p:column headerText="Pesquisa">
+				<h:outputText value="#{pi.pesquisa.titulo}" />
+			</p:column>
+
+			<p:column headerText="Cod. Ins." style="width: 60px;" >
+				<h:outputText value="#{pi.instituicao.idinstituicao}" />
+			</p:column>
+			
+			<p:column headerText="Instituição">
+				<h:outputText value="#{pi.instituicao.instituicao}" />
+			</p:column>
+			
+			<p:column headerText="Status">
+				<h:outputText value="#{pi.statuscandidato.status}" />
+			</p:column>
+
+		</p:dataTable>
+		
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" update="messages" 
+					action="#{publicarPesquisaInstituicaoBean.limpar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Publicar" icon="ui-icon-check" update="messages, dataTable" 
+					action="#{publicarPesquisaInstituicaoBean.salvar}" onclick="return confirmar(); atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Novo</b>: Usado para limpar os campos para serem preenchidos por novos dados.
+			<br/>
+			- <b>Botão Publicar</b>: Usado para agendar o envio dos emails.
+			<br/>
+			- <b>Botão Pesquisar</b>: Usado para poder pesquisar os dados referente ao campo Pesquisa e Instituição.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

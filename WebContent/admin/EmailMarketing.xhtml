@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Gerenciamento de Email Marketing</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar, pesquisar, limpar, dataTable">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Gerenciamento de Email Marketing">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<h:panelGrid columns="3" id="grid">
+			
+			<p:outputLabel value="ID:" style="float: right;" />
+			<p:inputText value="#{emailMarketingBean.em.idemailmarketing}" id="id" readonly="true" style="width: 60px;"/>	
+			<p:message id="idMessage" for="id" />
+
+			<p:outputLabel value="Assunto:" style="float: right;" for="assunto" />
+			<p:inputText id="assunto" value="#{emailMarketingBean.em.assunto}" maxlength="255"
+				required="#{param['validation']=='true'}" style="width: 350px;" />
+			<p:message id="assuntoMessage" for="assunto" />
+			
+			<p:outputLabel value="Mensagem:" style="float: right;" for="mensagem" />
+			<p:editor id="mensagem" value="#{emailMarketingBean.em.mensagem}" width="350"
+				required="#{param['validation']=='true'}" style="width: 350px;" />
+			<p:message id="mensagemMessage" for="mensagem" />
+			
+			<p:outputLabel value="Data:" style="float: right;" for="data" />
+			<p:calendar id="data" value="#{emailMarketingBean.em.data}" navigator="true" 
+				required="#{param['validation']=='true'}" pattern="dd/MM/yyyy"/>
+			<p:message id="dataMessage" for="data" />
+			
+			<p:outputLabel value="Status:" style="float: right;" for="status" />
+			<p:selectOneRadio id="status" value="#{emailMarketingBean.em.status}" 
+				required="#{param['validation']=='true'}" >
+				<f:selectItem itemLabel="Ativo" itemValue="1" />  
+            	<f:selectItem itemLabel="Inativo" itemValue="0" />  	
+			</p:selectOneRadio>
+			<p:message id="statusMessage" for="status" />
+
+		</h:panelGrid>
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+
+		<h:panelGrid columns="2" id="grid2">
+			<p:outputLabel value="Pesquisar E-Mail por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa" value="#{emailMarketingBean.tipoPesquisaEmail}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Assunto" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoEmail" value="#{emailMarketingBean.idTituloAssunto}" style="width: 350px;" />
+			<p:commandButton actionListener="#{emailMarketingBean.pesquisarEmail}" title="Buscar" id="pesquisar" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTable" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{emailMarketingBean.listarTudo}" id="limpar" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTable" onclick="atualizarSessao();" />
+		</h:column>
+			
+		<p:dataTable id="dataTable" var="e" value="#{emailMarketingBean.listaEmailMarketing}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" >
+			<f:facet name="header">  
+            	Email Marketing
+        	</f:facet>
+
+			<p:column style="width: 80px;" headerText="Data">
+				<h:outputText value="#{e.data}" >
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			
+			<p:column headerText="Código" style="width: 60px;" >
+				<h:outputText value="#{e.idemailmarketing}" />
+			</p:column>
+			
+			<p:column headerText="Assunto">
+				<h:outputText value="#{e.assunto}" />
+			</p:column>
+
+			<p:column style="width: 80px;" headerText="Ações">
+				<p:commandButton id="alterar" actionListener="#{emailMarketingBean.alterar(e.idemailmarketing)}" title="Alterar" icon="ui-icon-pencil" update=":form:grid" onclick="atualizarSessao();" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="excluir" action="#{emailMarketingBean.excluir(e.idemailmarketing)}" title="Excluir" onclick="return excluir(); atualizarSessao();" icon="ui-icon-trash" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+				
+		
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" update="grid, messages" action="#{emailMarketingBean.limpar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk" update="grid, messages, dataTable" action="#{emailMarketingBean.salvar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Novo</b>: Usado para limpar os campos para serem preenchidos por novos dados.
+			<br/>
+			- <b>Botão Salvar</b>: Usado para gravar os dados no banco de dados.
+			<br/>
+			- <b>Botão Editar</b>: Usado para poder alterar se o estudante esta ou não matriculado no curso.
+			<br/>
+			- <b>Botão Excluir</b>: Usado para excluir o registro do banco de dados. Caso uma mensagem de Impossível Excluir
+			apareça, isso ocorre quando o registro esta vinculado a outros dados, o que impossibilita a sua devida exclusão.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

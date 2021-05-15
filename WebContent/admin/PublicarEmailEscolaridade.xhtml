@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Publicar Email Marketing por Escolaridade</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar, pesquisar, limpar, pesquisar1, limpar1, pesquisar2, limpar2, dataTableEmails, dataTableEscolaridades, dataTable">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Publicar Email Marketing por Escolaridade">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<p:outputLabel value="Status:" for="status" />
+		<p:selectOneListbox id="status" value="#{publicarEmailMarketingEscolaridadeBean.idStatusCandidato}" 
+			style="width: 350px; height:100px;"	>
+			<f:selectItem itemValue="0" itemLabel="Todos Status" />
+			<f:selectItems value="#{publicarEmailMarketingEscolaridadeBean.listaStatusCandidato}" var="s" itemValue="#{s.idstatuscandidato}" 
+				itemLabel="#{s.status}" />
+		</p:selectOneListbox>
+		
+		<h:panelGrid columns="2" id="grid2">
+			<p:outputLabel value="Pesquisar E-Mail por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa" value="#{publicarEmailMarketingEscolaridadeBean.tipoPesquisaEmail}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Assunto" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoEmail" value="#{publicarEmailMarketingEscolaridadeBean.idTituloAssunto}" style="width: 350px;" />
+			<p:commandButton actionListener="#{publicarEmailMarketingEscolaridadeBean.pesquisarEmail}" title="Buscar" id="pesquisar" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTableEmails" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{publicarEmailMarketingEscolaridadeBean.listarTudoEmail}" id="limpar" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTableEmails" onclick="atualizarSessao();" />
+		</h:column>
+		
+		<p:dataTable id="dataTableEmails" var="e" value="#{publicarEmailMarketingEscolaridadeBean.listaEmailMarketing}"
+			paginator="true" rows="10" selectionMode="single" selection="#{publicarEmailMarketingEscolaridadeBean.em}" 
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" rowKey="#{e.idemailmarketing}">
+			<f:facet name="header">  
+            	Emails
+        	</f:facet>
+
+			<p:column style="width: 60px;" headerText="Código">
+				<h:outputText value="#{e.idemailmarketing}" />
+			</p:column>
+
+			<p:column headerText="Assunto">
+				<h:outputText value="#{e.assunto}" />
+			</p:column>
+
+			<p:column style="width: 90px;" headerText="Data">
+				<h:outputText value="#{e.data}" >
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			
+		</p:dataTable>
+			
+		<h:panelGrid columns="2" id="grid3">
+			<p:outputLabel value="Pesquisar Escolaridade por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa1" value="#{publicarEmailMarketingEscolaridadeBean.tipoPesquisaEscolaridade}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Escolaridade" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoEscolaridade" value="#{publicarEmailMarketingEscolaridadeBean.idTituloEscolaridade}" style="width: 350px;" />
+			<p:commandButton actionListener="#{publicarEmailMarketingEscolaridadeBean.pesquisarEscolaridade}" title="Buscar" id="pesquisar1" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTableEscolaridades" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{publicarEmailMarketingEscolaridadeBean.listarTudoEscolaridade}" id="limpar1" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTableEscolaridades" onclick="atualizarSessao();" />
+		</h:column>
+		
+		<p:dataTable id="dataTableEscolaridades" var="e" value="#{publicarEmailMarketingEscolaridadeBean.listaEscolaridades}"
+			paginator="true" rows="10" selectionMode="single" selection="#{publicarEmailMarketingEscolaridadeBean.escolaridade}" 
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" rowKey="#{e.idescolaridade}">
+			<f:facet name="header">  
+            	Escolaridades
+        	</f:facet>
+
+			<p:column style="width: 60px;" headerText="Código">
+				<h:outputText value="#{e.idescolaridade}" />
+			</p:column>
+
+			<p:column headerText="Escolaridade">
+				<h:outputText value="#{e.escolaridade}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+		
+		<h:panelGrid columns="2" id="grid4">
+			<p:outputLabel value="Pesquisar Publicações por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa2" value="#{publicarEmailMarketingEscolaridadeBean.tipoPesquisaPublicacao}" >
+				<f:selectItem itemLabel="Cód Email" itemValue="1" />  
+	      		<f:selectItem itemLabel="Assunto" itemValue="0" /> 
+	      		<f:selectItem itemLabel="Cód Escolaridade" itemValue="2" />
+	      		<f:selectItem itemLabel="Escolaridade" itemValue="3" />
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoPublicacao" value="#{publicarEmailMarketingEscolaridadeBean.idTituloPublicacao}" style="width: 350px;" />
+			<p:commandButton actionListener="#{publicarEmailMarketingEscolaridadeBean.pesquisarPublicacao}" title="Buscar" id="pesquisar2" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTable" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{publicarEmailMarketingEscolaridadeBean.listarTudoPublicacao}" id="limpar2" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTable" onclick="atualizarSessao();" />
+		</h:column>
+
+		<p:dataTable id="dataTable" var="ee" value="#{publicarEmailMarketingEscolaridadeBean.listaEmailMarketingEscolaridade}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" >
+			<f:facet name="header">  
+            	Email/Escolaridade Publicados
+        	</f:facet>
+
+			<p:column headerText="Data" style="width: 70px;">
+				<h:outputText value="#{ee.emailmarketing.data}" >
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			
+			<p:column headerText="Cod. Email" style="width: 60px;">
+				<h:outputText value="#{ee.emailmarketing.idemailmarketing}" />
+			</p:column>
+
+			<p:column headerText="Assunto Email">
+				<h:outputText value="#{ee.emailmarketing.assunto}" />
+			</p:column>
+
+			<p:column headerText="Cód. Esc." style="width: 60px;">
+				<h:outputText value="#{ee.escolaridade.idescolaridade}" />
+			</p:column>
+
+			<p:column headerText="Escolaridade">
+				<h:outputText value="#{ee.escolaridade.escolaridade}" />
+			</p:column>
+			
+			<p:column headerText="Status">
+				<h:outputText value="#{ee.statuscandidato.status}" />
+			</p:column>
+		</p:dataTable>
+		
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" update="messages" 
+					action="#{publicarEmailMarketingEscolaridadeBean.limpar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Publicar" icon="ui-icon-check" update="messages, dataTable" 
+					action="#{publicarEmailMarketingEscolaridadeBean.salvar}" onclick="return confirmar(); atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Novo</b>: Usado para limpar os campos para serem preenchidos por novos dados.
+			<br/>
+			- <b>Botão Publicar</b>: Usado para agendar o envio dos emails.
+			<br/>
+			- <b>Botão Pesquisar</b>: Usado para poder pesquisar os dados referente ao campo Email e Escolaridade.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

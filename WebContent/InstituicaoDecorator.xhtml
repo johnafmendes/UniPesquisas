@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<p:dataTable id="dataTableInstituicoesDisponiveis" var="id" 
+		value="#{candidatoInstituicaoBean.listaInstituicoesDisponiveis}" scrollable="true" scrollHeight="200">
+		<f:facet name="header">  
+           	Instituições Disponíveis
+       	</f:facet>
+
+		<p:column headerText="Instituição">
+			<h:outputText value="#{id.instituicao}" />
+		</p:column>
+
+		<p:column style="width: 115px;" headerText="Ação">
+			<p:commandButton
+				actionListener="#{candidatoInstituicaoBean.adicionarInstituicao(id.idinstituicao)}"
+				title="Adicionar Instituição" value="Adicionar" icon="ui-icon-plus" 
+				update="dataTableInstituicoesDisponiveis, :form:dataTableInstituicoesSelecionados"
+				onclick="atualizarSessao();"/>
+		</p:column>
+	</p:dataTable>
+	
+	<p:dataTable id="dataTableInstituicoesSelecionados" var="is"
+		value="#{candidatoInstituicaoBean.listaInstituicoesSelecionados}">
+		<f:facet name="header">  
+           	Instituições Selecionados
+       	</f:facet>
+
+		<p:column headerText="Instituição">
+			<h:outputText value="#{is.instituicao.instituicao}" />
+		</p:column>
+
+		<p:column style="width: 40px;" headerText="Ação">
+			<p:commandButton
+				actionListener="#{candidatoInstituicaoBean.removerInstituicao(is.instituicao.idinstituicao)}"
+				title="Remover Instituição" icon="ui-icon-trash" 
+				update=":form:dataTableInstituicoesDisponiveis, :form:dataTableInstituicoesSelecionados"
+				onclick="atualizarSessao();"/>
+		</p:column>
+	</p:dataTable>
+</ui:composition>
+</html>

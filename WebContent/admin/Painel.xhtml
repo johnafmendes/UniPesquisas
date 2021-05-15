@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">UniPesquisas - Painel de Controle</ui:define>
+
+	<ui:define name="conteudo">
+		<p:panel id="corpo" header="Painel de Controle">
+			<div id="divCorpo" style="padding: 7px;">
+				<p:tabView id="tabView">  
+				    <p:tab id="tab1" title="Status e Orientações">  
+				        <h:panelGrid columns="1" cellpadding="10">  
+				            <h:outputText id="orientacao1" value="Orientação 1: A primeira coisa a fazer antes 
+				            de tudo é se certificar de que os Status dos Estudantes sejam preenchidos. Exemplo: 
+				            Estudantes Externos, Vestibulandos, Alunos, Egressos. Acesse Gerenciamento/Status Estudantes" />
+				            
+				            <h:outputText id="orientacao2" value="Orientação 2: A segunda coisa a fazer antes 
+				            de tudo é se certificar de que haja um Status dos Estudantes Padrão para que os 
+				            estudantes que se cadastrarem no sistema UniPesquisas recebam esse status automaticamente. 
+				            Acesse Gerenciamento/Configurações" />				            
+				        </h:panelGrid>  
+				    </p:tab>  
+				  
+				    <p:tab id="tab2" title="Vídeos">  
+				        <h:panelGrid columns="2">
+							<iframe width="400" height="225" src="//www.youtube.com/embed/nnAES9bcMJo" frameborder="0"></iframe>
+							<p:outputLabel value="Vídeo sobre Áreas de Curso" />
+							
+							<iframe width="400" height="225" src="//www.youtube.com/embed/uXW5kTA04x8?list=UUC-ljCPwef3SZxkDQTQrJnA" frameborder="0"></iframe>
+							<p:outputLabel value="Vídeo sobre Instituições de Ensino" />
+							
+							<iframe width="400" height="225" src="//www.youtube.com/embed/vShFcj_zaRU?list=UUC-ljCPwef3SZxkDQTQrJnA" frameborder="0"></iframe>
+							<p:outputLabel value="Vídeo sobre Cursos" />
+							
+							<iframe width="400" height="225" src="//www.youtube.com/embed/Mxpaj7qmlZY?list=UUC-ljCPwef3SZxkDQTQrJnA" frameborder="0"></iframe>
+							<p:outputLabel value="Vídeo sobre Criar, Montar e Publicar Pesquisas" />
+							
+							<iframe width="400" height="225" src="//www.youtube.com/embed/lVoIwYf7CP4?list=UUC-ljCPwef3SZxkDQTQrJnA" frameborder="0"></iframe>
+							<p:outputLabel value="Vídeo sobre Relatórios" />
+							
+							<iframe width="400" height="225" src="//www.youtube.com/embed/YJc43QHf678?list=UUC-ljCPwef3SZxkDQTQrJnA" frameborder="0"></iframe>
+							<p:outputLabel value="Vídeo sobre e-Mail Marketing" />
+							
+							<iframe width="400" height="225" src="//www.youtube.com/embed/m-IZsOSwl7o?list=PL7qNwZE1-G6DqOU4v8082XLVrU_Y1EHts" frameborder="0"></iframe>
+							<p:outputLabel value="Vídeo sobre Gerenciamento de Progressos" />
+						</h:panelGrid>  
+				    </p:tab>  
+				  
+				</p:tabView>
+				
+			</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="false" style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="false"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- Selecione no menu superior a opção desejada.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/composite"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h1="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsp/jstl/core"
+	xmlns:f1="http://java.sun.com/jsf/core">
+<h1:head>
+	<title><ui:insert name="titulo">UniPesquisas</ui:insert></title>
+	<h1:outputStylesheet name="Styles.css" library="css" />
+	<h1:outputScript name="scripts.js" library="scripts" />
+	<f1:metadata>
+		<f1:event listener="#{autenticacaoBean.verificarAutorizacao}" type="preRenderView"/>
+	</f1:metadata>
+<!-- 	<meta http-equiv="refresh" content="${autenticacaoBean.maxInactiveInterval}; url=default.jsf" /> -->
+	<script>
+	window.onload = function(){
+		DisplaySessionTimeout.run = true;
+		DisplaySessionTimeout(#{autenticacaoBean.maxInactiveInterval});
+	};
+	</script>
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41134999-1', 'unipesquisas.com');
+  ga('send', 'pageview');
+
+</script>
+</h1:head>
+
+<body>
+	<h1:form id="form" method="post" enctype="multipart/form-data" prependId="false">
+		<h1:inputHidden id="tempoSessao" value="#{autenticacaoBean.maxInactiveInterval}" />
+		<div id="container">
+			<div id="header">
+				<div id="leftsideHeader">
+					<div id="logoWrap">
+						<div class="google-header-bar">
+							<div class="logoWrap">
+								<h1:graphicImage name="0.gif" alt="UniPesquisas por EngSoftware"
+									id="logoUniPesquisa" library="logos" width="150" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="rightsideHeader">
+					<div id="menuWrap">
+						<p:menubar>
+							<p:menuitem value="Principal" icon="ui-icon-home" url="Painel.jsf" />
+
+							<p:submenu label="Relatórios" icon="ui-icon-print" rendered="#{autenticacaoBean.empresa.idempresa != 1}">
+								<p:submenu label="Estudantes" icon="ui-icon-print" >
+									<p:menuitem value="Lista Simples" url="RelatorioCandidatoListaSimples.jsf" icon="ui-icon-print" />
+									<p:menuitem value="Lista por Escolaridade" url="RelatorioCandidatoListaPorEscolaridade.jsf" icon="ui-icon-print" />
+									<p:menuitem value="Lista por Instituição" url="RelatorioCandidatoListaPorInstituicao.jsf" icon="ui-icon-print" />
+									<p:menuitem value="Lista por Curso" url="RelatorioCandidatoListaPorCurso.jsf" icon="ui-icon-print" />
+									<p:menuitem value="Lista por Area" url="RelatorioCandidatoListaPorArea.jsf" icon="ui-icon-print" />
+									<p:menuitem value="Lista por Cursos Matriculados" url="RelatorioCandidatoMatriculados.jsf" icon="ui-icon-print" />
+								</p:submenu>
+								<p:submenu label="Progresso" icon="ui-icon-print" >
+									<p:menuitem value="Lista Total de Contatos" url="RelatorioProgressoListaTotalContatos.jsf" icon="ui-icon-print" />
+									<p:menuitem value="Lista Progresso por Estudantes" url="RelatorioProgressoPorCandidato.jsf" icon="ui-icon-print" />
+								</p:submenu>
+								<p:submenu label="Pesquisas" icon="ui-icon-print" >
+									<p:submenu label="Aproveitamento" icon="ui-icon-print" >
+										<p:menuitem value="Escolaridade Geral" url="RelatorioPesquisaResumoPesquisaEscolaridade.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Instituição Geral" url="RelatorioPesquisaResumoPesquisaInstituicao.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Curso Geral" url="RelatorioPesquisaResumoPesquisaCurso.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Escolaridade Individual" url="RelatorioPesquisaResumoPesquisaEscolaridadeIndividual.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Instituição Individual" url="RelatorioPesquisaResumoPesquisaInstituicaoIndividual.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Curso Individual" url="RelatorioPesquisaResumoPesquisaCursoIndividual.jsf" icon="ui-icon-print" />
+									</p:submenu>
+									<p:submenu label="Listas" icon="ui-icon-print" >
+										<p:menuitem value="Perguntas por Pesquisa" url="RelatorioPesquisaListaPerguntasPorPesquisa.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Estudantes por Alternativa Respondida Geral" url="RelatorioPesquisaListaCandidatoPorPerguntasGeral.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Estudantes por Alternativa Respondida Escolaridade" url="RelatorioPesquisaListaCandidatoPorPerguntasEscolaridade.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Estudantes por Alternativa Respondida Instituição" url="RelatorioPesquisaListaCandidatoPorPerguntasInstituicao.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Estudantes por Alternativa Respondida Curso" url="RelatorioPesquisaListaCandidatoPorPerguntasCurso.jsf" icon="ui-icon-print" />
+									</p:submenu>
+									<p:submenu label="Estatísticas" icon="ui-icon-print" >
+										<p:menuitem value="Geral por Pesquisa" url="RelatorioPesquisaListaPerguntasEstatisticasPorPesquisa.jsf"  icon="ui-icon-print"/>
+										<p:menuitem value="Pesquisa por Escolaridade" url="RelatorioPesquisaListaPerguntasEstatisticasPorPesquisaEscolaridade.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Pesquisa por Instituição" url="RelatorioPesquisaListaPerguntasEstatisticasPorPesquisaInstituicao.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Pesquisa por Curso" url="RelatorioPesquisaListaPerguntasEstatisticasPorPesquisaCurso.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Pergunta Geral" url="RelatorioPesquisaEstatisticaPorPerguntaGeral.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Pergunta Escolaridade" url="RelatorioPesquisaEstatisticaPorPerguntaEscolaridade.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Pergunta Instituição" url="RelatorioPesquisaEstatisticaPorPerguntaInstituicao.jsf" icon="ui-icon-print" />
+										<p:menuitem value="Pergunta Curso" url="RelatorioPesquisaEstatisticaPorPerguntaCurso.jsf" icon="ui-icon-print" />
+									</p:submenu>
+								</p:submenu>
+							</p:submenu>
+							
+							<p:submenu label="Email Marketing" icon="ui-icon-mail-closed" rendered="#{autenticacaoBean.empresa.idempresa != 1}">
+								<p:menuitem value="Criar Email" icon="ui-icon-mail-closed" url="EmailMarketing.jsf" />
+								<p:submenu label="Publicar Email" icon="ui-icon-mail-closed">
+									<p:menuitem value="Por Escolaridade" url="PublicarEmailEscolaridade.jsf" icon="ui-icon-mail-closed" />
+									<p:menuitem value="Por Instituição" url="PublicarEmailInstituicao.jsf" icon="ui-icon-mail-closed" />
+									<p:menuitem value="Por Curso" url="PublicarEmailCurso.jsf" icon="ui-icon-mail-closed" />
+									<p:menuitem value="Por Alternativa de Pergunta" url="PublicarEmailAlternativa.jsf" icon="ui-icon-mail-closed" />
+								</p:submenu>
+							</p:submenu>
+													
+							<p:submenu label="SMS Marketing" icon="ui-icon-mail-closed" rendered="#{autenticacaoBean.empresa.idempresa != 1}">
+								<p:menuitem value="Criar SMS" icon="ui-icon-mail-closed" url="SMSMarketing.jsf" />
+								<p:submenu label="Publicar SMS" icon="ui-icon-mail-closed">
+									<p:menuitem value="Por Escolaridade" url="PublicarSMSEscolaridade.jsf" icon="ui-icon-mail-closed" />
+									<p:menuitem value="Por Instituição" url="PublicarSMSInstituicao.jsf" icon="ui-icon-mail-closed" />
+									<p:menuitem value="Por Curso" url="PublicarSMSCurso.jsf" icon="ui-icon-mail-closed" />
+									<p:menuitem value="Por Alternativa de Pergunta" url="PublicarSMSAlternativa.jsf" icon="ui-icon-mail-closed" />
+								</p:submenu>
+							</p:submenu>
+							
+							<p:submenu label="Administração" icon="ui-icon-gear" rendered="#{autenticacaoBean.empresa.idempresa == 1}" >
+								<p:menuitem value="Empresas" icon="ui-icon-gear" url="Empresas.jsf" />
+								<p:menuitem value="Escolaridades" icon="ui-icon-gear" url="Escolaridades.jsf" />
+								<p:menuitem value="Emails Padrão" icon="ui-icon-gear" url="EmailPadrao.jsf" />
+								<p:menuitem value="Configurações" icon="ui-icon-gear" url="ConfiguracoesSistema.jsf" />
+								<p:menuitem value="Usuários" icon="ui-icon-gear" url="Usuarios.jsf" />
+							</p:submenu>
+							
+							<p:submenu label="Pesquisa" icon="ui-icon-comment" rendered="#{autenticacaoBean.empresa.idempresa != 1}">
+								<p:menuitem value="Criar Pesquisas" icon="ui-icon-comment" url="Pesquisas.jsf" />
+								<p:menuitem value="Criar Perguntas" icon="ui-icon-comment" url="Perguntas.jsf" />
+								<p:menuitem value="Montar Pesquisa" icon="ui-icon-comment" url="MontarPesquisa.jsf" />
+								<p:submenu label="Publicar Pesquisa" icon="ui-icon-comment">
+									<p:menuitem value="Por Escolaridade" url="PublicarPesquisaEscolaridade.jsf" icon="ui-icon-comment" />
+									<p:menuitem value="Por Instituição" url="PublicarPesquisaInstituicao.jsf" icon="ui-icon-comment" />
+									<p:menuitem value="Por Curso" url="PublicarPesquisaCurso.jsf" icon="ui-icon-comment" />
+								</p:submenu>
+							</p:submenu>
+							
+							<p:submenu label="Gerenciamento" icon="ui-icon-gear" rendered="#{autenticacaoBean.empresa.idempresa != 1}">
+								<p:menuitem value="Usuários" icon="ui-icon-gear" url="Usuarios.jsf" />
+								<p:menuitem value="Áreas de Curso" icon="ui-icon-gear" url="AreasCurso.jsf" />
+								<p:menuitem value="Instituições de Ensino" icon="ui-icon-gear" url="Instituicoes.jsf" />
+								<p:menuitem value="Estudantes" icon="ui-icon-gear" url="Candidatos.jsf" />
+								<p:menuitem value="Cursos" icon="ui-icon-gear" url="Cursos.jsf" />
+								<p:menuitem value="Progresso" icon="ui-icon-gear" url="Progresso.jsf" />
+								<p:menuitem value="Estudante Curso" icon="ui-icon-gear" url="CandidatoCursos.jsf" />
+								<p:menuitem value="Estudante Instituição" icon="ui-icon-gear" url="CandidatoInstituicoes.jsf" />
+								<p:menuitem value="Status Estudante" icon="ui-icon-gear" url="StatusCandidato.jsf" />
+								<p:menuitem value="Configurações" icon="ui-icon-gear" url="ConfiguracoesEmpresa.jsf" />
+							</p:submenu>
+							
+
+							<p:menuitem value="Resumos" icon="ui-icon-script" url="Resumos.jsf" rendered="#{autenticacaoBean.empresa.idempresa != 1}"/>
+							<p:menuitem value="Resumos" icon="ui-icon-script" url="ResumosAdmin.jsf" rendered="#{autenticacaoBean.empresa.idempresa == 1}"/>
+							
+							
+
+							
+							
+							<p:menuitem value="Logout" action="#{autenticacaoBean.logout}" icon="ui-icon-power" />
+
+						</p:menubar>
+					</div>
+				</div>
+			</div>
+
+			<div id="bodycontainer">
+				<div id="leftside">
+					<div id="bodyContent">
+						<ui:insert name="conteudo" />
+					</div>
+				</div>
+
+				<div id="rightside">
+					<div id="BodyRigthSide">
+						<ui:insert name="R1Content" />						
+						<div id="R2">
+							<p:panel id="mensagens" header="Mensagens">
+								<div id="R2ContentHTML" style="padding: 7px;">
+									<div class="title6" id="SessionTime">
+										Fim da Sessão em:&nbsp;<div id="contador" style="display:inline;" />&nbsp;segundos.
+									</div>
+									<p:messages id="messages" showDetail="true"
+										closable="true" showSummary="false" globalOnly="true" />
+									<ui:insert name="R2Content" />
+								</div>
+							</p:panel>
+						</div>
+						<br />
+						<div id="R4">
+							<p:panel id="ajuda" header="Ajuda">
+								<div id="R4ContentHTML" style="padding: 7px;">
+									<ui:insert name="R3Content" />
+								</div>
+							</p:panel>
+						</div>
+						<br />
+					</div>
+				</div>
+			</div>
+
+			<div id="footer">
+				<div id="footerContent">
+					<p:toolbar>  
+					    <p:toolbarGroup align="center" style="height: 20px;">  
+					        <p:outputLabel value="#{autenticacaoBean.empresa.nome}" />  
+					        <p:separator />  
+							<p:outputLabel value="Desenvolvido por EngSoftware"/>
+							<p:separator />
+							<p:outputLabel  value="www.engsoftware.com.br"/>
+							<p:separator />
+							<p:outputLabel value="(47) 3622-6669" />											  
+					    </p:toolbarGroup>  
+					</p:toolbar>    
+				</div>
+			</div>
+		</div>
+	</h1:form>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Relatórios de Pesquisas: Lista de Estudantes por Alternativa de uma Escolaridade</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="gerar, pesquisar, limpar, dataTableEscolaridades1">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+	    
+		<p:panel id="corpo" header="Relatório de Pesquisas: Lista de Estudantes por Alternativa de uma Escolaridade">
+		<div id="divCorpo" style="padding: 7px;">
+			<h:panelGrid columns="1" id="grid15">
+				<p:outputLabel value="Este relatório fornece relação ou lista de estudantes que responderam uma determinada alternativa de uma pergunta dentro de uma pesquisa envolvendo Escolaridade." style="float: right;" />
+				<p:outputLabel value="Status:" for="status" />
+				<p:selectOneListbox id="status" value="#{relatorioPesquisaBean.idStatusCandidato}" 
+					style="width: 350px; height:100px;"	>
+					<f:selectItem itemValue="0" itemLabel="Todos Status" />
+					<f:selectItems value="#{relatorioPesquisaBean.listaStatusCandidato}" var="s" itemValue="#{s.idstatuscandidato}" 
+						itemLabel="#{s.status}" />
+				</p:selectOneListbox>				
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" id="grid3">
+			<p:outputLabel value="Pesquisar Escolaridade por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa1" value="#{relatorioPesquisaBean.tipoPesquisaEscolaridade}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Escolaridade" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoEscolaridade" value="#{relatorioPesquisaBean.idTituloEscolaridade}" style="width: 350px;" />
+			<p:commandButton actionListener="#{relatorioPesquisaBean.pesquisarEscolaridade}" title="Buscar" id="pesquisar" 
+				value="Pesquisar" icon="ui-icon-search" 
+				update="messages, dataTableEscolaridades1, dataTablePesquisas5, dataTablePerguntas, gridPergunta" 
+				onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{relatorioPesquisaBean.listarTudoEscolaridade}" id="limpar" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" 
+				update="dataTableEscolaridades1, dataTablePesquisas5, dataTablePerguntas, gridPergunta" 
+				onclick="atualizarSessao();" />
+		</h:column>
+		
+			<p:dataTable id="dataTableEscolaridades1" var="e" value="#{relatorioPesquisaBean.listaEscolaridades}"
+				paginator="true" rows="10" selectionMode="single" selection="#{relatorioPesquisaBean.escolaridade}" 
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+				paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+				rowsPerPageTemplate="10,20,40" rowKey="#{e.idescolaridade}">
+				<f:facet name="header">  
+	            	Escolaridades
+	        	</f:facet>
+	
+				<p:column style="width: 60px;" headerText="Código">
+					<h:outputText value="#{e.idescolaridade}" />
+				</p:column>
+	
+				<p:column headerText="Escolaridade">
+					<h:outputText value="#{e.escolaridade}" />
+				</p:column>
+				
+				<p:column style="width: 90px;" headerText="Ação">
+					<p:commandButton id="filtrar" value="Filtrar" icon="ui-icon-search" 
+						action="#{relatorioPesquisaBean.pesquisarPesquisaPorEscolaridade(e.idescolaridade)}" 
+						update=":form:dataTablePesquisas5, :form:messages, :form:dataTablePerguntas, :form:gridPergunta"
+						onclick="atualizarSessao();"/>
+				</p:column>
+	
+			</p:dataTable>
+			
+			<p:dataTable id="dataTablePesquisas5" var="p" value="#{relatorioPesquisaBean.listaPesquisas}"
+				paginator="true" rows="10" selectionMode="single" selection="#{relatorioPesquisaBean.pesquisa}" 
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+				paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+				rowsPerPageTemplate="10,20,40" rowKey="#{p.idpesquisa}">
+				<f:facet name="header">  
+	            	Pesquisas Publicadas na Escolaridade: #{relatorioPesquisaBean.idEscolaridadeSelecionado}
+	        	</f:facet>
+	
+				<p:column style="width: 60px;" headerText="Código">
+					<h:outputText value="#{p.idpesquisa}" />
+				</p:column>
+	
+				<p:column headerText="Título">
+					<h:outputText value="#{p.titulo}" />
+				</p:column>
+	
+				<p:column style="width: 90px;" headerText="Data">
+					<h:outputText value="#{p.data}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column style="width: 90px;" headerText="Ação">
+					<p:commandButton id="filtrar" value="Filtrar" icon="ui-icon-search" 
+						action="#{relatorioPesquisaBean.filtrarPerguntas(p.idpesquisa)}" 
+						update=":form:dataTablePerguntas, :form:messages, :form:gridPergunta"
+						onclick="atualizarSessao();"/>
+				</p:column>
+				
+			</p:dataTable>
+			
+			<p:dataTable id="dataTablePerguntas" var="p" value="#{relatorioPesquisaBean.listaPerguntas}"
+				paginator="true" rows="10" selectionMode="single" selection="#{relatorioPesquisaBean.pergunta}" 
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+				paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+				rowsPerPageTemplate="10,20,40" rowKey="#{p.idpergunta}">
+				<f:facet name="header">  
+	            	Perguntas da Pesquisa: #{relatorioPesquisaBean.idPesquisaSelecionado}
+	        	</f:facet>
+	
+				<p:column style="width: 60px;" headerText="Código">
+					<h:outputText value="#{p.idpergunta}" />
+				</p:column>
+	
+				<p:column headerText="Pergunta">
+					<h:outputText value="#{p.pergunta}" />
+				</p:column>
+	
+				<p:column style="width: 90px;" headerText="Tipo">
+					<h:outputText value="#{p.tipo}" />
+				</p:column>
+				
+				<p:column style="width: 90px;" headerText="Ação">
+					<p:commandButton id="filtrar" value="Filtrar" icon="ui-icon-search" 
+						action="#{relatorioPesquisaBean.carregarPergunta(p.idpergunta)}" 
+						update=":form:gridPergunta, :form:messages"
+						onclick="atualizarSessao();"/>
+				</p:column>
+			</p:dataTable>
+			
+			<h:panelGrid columns="2" id="gridPergunta">
+				<p:outputLabel value="Pergunta:" style="float: right;" />
+				<p:outputLabel id="pergunta" value="#{relatorioPesquisaBean.pergunta.pergunta}"/>
+
+				<p:outputLabel value="Alternativas:" style="float: right;" />
+				<p:selectOneRadio id="alternativaABCDE" value="#{relatorioPesquisaBean.resposta}" layout="pageDirection" 
+					rendered="#{relatorioPesquisaBean.pergunta.alta != '' and 
+						relatorioPesquisaBean.pergunta.altb != '' and
+						relatorioPesquisaBean.pergunta.altc != '' and
+						relatorioPesquisaBean.pergunta.altd != '' and
+						relatorioPesquisaBean.pergunta.alte != ''}">
+					<f:selectItem itemLabel="a) #{relatorioPesquisaBean.pergunta.alta}" itemValue="a" />  
+            		<f:selectItem itemLabel="b) #{relatorioPesquisaBean.pergunta.altb}" itemValue="b" />  	
+            		<f:selectItem itemLabel="c) #{relatorioPesquisaBean.pergunta.altc}" itemValue="c" />
+            		<f:selectItem itemLabel="d) #{relatorioPesquisaBean.pergunta.altd}" itemValue="d" />
+            		<f:selectItem itemLabel="e) #{relatorioPesquisaBean.pergunta.alte}" itemValue="e" />
+				</p:selectOneRadio>
+				
+				<p:selectOneRadio id="alternativaAB" value="#{relatorioPesquisaBean.resposta}" layout="pageDirection" 
+					rendered="#{relatorioPesquisaBean.pergunta.alta != '' and 
+						relatorioPesquisaBean.pergunta.altb != '' and
+						relatorioPesquisaBean.pergunta.altc == '' and
+						relatorioPesquisaBean.pergunta.altd == '' and
+						relatorioPesquisaBean.pergunta.alte == ''}">
+					<f:selectItem itemLabel="a) #{relatorioPesquisaBean.pergunta.alta}" itemValue="a" />  
+            		<f:selectItem itemLabel="b) #{relatorioPesquisaBean.pergunta.altb}" itemValue="b" />  	
+				</p:selectOneRadio>
+				
+				<p:selectOneRadio id="alternativaABC" value="#{relatorioPesquisaBean.resposta}" layout="pageDirection" 
+					rendered="#{relatorioPesquisaBean.pergunta.alta != '' and 
+						relatorioPesquisaBean.pergunta.altb != '' and
+						relatorioPesquisaBean.pergunta.altc != '' and
+						relatorioPesquisaBean.pergunta.altd == '' and
+						relatorioPesquisaBean.pergunta.alte == ''}">
+					<f:selectItem itemLabel="a) #{relatorioPesquisaBean.pergunta.alta}" itemValue="a" />  
+            		<f:selectItem itemLabel="b) #{relatorioPesquisaBean.pergunta.altb}" itemValue="b" />  	
+            		<f:selectItem itemLabel="c) #{relatorioPesquisaBean.pergunta.altc}" itemValue="c" />
+				</p:selectOneRadio>
+				
+				<p:selectOneRadio id="alternativaABCD" value="#{relatorioPesquisaBean.resposta}" layout="pageDirection" 
+					rendered="#{relatorioPesquisaBean.pergunta.alta != '' and 
+						relatorioPesquisaBean.pergunta.altb != '' and
+						relatorioPesquisaBean.pergunta.altc != '' and
+						relatorioPesquisaBean.pergunta.altd != '' and
+						relatorioPesquisaBean.pergunta.alte == ''}">
+					<f:selectItem itemLabel="a) #{relatorioPesquisaBean.pergunta.alta}" itemValue="a" />  
+            		<f:selectItem itemLabel="b) #{relatorioPesquisaBean.pergunta.altb}" itemValue="b" />  	
+            		<f:selectItem itemLabel="c) #{relatorioPesquisaBean.pergunta.altc}" itemValue="c" />
+            		<f:selectItem itemLabel="d) #{relatorioPesquisaBean.pergunta.altd}" itemValue="d" />
+				</p:selectOneRadio>
+			</h:panelGrid>
+			
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="abrir" value="Abrir" icon="ui-icon-folder-open" 
+				action="#{relatorioPesquisaBean.abrirListaCandidatosPorPerguntaEscolaridade}" ajax="false" />
+				<p:commandButton id="gerar" value="Gerar" update="messages" icon="ui-icon-gear" action="#{relatorioPesquisaBean.gerarListaCandidatosPorPerguntaEscolaridade}" onclick="atualizarSessao();" />
+				<p:commandButton id="download" value="Download" ajax="false" icon="ui-icon-disk">
+					<p:fileDownload value="#{relatorioPesquisaBean.file}" contentDisposition="attachment" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Abrir</b>: Usado para abrir em PDF no próprio navegador o relatório com base nos parâmetros digitados.
+			<br/>
+			- <b>Botão Gerar</b>: Usado para gerar um arquivo em PDF para ser feito o download cliando no botão Download.
+			<br/>
+			- <b>Botão Download</b>: Usado para baixar o arquivo gerado pelo sistema.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

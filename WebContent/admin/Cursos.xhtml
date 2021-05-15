@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Gerenciamento de Cursos</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar, pesquisar, limpar, dataTable">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Gerenciamento de Cursos">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<h:panelGrid columns="3" id="grid">
+			
+			<p:outputLabel value="ID:" style="float: right;" />
+			<p:inputText value="#{cursoBean.curso.idcurso}" id="id" readonly="true" style="width: 60px;"/>	
+			<p:message id="idMessage" for="id" />
+
+			<p:outputLabel value="Curso:" style="float: right;" for="curso" />
+			<p:inputText id="curso" value="#{cursoBean.curso.curso}" maxlength="50"
+				required="#{param['validation']=='true'}" style="width: 350px;" />
+			<p:message id="cursoMessage" for="curso" />
+
+			<p:outputLabel value="Área:" style="float: right;" for="area" />
+			<p:selectOneListbox id="area" value="#{cursoBean.idArea}" style="width: 350px; height:100px;" 
+				required="#{param['validation']=='true'}">
+				<f:selectItems value="#{cursoBean.listaAreas}" var="a" itemValue="#{a.idareacurso}" itemLabel="#{a.area}" />
+			</p:selectOneListbox>
+			<p:message id="areaMessage" for="area" />
+			
+			<p:outputLabel value="Instituição de Ensino:" style="float: right;" for="instituicao" />
+			<p:selectOneListbox id="instituicao" value="#{cursoBean.idInstituicao}" style="width: 350px; height:100px;" 
+				required="#{param['validation']=='true'}">
+				<f:selectItems value="#{cursoBean.listaInstituicoes}" var="i" itemValue="#{i.idinstituicao}" itemLabel="#{i.instituicao}" />
+			</p:selectOneListbox>
+			<p:message id="instituicaoMessage" for="instituicao" />
+
+		</h:panelGrid>
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+		
+		<h:panelGrid columns="2" id="grid2">
+			<p:outputLabel value="Pesquisar Cursos por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa" value="#{cursoBean.tipoPesquisaCurso}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Curso" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoCurso" value="#{cursoBean.idNomeCurso}" style="width: 350px;" />
+			<p:commandButton actionListener="#{cursoBean.pesquisarCurso}" title="Buscar" id="pesquisar" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTable" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{cursoBean.listarTudo}" id="limpar" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTable" onclick="atualizarSessao();" />
+		</h:column>
+
+		<p:dataTable id="dataTable" var="c" value="#{cursoBean.listaCursos}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" >
+			<f:facet name="header">  
+            	Cursos  
+        	</f:facet>
+
+			<p:column headerText="Código" style="width: 60px;">
+				<h:outputText value="#{c.idcurso}" />
+			</p:column>
+			
+			<p:column headerText="Curso">
+				<h:outputText value="#{c.curso}" />
+			</p:column>
+
+			<p:column headerText="Área" style="width: 120px;" >
+				<h:outputText value="#{c.areacurso.area}" />
+			</p:column>
+
+			<p:column headerText="Instituição">
+				<h:outputText value="#{c.instituicao.instituicao}" />
+			</p:column>
+
+			<p:column style="width: 80px;" headerText="Ações">
+				<p:commandButton actionListener="#{cursoBean.alterar(c.idcurso)}" title="Alterar" icon="ui-icon-pencil" update=":form:grid" onclick="atualizarSessao();" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton action="#{cursoBean.excluir(c.idcurso)}" title="Excluir" onclick="return excluir(); atualizarSessao();" icon="ui-icon-trash" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" update="grid, messages" action="#{cursoBean.limpar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk" update="grid, messages, dataTable" action="#{cursoBean.salvar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Novo</b>: Usado para limpar os campos para serem preenchidos por novos dados.
+			<br/>
+			- <b>Botão Salvar</b>: Usado para gravar os dados no banco de dados.
+			<br/>
+			- <b>Botão Editar</b>: Usado para poder alterar se o estudante esta ou não matriculado no curso.
+			<br/>
+			- <b>Botão Excluir</b>: Usado para excluir o registro do banco de dados. Caso uma mensagem de Impossível Excluir
+			apareça, isso ocorre quando o registro esta vinculado a outros dados, o que impossibilita a sua devida exclusão.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

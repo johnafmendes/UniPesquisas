@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListaCandidatos" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a1d958c9-3d0f-426c-a3c6-f341d1235a3f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idEmpresa" class="java.lang.String"/>
+	<parameter name="idPesquisa" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idEscolaridade" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT p.titulo, p.data, per.pergunta, per.alta, per.altb, per.altc, per.altd, per.alte
+FROM pesquisa p
+INNER JOIN pesquisapergunta pp ON pp.idpesquisa=p.idpesquisa
+INNER JOIN pergunta per ON per.idpergunta=pp.idpergunta
+WHERE p.idempresa = $P{idEmpresa} AND p.idpesquisa = $P{idPesquisa};]]>
+	</queryString>
+	<field name="titulo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pergunta" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="alta" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="altb" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="altc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="altd" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="alte" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="idEmpresa" class="java.lang.String"/>
+	<group name="Pesquisa">
+		<groupExpression><![CDATA[$F{titulo}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="ebaf4dff-2958-4b4e-8d5a-cd6e14d6be0d" x="101" y="0" width="701" height="20"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement uuid="80a17188-cf61-4b17-8fcb-e900812b8d72" x="1" y="0" width="100" height="20"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement uuid="5b0375ca-b9df-4187-86e5-becb60951cf4" mode="Opaque" x="0" y="-20" width="802" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement uuid="44a83f4b-549a-4482-aa9d-2b2c3279d758" x="20" y="20" width="727" height="43" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Lista de Perguntas por Pesquisa]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement uuid="f4d05931-99eb-447b-8f1a-2f24dda6922a" mode="Opaque" x="0" y="0" width="208" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pergunta]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="66480064-22d4-46ef-8048-93c6169409b1" x="0" y="20" width="802" height="1" forecolor="#666666"/>
+			</line>
+			<staticText>
+				<reportElement uuid="45796128-ca96-466a-97cb-9f433753aa08" mode="Opaque" x="208" y="0" width="122" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Alternativa A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="94e215ec-5951-412c-9d7e-2fc85ab13722" mode="Opaque" x="457" y="0" width="115" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Alternativa C]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8278d6dc-7d76-4269-af91-25384abbbbaf" mode="Opaque" x="330" y="0" width="127" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Alternativa B]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7020c604-9e72-48b6-8f26-4aecc2b460c7" mode="Opaque" x="572" y="0" width="117" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Alternativa D]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ae182d6c-273c-4472-9909-77eb22ee7ea3" mode="Opaque" x="689" y="0" width="113" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Alternativa E]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement uuid="5d321b63-839e-4770-8801-fd7b0fd3c7d6" positionType="FixRelativeToBottom" x="0" y="19" width="802" height="1"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="38e0076c-721e-441c-9aa0-7a4a8969e9cc" x="1" y="0" width="208" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pergunta}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="950e9fa6-c8a0-45ac-b8ec-ed2c2b8fff96" x="209" y="0" width="122" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{alta}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="fab2b16f-d970-4b47-95be-14aba7c61613" x="331" y="0" width="127" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{altb}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="1421f850-4f59-4b71-a0ba-7b34acf2982a" x="458" y="0" width="115" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{altc}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="0b0e1192-7c2a-4e96-ab25-30128333a9c3" x="573" y="0" width="117" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{altd}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="e8593b66-cdd6-4144-982d-91cceff6855b" x="689" y="0" width="113" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{alte}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement uuid="29bd926a-1ad9-4b4f-832a-06ec3c840848" mode="Opaque" x="0" y="4" width="762" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="2dfcc204-7c91-488a-a172-bd60d52211a5" mode="Opaque" x="762" y="4" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="0697813a-9a07-4034-bfdd-90dda7d1c87c" x="0" y="4" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

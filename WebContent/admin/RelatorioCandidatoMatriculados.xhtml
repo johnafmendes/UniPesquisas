@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Relatórios de Estudantes: Lista de Matriculados</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="gerar">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+	    
+		<p:panel id="corpo" header="Relatório de Estudantes: Lista de Matriculados">
+		<div id="divCorpo" style="padding: 7px;">
+		
+			<h:panelGrid columns="1" id="grid6">
+				<p:outputLabel value="Este relatório fornece apenas uma listagem simples de estudantes por Curso Matriculado ou Não." style="float: right;" />
+				<p:outputLabel value="Status:" for="status" />
+				<p:selectOneListbox id="status" value="#{relatorioCandidatoBean.idStatusCandidato}" 
+					style="width: 350px; height:100px;"	>
+					<f:selectItem itemValue="0" itemLabel="Todos Status" />
+					<f:selectItems value="#{relatorioCandidatoBean.listaStatusCandidato}" var="s" itemValue="#{s.idstatuscandidato}" 
+						itemLabel="#{s.status}" />
+				</p:selectOneListbox>
+				<p:outputLabel value="Cursos:" for="curso" />
+				<p:selectOneListbox id="curso" value="#{relatorioCandidatoBean.idCursoMatriculado}" 
+					style="width: 350px; height:100px;"	>
+					<f:selectItems value="#{relatorioCandidatoBean.listaCursos}" var="e" itemValue="#{e.idcurso}" 
+						itemLabel="#{e.curso}" />
+				</p:selectOneListbox>
+			</h:panelGrid>
+			<p:selectOneRadio id="matriculado" value="#{relatorioCandidatoBean.matriculado}" >
+				<f:selectItem itemLabel="Matriculado" itemValue="1" />  
+          		<f:selectItem itemLabel="Não Matriculado" itemValue="0" />  	
+			</p:selectOneRadio>
+	
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="abrir" value="Abrir" icon="ui-icon-folder-open" action="#{relatorioCandidatoBean.abrirListaCandidatoCursoMatriculado}" ajax="false" />
+				<p:commandButton id="gerar" value="Gerar" update="messages" icon="ui-icon-gear" action="#{relatorioCandidatoBean.gerarListaCandidatoCursoMatriculado}" onclick="atualizarSessao();" />
+				<p:commandButton id="download" value="Download" ajax="false" icon="ui-icon-disk">
+					<p:fileDownload value="#{relatorioCandidatoBean.file}" contentDisposition="attachment" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Abrir</b>: Usado para abrir em PDF no próprio navegador o relatório com base nos parâmetros digitados.
+			<br/>
+			- <b>Botão Gerar</b>: Usado para gerar um arquivo em PDF para ser feito o download cliando no botão Download.
+			<br/>
+			- <b>Botão Download</b>: Usado para baixar o arquivo gerado pelo sistema.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

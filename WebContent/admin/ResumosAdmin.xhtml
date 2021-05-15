@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Resumos e Totais</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="btnFiltrar">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+	
+		<p:panel id="corpo" header="Resumos e Totais">
+		<div id="divCorpo" style="padding: 7px;">
+			<p:outputLabel value="Total de Estudantes Cadastrados: #{resumosAdminBean.totalEstudantes}" />
+			<br/>
+			<br/>
+			<p:outputLabel value="Total de Estudantes com celular: #{resumosAdminBean.totalEstudantesCelular}" />
+			<br/>
+			<br/>
+			<p:dataTable id="dataTableEscolaridades" var="e" 
+				value="#{resumosAdminBean.listaEscolaridades}" scrollable="true" scrollHeight="150">
+				<f:facet name="header">  
+		           	Totais de Estudantes por Escolaridades
+		       	</f:facet>
+		
+				<p:column headerText="Código" style="width: 60px;">
+					<h:outputText value="#{e.idescolaridade}" />
+				</p:column>
+				
+				<p:column headerText="Escolaridade">
+					<h:outputText value="#{e.escolaridade}" />
+				</p:column>
+		
+				<p:column style="width: 60px;" headerText="Total">
+					<h:outputText value="#{e.total}" />
+				</p:column>
+			</p:dataTable>
+
+			<br />		
+			<div id="divisorLineArticle"></div>
+			<br />
+			
+			<p:dataTable id="dataTableEnvioEmails" var="e" 
+				value="#{resumosAdminBean.listaEnvioEmailMarketing}" scrollable="true" scrollHeight="150">
+				<f:facet name="header">  
+		           	Totais de Envio de Emails por Dia
+		       	</f:facet>
+		
+				<p:column headerText="Data" style="width: 70px;">
+					<h:outputText value="#{e.data}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column style="width: 60px;" headerText="Total">
+					<h:outputText value="#{e.numeroemails}" />
+				</p:column>
+				
+				<p:column style="width: 60px;" headerText="Tempo">
+					<h:outputText value="#{e.tempo}" />
+				</p:column>
+			</p:dataTable>
+			
+			
+			<br />		
+			<div id="divisorLineArticle"></div>
+			<br />
+			
+			<p:outputLabel value="Empresas:" for="empresas" />
+			<p:selectOneListbox id="empresas" value="#{resumosAdminBean.idEmpresa}" 
+				style="width: 350px; height:100px;"	>
+				<f:selectItems value="#{resumosAdminBean.listaEmpresas}" var="e" itemValue="#{e.idempresa}" 
+					itemLabel="#{e.idempresa} - #{e.nome}" />
+			</p:selectOneListbox>
+			
+			<p:commandButton value="Filtrar" action="#{resumosAdminBean.filtrarDadosEmpresa}" id="btnFiltrar"
+				update="totalEstudantes, totalCelular, dataTableEscolaridades1, dataTableInstituicoes, dataTableAreas, 
+				dataTableStatus, totalSemStatus" />
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+
+			<p:outputLabel value="Total de Estudantes Cadastrados: #{resumosAdminBean.totalEstudantesPorEmpresa}" 
+				id="totalEstudantes" />
+			<br/>
+			<br/>
+			<p:outputLabel value="Total de Estudantes com celular: #{resumosAdminBean.totalEstudantesCelularPorEmpresa}" 
+				id="totalCelular"/>
+			<br/>
+			<br/>
+			<p:dataTable id="dataTableEscolaridades1" var="e" 
+				value="#{resumosAdminBean.listaEscolaridadesPorEmpresa}" scrollable="true" scrollHeight="150">
+				<f:facet name="header">  
+		           	Totais de Estudantes por Escolaridades
+		       	</f:facet>
+		
+				<p:column headerText="Código" style="width: 60px;">
+					<h:outputText value="#{e.idescolaridade}" />
+				</p:column>
+				
+				<p:column headerText="Escolaridade">
+					<h:outputText value="#{e.escolaridade}" />
+				</p:column>
+		
+				<p:column style="width: 60px;" headerText="Total">
+					<h:outputText value="#{e.total}" />
+				</p:column>
+			</p:dataTable>
+
+			<br />		
+			<div id="divisorLineArticle"></div>
+			<br />
+			
+			<p:dataTable id="dataTableInstituicoes" var="i" 
+				value="#{resumosAdminBean.listaInstituicoesPorEmpresa}" scrollable="true" scrollHeight="150">
+				<f:facet name="header">  
+		           	Totais de Estudantes por Instituições
+		       	</f:facet>
+		
+				<p:column headerText="Código" style="width: 60px;">
+					<h:outputText value="#{i.idinstituicao}" />
+				</p:column>
+				
+				<p:column headerText="Instituição">
+					<h:outputText value="#{i.instituicao}" />
+				</p:column>
+		
+				<p:column style="width: 60px;" headerText="Total">
+					<h:outputText value="#{i.total}" />
+				</p:column>
+			</p:dataTable>
+			
+			<br />		
+			<div id="divisorLineArticle"></div>
+			<br />
+			
+			<p:dataTable id="dataTableAreas" var="a" 
+				value="#{resumosAdminBean.listaAreasPorEmpresa}" scrollable="true" scrollHeight="100">
+				<f:facet name="header">  
+		           	Totais de Estudantes por Áreas
+		       	</f:facet>
+		
+				<p:column headerText="Código" style="width: 60px;">
+					<h:outputText value="#{a.idareacurso}" />
+				</p:column>
+				
+				<p:column headerText="Área">
+					<h:outputText value="#{a.area}" />
+				</p:column>
+		
+				<p:column style="width: 60px;" headerText="Total">
+					<h:outputText value="#{a.total}" />
+				</p:column>
+			</p:dataTable>
+			
+			<br />		
+			<div id="divisorLineArticle"></div>
+			<br />		
+		
+			<p:outputLabel id="totalSemStatus" value="Total de Estudantes Sem Status: #{resumosAdminBean.totalEstudantesSemStatusPorEmpresa}" />
+			<br/>
+			<br/>
+			<p:dataTable id="dataTableStatus" var="s" 
+				value="#{resumosAdminBean.listaStatusCandidatosPorEmpresa}" scrollable="true" scrollHeight="100">
+				<f:facet name="header">  
+		           	Totais de Estudantes por Status
+		       	</f:facet>
+		
+				<p:column headerText="Código" style="width: 60px;">
+					<h:outputText value="#{s.idstatuscandidato}" />
+				</p:column>
+				
+				<p:column headerText="Status">
+					<h:outputText value="#{s.status}" />
+				</p:column>
+		
+				<p:column style="width: 60px;" headerText="Total">
+					<h:outputText value="#{s.total}" />
+				</p:column>
+			</p:dataTable>
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="false"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="false"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

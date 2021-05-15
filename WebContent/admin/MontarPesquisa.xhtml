@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Montagem de Pesquisa</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar, pesquisar, limpar, pesquisar2, limpar2, dataTablePesquisas, dataTablePerguntas, dataTablePesquisaPerguntas">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Montagem de Pesquisa">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<h:panelGrid id="grid">
+		
+			<h:panelGrid columns="2" id="grid2">
+				<p:outputLabel value="Pesquisar Pesquisa por:" style="float: right;" />
+				<p:selectOneRadio id="tipoPesquisa" value="#{pesquisaPerguntaBean.tipoPesquisaPesquisa}" >
+					<f:selectItem itemLabel="Código" itemValue="1" />  
+		      		<f:selectItem itemLabel="Título" itemValue="0" /> 
+				</p:selectOneRadio>
+			</h:panelGrid>
+			<h:column>
+				<p:inputText id="codigoPesquisa" value="#{pesquisaPerguntaBean.idTituloPesquisa}" style="width: 350px;" />
+				<p:commandButton actionListener="#{pesquisaPerguntaBean.pesquisarPesquisa}" title="Buscar" id="pesquisar" 
+					value="Pesquisar" icon="ui-icon-search" update="messages, dataTablePesquisas" onclick="atualizarSessao();" />
+				<p:commandButton actionListener="#{pesquisaPerguntaBean.listarTudoPesquisa}" id="limpar" 
+					value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTablePesquisas" onclick="atualizarSessao();" />
+			</h:column>
+			
+			<p:dataTable id="dataTablePesquisas" var="p" value="#{pesquisaPerguntaBean.listaPesquisas}"
+				paginator="true" rows="10" selectionMode="single" selection="#{pesquisaPerguntaBean.pesquisa}" 
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+				paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+				rowsPerPageTemplate="10,20,40" rowKey="#{p.idpesquisa}">
+				<f:facet name="header">  
+	            	Pesquisas
+	        	</f:facet>
+	
+				<p:column style="width: 60px;" headerText="Código">
+					<h:outputText value="#{p.idpesquisa}" />
+				</p:column>
+	
+				<p:column headerText="Título">
+					<h:outputText value="#{p.titulo}" />
+				</p:column>
+	
+				<p:column style="width: 90px;" headerText="Data">
+					<h:outputText value="#{p.data}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column style="width: 90px;" headerText="Ação">
+					<p:commandButton action="#{pesquisaPerguntaBean.filtrar(p.idpesquisa)}" title="Filtrar" onclick="atualizarSessao();" 
+						icon="ui-icon-search" update=":form:dataTablePesquisaPerguntas" value="Filtrar" >
+						<f:param name="validation" value="false" />
+					</p:commandButton>
+				</p:column>				
+			</p:dataTable>
+	
+			<h:panelGrid columns="2" id="grid3">
+				<p:outputLabel value="Pesquisar Pergunta por:" style="float: right;" />
+				<p:selectOneRadio id="tipoPesquisa2" value="#{pesquisaPerguntaBean.tipoPesquisaPergunta}" >
+					<f:selectItem itemLabel="Código" itemValue="1" />  
+		      		<f:selectItem itemLabel="Título" itemValue="0" /> 
+				</p:selectOneRadio>
+			</h:panelGrid>
+			<h:column>
+				<p:inputText id="codigoPergunta" value="#{pesquisaPerguntaBean.idTituloPergunta}" style="width: 350px;" />
+				<p:commandButton actionListener="#{pesquisaPerguntaBean.pesquisarPergunta}" title="Buscar" id="pesquisar2" 
+					value="Pesquisar" icon="ui-icon-search" update="messages, dataTablePerguntas" onclick="atualizarSessao();" />
+				<p:commandButton actionListener="#{pesquisaPerguntaBean.listarTudoPergunta}" id="limpar2" 
+					value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTablePerguntas" onclick="atualizarSessao();" />
+			</h:column>
+			
+			<p:dataTable id="dataTablePerguntas" var="p" value="#{pesquisaPerguntaBean.listaPerguntas}"
+				paginator="true" rows="10" selectionMode="single" selection="#{pesquisaPerguntaBean.pergunta}" 
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+				paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+				rowsPerPageTemplate="10,20,40" rowKey="#{p.idpergunta}">
+				<f:facet name="header">  
+	            	Perguntas
+	        	</f:facet>
+	
+				<p:column style="width: 60px;" headerText="Código">
+					<h:outputText value="#{p.idpergunta}" />
+				</p:column>
+	
+				<p:column headerText="Pergunta">
+					<h:outputText value="#{p.pergunta}" />
+				</p:column>
+	
+				<p:column style="width: 120px;" headerText="Tipo">
+					<h:outputText value="#{p.tipo}" />
+				</p:column>				
+			</p:dataTable>
+		</h:panelGrid>
+				
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+			<p:dataTable id="dataTablePesquisaPerguntas" var="pp" value="#{pesquisaPerguntaBean.listaPPs}"
+				paginator="true" rows="10" selectionMode="single" selection="#{pesquisaPerguntaBean.pp}" 
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+				paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+				rowsPerPageTemplate="10,20,40" rowKey="#{pp.idpesquisapergunta}">
+				<f:facet name="header">  
+	            	Perguntas da Pesquisa: #{pp.pesquisa.idpesquisa}
+	        	</f:facet>
+	
+				<p:column style="width: 60px;" headerText="Código">
+					<h:outputText value="#{pp.idpesquisapergunta}" />
+				</p:column>
+	
+				<p:column headerText="Pergunta">
+					<h:outputText value="#{pp.pergunta.pergunta}" />
+				</p:column>
+	
+				<p:column style="width: 120px;" headerText="Tipo">
+					<h:outputText value="#{pp.pergunta.tipo}" />
+				</p:column>	
+				
+				<p:column style="width: 35px;" headerText="Ação">
+					<p:commandButton action="#{pesquisaPerguntaBean.excluir(pp.idpesquisapergunta)}" title="Excluir" onclick="return excluir(); atualizarSessao();" 
+						icon="ui-icon-trash" update="dataTablePesquisaPerguntas" >
+						<f:param name="validation" value="false" />
+					</p:commandButton>
+				</p:column>				
+			</p:dataTable>
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" 
+					update="grid, messages, dataTablePesquisas, dataTablePerguntas, dataTablePesquisaPerguntas" 
+					action="#{progressoBean.limpar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk" 
+					update="grid, messages, dataTablePesquisaPerguntas" action="#{pesquisaPerguntaBean.salvar}" 
+					onclick="atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Novo</b>: Usado para limpar os campos para serem preenchidos por novos dados.
+			<br/>
+			- <b>Botão Salvar</b>: Usado para gravar os dados no banco de dados.
+			<br/>
+			- <b>Botão Excluir</b>: Usado para excluir o registro do banco de dados. Caso uma mensagem de Impossível Excluir
+			apareça, isso ocorre quando o registro esta vinculado a outros dados, o que impossibilita a sua devida exclusão.
+			<br/>
+			- <b>Botão Pesquisar</b>: Usado para poder pesquisar os dados referente ao campo Pesquisa ou Pergunta.
+			<br/>
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

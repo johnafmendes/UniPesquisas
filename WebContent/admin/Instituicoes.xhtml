@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Instituições de Ensino</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar, pesquisar, limpar, dataTable">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Gerenciamento de Instituições de Ensino">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<h:panelGrid columns="3" id="grid">
+			
+			<p:outputLabel value="ID:" style="float: right;" />
+			<p:inputText value="#{instituicaoBean.instituicao.idinstituicao}" id="id" readonly="true" style="width: 60px;"/>	
+			<p:message id="idMessage" for="id" />
+
+			<p:outputLabel value="Instituição:" style="float: right;" for="instituicao" />
+			<p:inputText id="instituicao" value="#{instituicaoBean.instituicao.instituicao}" maxlength="50"
+				required="#{param['validation']=='true'}" style="width: 350px;" />
+			<p:message id="instituicaoMessage" for="instituicao" />
+			
+			<p:outputLabel value="Sigla:" style="float: right;" for="sigla" />
+			<p:inputText id="sigla" value="#{instituicaoBean.instituicao.sigla}" maxlength="50"
+				required="#{param['validation']=='true'}" style="width: 350px;" />
+			<p:message id="siglaMessage" for="sigla" />
+
+			<p:outputLabel value="Endereço:" style="float: right;" for="endereco" />
+			<p:inputText id="endereco" value="#{instituicaoBean.instituicao.endereco}"
+				style="width: 350px;" maxlength="50"/>
+			<p:message id="enderecoMessage" for="endereco" />
+
+			<p:outputLabel value="Bairro:" style="float: right;" for="bairro" />
+			<p:inputText id="bairro" value="#{instituicaoBean.instituicao.bairro}"
+				style="width: 300px;" maxlength="50" />
+			<p:message id="bairroMessage" for="bairro" />
+
+			<p:outputLabel value="Cidade:" style="float: right;" for="cidade" />
+			<p:inputText id="cidade" value="#{instituicaoBean.instituicao.cidade}"
+				style="width: 300px;" maxlength="50" />
+			<p:message id="cidadeMessage" for="cidade" />
+			
+			<p:outputLabel value="Estado:" style="float: right;" for="estado" />
+			<p:inputText value="#{instituicaoBean.instituicao.estado}" id="estado" 
+				style="width: 40px;" maxlength="2" />
+			<p:message id="estadoMessage" for="estado" />
+			
+			<p:outputLabel value="CEP:" style="float: right;" for="cep" />
+			<p:inputMask id="cep" value="#{instituicaoBean.instituicao.cep}"
+				mask="99.999-999" style="width: 150px;" />
+			<p:message id="cepMessage" for="cep" />
+			
+			<p:outputLabel value="Diretor:" style="float: right;" for="diretor" />
+			<p:inputText value="#{instituicaoBean.instituicao.diretor}" id="diretor" 
+				style="width: 350px;" maxlength="50" />
+			<p:message id="diretorMessage" for="diretor" />
+			
+			<p:outputLabel value="Telefone:" style="float: right;" for="telefone" />
+			<h:column>
+				<p:inputText id="dddtel" value="#{instituicaoBean.instituicao.dddtel}"
+					style="width: 20px;" maxlength="2"/>
+				<p:inputText id="telefone" value="#{instituicaoBean.instituicao.telefone}"
+					style="width: 100px;" maxlength="9" />
+			</h:column>
+			<h:column>
+				<p:message id="telefoneMessage" for="telefone" />
+				<p:message id="dddtelMessage" for="dddtel" />
+			</h:column>
+
+			<p:outputLabel value="Telefone celular:" style="float: right;" for="telefonecel" />
+			<h:column>
+				<p:inputText id="dddcel" value="#{instituicaoBean.instituicao.dddcel}"
+					style="width: 20px;" maxlength="2"/>
+				<p:inputText id="telefonecel" value="#{instituicaoBean.instituicao.telefonecel}"
+					style="width: 100px;" maxlength="9"/>
+			</h:column>
+			<h:column>
+				<p:message id="telefonecelMessage" for="telefonecel" />
+				<p:message id="dddcelMessage" for="dddcel" />
+			</h:column>
+			
+			<p:outputLabel value="e-Mail:" style="float: right;" for="email" />
+			<p:inputText id="email" value="#{instituicaoBean.instituicao.email}"
+				style="width: 350px;" maxlength="255"/>
+			<p:message id="emailMessage" for="email" />
+			
+		</h:panelGrid>
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+		
+		<h:panelGrid columns="2" id="grid2">
+			<p:outputLabel value="Pesquisar Instituições por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa" value="#{instituicaoBean.tipoPesquisaInstituicao}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Instituição" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoInstituicao" value="#{instituicaoBean.idNomeInstituicao}" style="width: 350px;" />
+			<p:commandButton actionListener="#{instituicaoBean.pesquisarInstituicao}" title="Buscar" id="pesquisar" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTable" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{instituicaoBean.listarTudo}" id="limpar" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTable" onclick="atualizarSessao();" />
+		</h:column>
+		
+
+		<p:dataTable id="dataTable" var="i" value="#{instituicaoBean.listaInstituicoes}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" >
+			<f:facet name="header">  
+            	Instituições  
+        	</f:facet>
+
+			<p:column headerText="Código" style="width: 60px;">
+				<h:outputText value="#{i.idinstituicao}" />
+			</p:column>
+			
+			<p:column headerText="Instituição">
+				<h:outputText value="#{i.instituicao}" />
+			</p:column>
+
+			<p:column headerText="e-Mail">
+				<h:outputText value="#{i.email}" />
+			</p:column>
+
+			<p:column headerText="Telefone" style="width: 100px;" >
+				<h:outputText value="#{i.dddtel} #{i.telefone}" />
+			</p:column>
+
+			<p:column style="width: 80px;" headerText="Ações">
+				<p:commandButton actionListener="#{instituicaoBean.alterar(i.idinstituicao)}" title="Alterar" icon="ui-icon-pencil" update=":form:grid" onclick="atualizarSessao();" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton action="#{instituicaoBean.excluir(i.idinstituicao)}" title="Excluir" onclick="return excluir(); atualizarSessao();" icon="ui-icon-trash" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" update="grid, messages" action="#{instituicaoBean.limpar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk" update="grid, messages, dataTable" action="#{instituicaoBean.salvar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Novo</b>: Usado para limpar os campos para serem preenchidos por novos dados.
+			<br/>
+			- <b>Botão Salvar</b>: Usado para gravar os dados no banco de dados.
+			<br/>
+			- <b>Botão Editar</b>: Usado para poder alterar se o estudante esta ou não matriculado no curso.
+			<br/>
+			- <b>Botão Excluir</b>: Usado para excluir o registro do banco de dados. Caso uma mensagem de Impossível Excluir
+			apareça, isso ocorre quando o registro esta vinculado a outros dados, o que impossibilita a sua devida exclusão.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

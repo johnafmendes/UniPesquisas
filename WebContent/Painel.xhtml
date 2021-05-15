@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="Template.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">UniPesquisas - Painel de Controle</ui:define>
+
+	<ui:define name="conteudo">
+		<p:panel id="corpo" header="Painel de Controle">
+			<div id="divCorpo" style="padding: 7px;">
+				<p:dataTable id="dataTableEscolaridade" var="p" value="#{pesquisaEscolaridadeBean.listaPesquisasDisponiveis}">
+					<f:facet name="header">  
+		            	Pesquisas por Escolaridade
+		        	</f:facet>
+		
+					<p:column style="width: 80px;">
+						<f:facet name="header">
+							<h:outputText value="Data" />
+						</f:facet>
+						<h:outputText value="#{p.pesquisa.data}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Titulo" />
+						</f:facet>
+						<h:outputText value="#{p.pesquisa.titulo}" />
+					</p:column>
+		
+					<p:column style="width: 80px;">
+						<f:facet name="header">
+							<h:outputText value="Ações" />
+						</f:facet>
+						<p:commandButton actionListener="#{pesquisaPerguntaBean.ResponderPesquisaEscolaridade(p.pesquisa.idpesquisa, p.idpesquisaescolaridade)}" title="Responder" value="Responder" icon="ui-icon-pencil" />
+					</p:column>
+				</p:dataTable>
+				<br/>
+				
+				<p:dataTable id="dataTableInstituicao" var="i" value="#{pesquisaInstituicaoBean.listaPesquisasDisponiveis}"
+					>
+					<f:facet name="header">  
+		            	Pesquisas por Instituição
+		        	</f:facet>
+		
+					<p:column style="width: 80px;">
+						<f:facet name="header">
+							<h:outputText value="Data" />
+						</f:facet>
+						<h:outputText value="#{i.pesquisa.data}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Titulo" />
+						</f:facet>
+						<h:outputText value="#{i.pesquisa.titulo}" />
+					</p:column>
+		
+					<p:column style="width: 80px;">
+						<f:facet name="header">
+							<h:outputText value="Ações" />
+						</f:facet>
+						<p:commandButton actionListener="#{pesquisaPerguntaBean.ResponderPesquisaInstituicao(i.pesquisa.idpesquisa, i.idpesquisainstituicao)}" title="Responder" value="Responder" icon="ui-icon-pencil" />
+					</p:column>
+				</p:dataTable>
+				<br/>
+				
+				<p:dataTable id="dataTableCurso" var="c" value="#{pesquisaCursoBean.listaPesquisasDisponiveis}"
+					>
+					<f:facet name="header">  
+		            	Pesquisas por Curso
+		        	</f:facet>
+		
+					<p:column style="width: 80px;">
+						<f:facet name="header">
+							<h:outputText value="Data" />
+						</f:facet>
+						<h:outputText value="#{c.pesquisa.data}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Titulo" />
+						</f:facet>
+						<h:outputText value="#{c.pesquisa.titulo}" />
+					</p:column>
+		
+					<p:column style="width: 80px;">
+						<f:facet name="header">
+							<h:outputText value="Ações" />
+						</f:facet>
+						<p:commandButton actionListener="#{pesquisaPerguntaBean.ResponderPesquisaCurso(c.pesquisa.idpesquisa, c.idpesquisacurso)}" title="Responder" value="Responder" icon="ui-icon-pencil" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="false" style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="false"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Responder</b>: Usado para iniciar as respostas das Pesquisas.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

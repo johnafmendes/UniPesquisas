@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Status do Candidato</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Gerenciamento de Status do Candidato">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<h:panelGrid columns="3" id="grid">
+			
+			<p:outputLabel value="ID:" style="float: right;" />
+			<p:inputText value="#{statusCandidatoBean.statusCandidato.idstatuscandidato}" id="id" readonly="true" style="width: 60px;"/>	
+			<p:message id="idMessage" for="id" />
+
+			<p:outputLabel value="Status:" style="float: right;" for="status" />
+			<p:inputText id="status" value="#{statusCandidatoBean.statusCandidato.status}" maxlength="50"
+				required="#{param['validation']=='true'}" style="width: 350px;" />
+			<p:message id="statusMessage" for="status" />
+			
+		</h:panelGrid>
+		
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+
+		<p:dataTable id="dataTable" var="s" value="#{statusCandidatoBean.listaStatus}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40">
+			<f:facet name="header">  
+            	Status  
+        	</f:facet>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Status" />
+				</f:facet>
+				<h:outputText value="#{s.status}" />
+			</p:column>
+
+			<p:column style="width: 80px;">
+				<f:facet name="header">
+					<h:outputText value="Ações" />
+				</f:facet>
+				<p:commandButton actionListener="#{statusCandidatoBean.alterar(s.idstatuscandidato)}" title="Alterar" icon="ui-icon-pencil" update=":form:grid" onclick="atualizarSessao();" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton action="#{statusCandidatoBean.excluir(s.idstatuscandidato)}" title="Excluir" onclick="return excluir(); atualizarSessao();" icon="ui-icon-trash" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" update="grid, messages" action="#{statusCandidatoBean.limpar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk" update="grid, messages, dataTable" action="#{statusCandidatoBean.salvar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Novo</b>: Usado para limpar os campos para serem preenchidos por novos dados.
+			<br/>
+			- <b>Botão Salvar</b>: Usado para gravar os dados no banco de dados.
+			<br/>
+			- <b>Botão Editar</b>: Usado para poder alterar se o estudante esta ou não matriculado no curso.
+			<br/>
+			- <b>Botão Excluir</b>: Usado para excluir o registro do banco de dados. Caso uma mensagem de Impossível Excluir
+			apareça, isso ocorre quando o registro esta vinculado a outros dados, o que impossibilita a sua devida exclusão.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

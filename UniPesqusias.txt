@@ -1,0 +1,86 @@
+1) UniPesquisas.com é um sistema CRM de Gestão de Relacionamento com o Cliente para Universidades. Desenvolvido pela EngSoftware Sistemas.
+_______________________________________________________
+2) Objetivos: O CRM UniPesquisas tem por objetivo gerenciar informações a respeito dos clientes que no caso da Universidade são os estudantes.
+
+Outro objetivo é identificar potenciais estudantes e gerenciar o relacionamento dos alunos e egressos da Universidade, ou seja. como o foco é o estreitamento do relacionamento com os estudantes e esses estudantes são classificados em três grupos: estudantes de fora da universidade, estudantes ou alunos da universidade e egressos da universidade. Então o CRM serve como ferramenta que permita o contato com esses três grupos de estudantes de forma que possa estreitar o relacionamento com todos.
+
+Por último, identificar quais são os melhores serviços Universitários a serem oferecido como também descobrir a opinião e demandas dos estudantes pesquisados. Isso é muito importante, pois com o CRM UniPesquisas é possível identificar entre todos três grupos de estudantes, quais são potenciais estudantes para cursos universitários, sejam eles de extensão, graduação ou pós-graduação como também identificar as demandas e necessidades dos estudantes e com isso a universidade poderá criar mecanismos que permitam a satisfação e estreitamento do relacionamento com o estudante.
+_______________________________________________________
+3) Passos do CRM UniPesquisas
+Basicamente exitem 6 passos básicos para o funcionamento do CRM UniPesquisas.
+- Elaboração e montagem estratégica das pesquisas;
+- Identificar e localizar o público alvo e aplicar as pesquisas;
+- Compilar os dados e gerar relatórios com estatísticas e gráficos;
+- Localizar os potenciais alunos e demandas e contactá-los para estreitar relacionamento;
+- Efetua-se anotações individuais extras das entrevistas de cada estudante contactado;
+- Análise final dos dados (relatórios e anotações) e enfim efetua-se aprimoramento do CRM UniPesquisas;
+
+A seguir estarei explicando cada um desses passos e sua importância para o bom funcionamento da ferramenta e o bom estreitamento do relacionamento com os estudantes.
+_______________________________________________________
+4) Passo 1) Elaboração e montagem estratégica das pesquisas
+O sistema CRM UniPesquisas em sua primeira versão funciona baseado em pesquisas e anotações extras, portanto, para coletar informações e dados dos estudantes, utiliza-se pesquisas que são montadas estratégicamente pela Universidade com o objetivo de conhecer melhor seu cliente que é o estudante e assim, tomar decisões mais apropriadas para cada caso. 
+
+As pesquisas podem ter diferentes focos, como por exemplo se aplicadas aos estudantes que não cursam uma Universidade, pode-se identificar quais deles são potenciais alunos a cursar uma Universidade e qual curso desejam. Também é possível descobrir o perfil dos estudantes, objetivos pessoais, cursos de interesse, necessidades dos potenciais alunos, etc.
+
+Caso as pesquisas sejam aplicadas internamente para os atuais alunos da Universidade, pode-se identificar as demandas, anseios, planos e feedback entre outras informações que são pertinetes para um bom funcionamento da instituição de ensino e com os dados pode-se melhorar o relacionamento com os estudantes buscando fidelizá-lo a instituição tornando-o um potencial aluno para outros cursos, como de extensão ou mesmo de pós-graduação. 
+
+Por fim, as pesquisas também podem ser aplicadas aos egressos da Universidade e com isso buscar informações pertinentes para que a Universidade continue sendo a primeira escolha destes estudantes num eventual desejo deles de cursar novos cursos.
+
+Vale ressaltar que todos que responderem as pesquisas deixarão um cadastro com dados de endereço, telefones e email o que permite que a Universidade possa entrar em contato com esses estudantes através de diferentes canais de comunicação, sejam eles pessoalmente, por telefone, email ou sms.
+_______________________________________________________
+5) Passo 2) Identificar e localizar o público alvo e aplicar as pesquisas
+Esse passo é muito importanto por vários motivos. Primeiro motivo é porque com as respostas dos estudantes as pesquisas, tem-se dados para serem analizados e assim, pode-se tomar decisões mais apuradas e montar estratégias de marketing entre outros. Segundo motivo é que com o cadastro dos estudantes no sistema, pode-se entrar em contato com eles de forma pessoal, por telefone, email ou mesmo sms e isso é muito importante para um marketing direcionado e um estreitamento do relacionamento e fidelização dos estudantes.
+
+Portanto, procurar estudantes para aplicar as pesquisas é fundamental. Para isso, a sugestão é buscar os estudantes nos três grupos que são, estudantes de fora da Universidade, atuais alunos e egressos. 
+
+Para o caso dos estudantes de fora da Universidade, um meio de alcançar esses estudantes é aplicar as pesquisas para os alunos do terceiro ano do ensino médio. Para isso, uma estratégia seria a montagem de um folder ou panfleto e sua distribuição a todos esses alunos diretamente em suas escolas com a oferta de uma barganha para que os estudantes respondam as pesquisas. Portanto, pode-se oferecer bolsas de estudos para cursos de extensão ou mesmo para cursos de graduação, tablets, notebooks, etc.
+
+Para o caso dos estudantes internos da Universidade, o contato torna-se mais fácil, pois o acesso é livre. Mas como motivação também pode-se oferecer benefícios e incentivos para que os estudantes respondam as pesquisas.
+
+Os egressos no primeiro momento são os mais difíceis de serem contactados sem o sistema CRM UniPesquisas. Mas todos atuais estudantes da universidade um dia serão egressos e com os dados deles cadastrados no sistema, o marketing direcionado será mais fácil e o contato por sua vez também. 
+
+Sendo assim, todos poderão responder as pesquisas formando uma excelente base de dados para análise e também para contato futuro.
+_______________________________________________________
+6) Passo 3) Compilar os dados e gerar relatórios com estatísticas e gráficos
+Esse passo é muito importante no CRM UniPesquisas. Com ele é possível extrair dados de grande importância para tomadas de decisão e nada melhor do que tomar decisões baseados em fatos e dados reais. A segurança de se tomar uma decisão é muito maior.
+
+Entre os relatórios que podem ser visualizados estão dados que diferenciam os estuantes sem motivação com os potenciais estuantes e futuros alunos da Universidade. É possível identificar qual o curso mais procurado, qual o investimento planejado pelos estudantes, quais as necessidades financeiras, entre outras informações baseadas nas pesquisas estratégicas geradas pela universidade.
+
+Para o caso das pesquisas aplicadas aos atuais alunos, tem-se relatórios com feedbacks, motivação atual dos estudantes, necessidades básicas detectadas pelos estudantes, entre outros.
+
+Vale ressaltar que entre os relatórios é possível fazer filtros e por exemplo entre 5 mil estudantes que responderam uma pergunta como por exemplo "Quem necessitaria de bolsas de estudos para cursar uma graduação" é possível selecionar e filtrar quem respondeu uma alternativa específica e assim trabalhar de forma direcionada com esses estudantes.
+_______________________________________________________
+7) Passo 4) Localizar os potenciais alunos e demandas e contactá-los para estreitar relacionamento
+Esse passo é o mais delicado, pois é onde a universidade entra em contato com o estudante a fim de entender suas necessidades e então atendê-lo. 
+
+Partindo do ponto de vista que as pesquisas foram publicadas ao grupo de alunos que não estudam em uma universidade, suponhamos que a pesquisa atinja 5 mil estudantes e entre eles foi identificado pelos relatórios que 10% teriam interesse em fazer algum curso na universidade mas possuem uma necessidade específica que o impediria. Estes são exemplos de alunos que interessam para a universidade, pois são estudantes em potencial.
+Sendo assim, entra-se em contato através de e-mail, sms, telefone ou visita pessoal e investiga-se com mais detalhes as intenções do estudante e discute-se as necessidades pessoais. A universidade pode-se então através do contato, usar da influencia e motivação para que o potencial estudante efetue matrícula.
+
+Também é possivel identificar estudantes que fariam uma graduação mas por algum motivo escolheriam outra instituição de ensino. Nesses casos, a universidade por contactá-los antes mesmo deles fazerem o processo seletivo e dialogar e influenciar, incentivar e motivar para que o mesmo faça o processo seletivo na sua universidade e não na concorrente.
+
+Em todos os casos, este seria um grande momento para fazer uma divulgação mais detalhada da universidade, onde pode-se dizer sobre a estrutura da instituição, falar sobre os laboratórios, biblioteca, funcionamento da universidade, mencionar o corpo docente entre outras informações que possam motivar o estudante a realizar a matrícula.
+
+Para o caso das pesquisas serem aplicadas ao grupo de alunos da Universidade, tem-se então dados das necessidades básicas deles, como também a satisfação entre outras informações. Neste caso é possível também filtrar e identificar os estudantes que necessitam de um melhor relacionamento com a universidade e enfim dialogar para melhor atendê-los.
+_______________________________________________________
+8) Passo 5) Efetua-se anotações individuais extras das entrevistas de cada estudante contactado
+O sistema CRM UniPesquisas possui uma área de anotações individuais que servem para criar um histórico dos contatos e manter todos eles registrados a fim de consultas futuras para uma possível tomada de decisão baseadas nas anotações. 
+
+Basicamente através de diferentes formas de contato sejam elas pessoalmente, por telefone, email ou sms, anotam-se os dados colhidos para manter um histórico e perfil do estudante.
+
+Essa etapa é muito importante, pois todas as propostas e estratégias feitas com cada estudante pode ser registrada e com isso é possível ter um melhor controle do relacionamento com o estudante.
+_______________________________________________________
+9) Passo 6) Análise final dos dados (relatórios e anotações) e enfim efetua-se aprimoramento do CRM UniPesquisas
+Essa última etapa é fundamental, pois é com ela que pode-se medir o sucesso das pesquisas e abordagem efetuadas com os estudantes. 
+
+Basicamente deve-se confrontam-se os dados dos estudantes matriculados com os dados do sistema e efetua-se o acompanhamento para aperfeiçoamento do sistema CRM UniPesquisas, como melhoria das pesquisas e estratégias de abordagem ou contato com os estudantes.
+
+Vale ressaltar que o sistema CRM UniPesquisas é utilizado em diferentes momentos formando um ciclo de vida ou ciclo de utilização, ou seja, as pesquisas devem ser aplicadas antes do processo seletivo, após período de matrículas e durante todo o ano letivo para que possam manter contato com os estudantes, sejam eles potenciais estudantes, alunos e egressos de forma próxima e assim manter atualizado as estatísticas fortalecendo as estratégias da universidade e claro manter atualizado os dados cadastrais dos mesmo para o efetivo marketing direcionado.
+_______________________________________________________
+10) Expectativas
+Com a utilização do CRM UniPesqusias espera-se identificar os potenciais estudantes e suas necessidades e tentar oferecer os recursos necessários que atendam as expectativas dos deles. Por exemplo, é possível identificar pelo sistema UniPesquisas que existem estudantes que desejam fazer um curso na universidade que custa 500 reais mas o orçamento é de apenas 400,00 reais. Com essa informação pode-se entrar em contato com o estudante e explicar que é possível utilizar sistemas de financiamento estudantil ou mesmo outros meios de bolsas que a própria universidade poderia conceder.
+
+Outra expectativa é que através de uma identificação dos potenciais estudantes, espera-se poder fazer uma apresentação da universidade e curso desejado, utilizando o poder de convencimento para que o estudante faça a matrícula. Essa é uma situação bastante comum, pois nos dias de hoje há diferentes ofertas de cursos, como cursos técnicos, cursos de extensão, cursos de graduação, etc. Sendo assim as vezes o aluno pode ter dúvidas do que estudar e com o sistema UniPesquisas é possível identificar esses estudantes com dúvidas e fazer uma abordagem a fim de responder a todas as dúvidas do estudante e orientá-lo da melhor forma possível para que o mesmo saiba escolher a melhor carreira e o curso mais adequado as suas expectativas.
+
+Também espera-se identificar quais estudantes pretendem fazer cursos na faculdade concorrente e com tempo hábil, pode-se apresentar as vantagens e pontos positivos de se estudar na sua universidade. Esse é um problema bem comum. A sua universidade tem um curso de administração e direito, mas a concorrente também tem os mesmo cursos e através do UniPesquisas é possível identificar se os estudantes fariam curso na sua universidade ou na concorrente, sendo assim, se a pesquisa foi aplicada em tempo hábil, é possível entrar em contato com os estudantes e tentar esclarecer o porque ir estudar em uma instituição concorrente. É nesse momento que sua universidade pode explorar os pontos fortes e favoráveis de sua instituição e apresentar ao estudante a fim de motivar o mesmo a mudar de idéia antes de fazer o processo seletivo.
+
+Para o caso dos atuais estudantes da Universidade, espera-se com os dados colhidos atender as demandas desses estudantes a fim de melhor atender o cliente e estreitar o relacionamento e fidelizá-lo.

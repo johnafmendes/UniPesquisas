@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="TemplateSemAutenticacao.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Verificação se Cadastro já Existe</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="salvar">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Cadastro já Existe">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<p:outputLabel value="Você já tem uma conta com o UniPesquisas! Faça o Login e autorize a integração da sua 
+		conta com essa nova Universidade." />
+		<br/><br/>
+		<h:panelGrid columns="3" id="grid">
+			
+			<p:outputLabel value="e-Mail:" style="float: right;" for="email" />
+			<p:inputText id="email" value="#{candidatoBean.candidato.email}"
+				style="width: 400px;" maxlength="255"
+				required="#{param['validation']=='true'}"/>
+			<p:message id="emailMessage" for="email" />
+		
+			<p:outputLabel value="Senha:" style="float: right;" for="senha1" />
+			<p:password id="senha1" value="#{candidatoBean.candidato.password}"
+				style="width: 100px;" />
+			<p:message id="senha1Message" for="senha1" />
+		</h:panelGrid>
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="admin/acaoDecorator.xhtml">
+				<p:commandButton value="Integrar Contas e Próximo" icon="ui-icon-disk" update="messages" 
+					action="#{candidatoBean.integrarContasEContinuar}" onclick="atualizarSessao();"
+					id="salvar">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Integrar Contas e Próximo</b>: Usado para unir as contas vinculadas com as Universidades cadastradas.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

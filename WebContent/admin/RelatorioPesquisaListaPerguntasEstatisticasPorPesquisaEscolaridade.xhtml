@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Relatórios de Pesquisa: Estatística Pesquisa por Escolaridade</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="gerar, pesquisar, limpar, dataTablePesquisas6">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+	    
+		<p:panel id="corpo" header="Relatório de Pesquisa: Estatística Pesquisa por Escolaridade">
+		<div id="divCorpo" style="padding: 7px;">
+		
+			<h:panelGrid columns="1" id="grid17">
+				<p:outputLabel value="Este relatório fornece uma lita das perguntas e suas respectivas estatístias por Pesquisa de uma determinada Escolaridade." style="float: right;" />
+				<p:outputLabel value="Status:" for="status" />
+				<p:selectOneListbox id="status" value="#{relatorioPesquisaBean.idStatusCandidato}" 
+					style="width: 350px; height:100px;"	>
+					<f:selectItem itemValue="0" itemLabel="Todos Status" />
+					<f:selectItems value="#{relatorioPesquisaBean.listaStatusCandidato}" var="s" itemValue="#{s.idstatuscandidato}" 
+						itemLabel="#{s.status}" />
+				</p:selectOneListbox>				
+			</h:panelGrid>
+			<h:panelGrid columns="2" id="grid2">
+				<p:outputLabel value="Pesquisar Pesquisas por:" style="float: right;" />
+				<p:selectOneRadio id="tipoPesquisa" value="#{relatorioPesquisaBean.tipoPesquisaPesquisa}" >
+					<f:selectItem itemLabel="Código" itemValue="1" />  
+	      			<f:selectItem itemLabel="Título" itemValue="0" /> 
+				</p:selectOneRadio>
+			</h:panelGrid>
+			<h:column>
+				<p:inputText id="codigoPesquisa" value="#{relatorioPesquisaBean.idTituloPesquisa}" style="width: 350px;" />
+				<p:commandButton actionListener="#{relatorioPesquisaBean.pesquisarPesquisa}" title="Buscar" id="pesquisar" 
+					value="Pesquisar" icon="ui-icon-search" update="messages, dataTablePesquisas6, dataTableEscolaridades1" 
+					onclick="atualizarSessao();" />
+				<p:commandButton actionListener="#{relatorioPesquisaBean.listarTudo}" id="limpar" 
+					value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTablePesquisas6, dataTableEscolaridades1" 
+					onclick="atualizarSessao();" />
+			</h:column>
+			
+			<p:dataTable id="dataTablePesquisas6" var="p" value="#{relatorioPesquisaBean.listaPesquisas}"
+				paginator="true" rows="10" selectionMode="single" selection="#{relatorioPesquisaBean.pesquisa}" 
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+				paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+				rowsPerPageTemplate="10,20,40" rowKey="#{p.idpesquisa}">
+				<f:facet name="header">  
+	            	Pesquisas
+	        	</f:facet>
+	
+				<p:column style="width: 60px;" headerText="Código">
+					<h:outputText value="#{p.idpesquisa}" />
+				</p:column>
+	
+				<p:column headerText="Título">
+					<h:outputText value="#{p.titulo}" />
+				</p:column>
+	
+				<p:column style="width: 90px;" headerText="Data">
+					<h:outputText value="#{p.data}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column style="width: 90px;" headerText="Ação">
+					<p:commandButton id="filtrar" value="Filtrar" icon="ui-icon-search" 
+						action="#{relatorioPesquisaBean.filtrarEscolaridades(p.idpesquisa)}" 
+						update=":form:dataTableEscolaridades1, :form:messages"
+						onclick="atualizarSessao();"/>
+				</p:column>
+				
+			</p:dataTable>
+			<p:dataTable id="dataTableEscolaridades1" var="e" value="#{relatorioPesquisaBean.listaEscolaridades}"
+				paginator="true" rows="10" selectionMode="single" selection="#{relatorioPesquisaBean.escolaridade}" 
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+				paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+				rowsPerPageTemplate="10,20,40" rowKey="#{e.idescolaridade}">
+				<f:facet name="header">  
+	            	Escolaridades da Pesquisa: #{relatorioPesquisaBean.idPesquisaSelecionado}
+	        	</f:facet>
+	
+				<p:column style="width: 60px;" headerText="Código">
+					<h:outputText value="#{e.idescolaridade}" />
+				</p:column>
+	
+				<p:column headerText="Escolaridade">
+					<h:outputText value="#{e.escolaridade}" />
+				</p:column>
+	
+			</p:dataTable>
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="abrir" value="Abrir" icon="ui-icon-folder-open" 
+					action="#{relatorioPesquisaBean.abrirListaEstatisticaPerguntasPorPesquisaEscolaridade}" 
+					ajax="false" />
+				<p:commandButton id="gerar" value="Gerar" update="messages" icon="ui-icon-gear" 
+					action="#{relatorioPesquisaBean.gerarListaEstatisticaPerguntasPorPesquisaEscolaridade}" 
+					onclick="atualizarSessao();" />
+				<p:commandButton id="download" value="Download" ajax="false" icon="ui-icon-disk">
+					<p:fileDownload value="#{relatorioPesquisaBean.file}" contentDisposition="attachment" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Abrir</b>: Usado para abrir em PDF no próprio navegador o relatório com base nos parâmetros digitados.
+			<br/>
+			- <b>Botão Gerar</b>: Usado para gerar um arquivo em PDF para ser feito o download cliando no botão Download.
+			<br/>
+			- <b>Botão Download</b>: Usado para baixar o arquivo gerado pelo sistema.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

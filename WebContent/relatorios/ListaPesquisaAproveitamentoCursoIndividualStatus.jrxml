@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListaCandidatos" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a1d958c9-3d0f-426c-a3c6-f341d1235a3f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="70"/>
+	<parameter name="idEmpresa" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idPesquisa" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idCurso" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idStatusCandidato" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT p.idpesquisa, p.titulo, p.data, p.status, c1.curso, IF($P{idStatusCandidato} > 0, (SELECT status FROM statuscandidato WHERE idempresa=$P{idEmpresa} AND idstatuscandidato=$P{idStatusCandidato}), 'Todos Status') as statuscandidato,
+(SELECT count(cpc1.idpesquisacurso) FROM candidatopesquisacurso cpc1
+INNER JOIN pesquisacurso pc1 ON pc1.idpesquisacurso=cpc1.idpesquisacurso
+INNER JOIN pesquisa p ON p.idpesquisa=pc1.idpesquisa
+INNER JOIN candidatoempresa ce ON ce.idcandidato=cpc1.idcandidato
+WHERE p.idempresa = $P{idEmpresa} AND pc1.idpesquisacurso=pc.idpesquisacurso AND ce.idempresa=$P{idEmpresa} AND IF($P{idStatusCandidato} > 0, ce.idstatuscandidato=$P{idStatusCandidato}, ce.idstatuscandidato IN (SELECT idstatuscandidato FROM statuscandidato WHERE idempresa=$P{idEmpresa})))
+as totalrespondido, (SELECT count(c.idcandidato) FROM candidato c
+INNER JOIN candidatocurso cc ON cc.idcandidato=c.idcandidato
+INNER JOIN curso c2 ON c2.idcurso=cc.idcurso
+INNER JOIN pesquisacurso pc2 ON pc2.idcurso=c2.idcurso
+INNER JOIN candidatoempresa ce ON ce.idcandidato=c.idcandidato
+WHERE ce.idempresa = $P{idEmpresa} AND pc2.idpesquisacurso=pc.idpesquisacurso AND IF($P{idStatusCandidato} > 0, ce.idstatuscandidato=$P{idStatusCandidato}, ce.idstatuscandidato IN (SELECT idstatuscandidato FROM statuscandidato WHERE idempresa=$P{idEmpresa}))) as totalaresponder
+FROM pesquisacurso pc
+INNER JOIN pesquisa p ON pc.idpesquisa=p.idpesquisa
+INNER JOIN curso c1 ON c1.idcurso=pc.idcurso
+WHERE p.idempresa = $P{idEmpresa} AND pc.idpesquisa = $P{idPesquisa} AND pc.idcurso = $P{idCurso}
+ORDER BY p.data;]]>
+	</queryString>
+	<field name="idpesquisa" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="titulo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="curso" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="statuscandidato" class="java.lang.String"/>
+	<field name="totalrespondido" class="java.lang.Long"/>
+	<field name="totalaresponder" class="java.lang.Long"/>
+	<variable name="idEmpresa" class="java.lang.String"/>
+	<group name="Status">
+		<groupExpression><![CDATA[$F{statuscandidato}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<staticText>
+					<reportElement uuid="02b10301-2f90-4087-9c7c-595ac653101b" x="0" y="0" width="68" height="20"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Status:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="4db8932e-f17e-4685-a7d4-288ef03823c9" x="68" y="0" width="734" height="20"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{statuscandidato}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement uuid="5b0375ca-b9df-4187-86e5-becb60951cf4" mode="Opaque" x="0" y="-20" width="802" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement uuid="44a83f4b-549a-4482-aa9d-2b2c3279d758" x="20" y="20" width="727" height="43" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Pesquisa por Curso: Aproveitamento]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement uuid="f4d05931-99eb-447b-8f1a-2f24dda6922a" mode="Opaque" x="0" y="0" width="68" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="66480064-22d4-46ef-8048-93c6169409b1" x="0" y="20" width="802" height="1" forecolor="#666666"/>
+			</line>
+			<staticText>
+				<reportElement uuid="0abff14b-9443-4831-9fb9-8bc00215341a" mode="Opaque" x="68" y="0" width="319" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Título Pesquisa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="efac3663-96e6-473d-a75e-f19beffcb8d9" mode="Opaque" x="590" y="0" width="82" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Responder]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1664b526-7951-43b6-bef3-e90d478de86b" mode="Opaque" x="672" y="0" width="75" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Respondido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a91306f9-38a7-4763-8fa9-2175f4a0a3e5" mode="Opaque" x="747" y="0" width="55" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aprov.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9fd238dd-5ee0-4633-85d3-b19545ad3557" mode="Opaque" x="387" y="0" width="203" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Curso]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement uuid="5d321b63-839e-4770-8801-fd7b0fd3c7d6" positionType="FixRelativeToBottom" x="0" y="19" width="802" height="1"/>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="08a94de6-6024-4fca-8ea1-836860672f69" x="0" y="0" width="68" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1e981164-aa5f-4e22-b92d-4ee61828d09c" x="590" y="0" width="82" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{totalaresponder}-$F{totalrespondido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2982ac5e-08df-4050-877b-13ed8560a045" x="672" y="0" width="75" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{totalrespondido}.equals(null) ? "0" : $F{totalrespondido}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 %">
+				<reportElement uuid="20645bbd-98ed-4751-81b7-119561880648" x="747" y="0" width="55" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{totalaresponder}.equals(null) ? "0" : $F{totalaresponder} == 0 ? "0" : ($F{totalrespondido}/$F{totalaresponder})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="645cb372-89e2-4988-9910-f05fe5516170" x="68" y="0" width="319" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9c4978c5-3567-4919-9b47-18bacc47df34" x="387" y="0" width="203" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement uuid="29bd926a-1ad9-4b4f-832a-06ec3c840848" mode="Opaque" x="0" y="4" width="762" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="2dfcc204-7c91-488a-a172-bd60d52211a5" mode="Opaque" x="762" y="4" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="0697813a-9a07-4034-bfdd-90dda7d1c87c" x="0" y="4" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="384">
+			<pie3DChart>
+				<chart>
+					<reportElement uuid="e0dea2cb-c401-45a7-acd5-9355639352e8" x="13" y="10" width="776" height="341"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<pieSeries>
+						<keyExpression><![CDATA["Total a Responder"]]></keyExpression>
+						<valueExpression><![CDATA[$F{totalaresponder}-$F{totalrespondido}]]></valueExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Total Respondido"]]></keyExpression>
+						<valueExpression><![CDATA[$F{totalrespondido}]]></valueExpression>
+					</pieSeries>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Estudante Instituições</ui:define>
+
+	<ui:define name="conteudo">
+		
+		<p:blockUI block="form" trigger="salvar, pesquisar, limpar, dataTableEstudantes">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+	     
+		<p:panel id="corpo" header="Estudante Instituições">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<h:panelGrid columns="2" id="grid2">
+			<p:outputLabel value="Pesquisar Estudantes por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa" value="#{candidatoInstituicaoBean.tipoPesquisaEstudante}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Nome" itemValue="0" />  	
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="nomeEstudante" value="#{candidatoInstituicaoBean.idNomeEstudante}" style="width: 350px;" />
+			<p:commandButton actionListener="#{candidatoInstituicaoBean.pesquisarCandidato}" title="Buscar" id="pesquisar"
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTableEstudantes" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{candidatoInstituicaoBean.listarTudo}" id="limpar" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTableEstudantes" onclick="atualizarSessao();" />
+		</h:column>
+			
+		<p:dataTable id="dataTableEstudantes" var="c" value="#{candidatoInstituicaoBean.listaCandidatos}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" >
+			<f:facet name="header">  
+            	Estudantes
+        	</f:facet>
+
+			<p:column headerText="Código" style="width: 60px;">
+				<h:outputText value="#{c.idcandidato}" />
+			</p:column>
+			
+			<p:column headerText="Nome">
+				<h:outputText value="#{c.nome}" />
+			</p:column>
+
+			<p:column headerText="e-Mail">
+				<h:outputText value="#{c.email}" />
+			</p:column>
+
+			<p:column style="width: 90px;" headerText="Ações">
+				<p:commandButton actionListener="#{candidatoInstituicaoBean.filtrarInstituicoesPorCandidato(c.idcandidato)}" 
+					title="Filtrar Instituições Selecionados" value="Filtrar"
+					icon="ui-icon-search" update=":form:dataTableInstituicoesSelecionados, :form:dataTableInstituicoesDisponiveis" 
+					onclick="atualizarSessao();" >
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		
+		<p:dataTable id="dataTableInstituicoesSelecionados" var="is" value="#{candidatoInstituicaoBean.listaInstituicoesSelecionados2}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" >
+			<f:facet name="header">  
+            	Instituições Selecionados para Estudante: #{candidatoInstituicaoBean.diversos.getIdCandidato()}
+        	</f:facet>
+
+			<p:column headerText="Código" style="width: 60px;">
+				<h:outputText value="#{is.instituicao.idinstituicao}" />
+			</p:column>
+			
+			<p:column headerText="Instituição" >
+				<h:outputText value="#{is.instituicao.instituicao}" />
+			</p:column>
+
+			<p:column headerText="Ação" style="width: 80px;" >
+				<p:commandButton action="#{candidatoInstituicaoBean.excluir(is.idcandidatoinstituicao)}" title="Excluir" 
+					onclick="return excluir(); atualizarSessao();" icon="ui-icon-trash" update="dataTableInstituicoesSelecionados" >
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		
+		<p:dataTable id="dataTableInstituicoesDisponiveis" var="id" 
+			value="#{candidatoInstituicaoBean.listaInstituicoesDisponiveis}" scrollable="true" scrollHeight="200">
+		<f:facet name="header">  
+           	Instituições Disponíveis para o Estudante: #{candidatoInstituicaoBean.diversos.getIdCandidato()}
+       	</f:facet>
+
+		<p:column headerText="Código" style="width: 60px;" >
+			<h:outputText value="#{id.idinstituicao}" />
+		</p:column>
+		
+		<p:column headerText="Instituição">
+			<h:outputText value="#{id.instituicao}" />
+		</p:column>
+
+		<p:column style="width: 115px;" headerText="Ação">
+			<p:commandButton
+				actionListener="#{candidatoInstituicaoBean.adicionarInstituicao(id.idinstituicao)}"
+				title="Adicionar Instituição" value="Adicionar" icon="ui-icon-plus" 
+				update="dataTableInstituicoesDisponiveis, :form:dataTableInstituicoesSelecionados"/>
+		</p:column>
+	</p:dataTable>
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk" 
+					update="messages, :form:dataTableInstituicoesSelecionados, :form:dataTableInstituicoesDisponiveis" 
+					action="#{candidatoInstituicaoBean.salvar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Salvar</b>: Usado para gravar os dados no banco de dados.
+			<br/>
+			- <b>Botão Pesquisar</b>: Usado para buscar os dados no banco de dados com base no Código ou Nome digitados.
+			<br/>
+			- <b>Botão Editar</b>: Usado para poder alterar se o estudante esta ou não matriculado no curso.
+			<br/>
+			- <b>Botão Excluir</b>: Usado para excluir o registro do banco de dados. Caso uma mensagem de Impossível Excluir
+			apareça, isso ocorre quando o registro esta vinculado a outros dados, o que impossibilita a sua devida exclusão.
+			<br/>
+			- <b>Botão Filtrar</b>: Usado para filtrar os Cursos Selecionados pelo Estudante.
+			<br/>
+			- <b>Botão Adicionar</b>: Usado para adicionar o curso para a lista de Cursos Selecionados.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

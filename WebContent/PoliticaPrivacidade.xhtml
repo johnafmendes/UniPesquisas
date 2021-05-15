@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>UniPesquisas</title>
+	<h:outputStylesheet name="StylesDefault.css" library="css" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41134999-1', 'unipesquisas.com');
+  ga('send', 'pageview');
+
+</script>
+</h:head>
+<h:body>
+	<h:form>
+		<div class="wrapper">
+			<div class="google-header-bar">
+				<div class="header content clearfix">
+					<h:graphicImage name="0.gif" alt="UniPesquisas por EngSoftware"
+						id="logoUniPesquisa" library="logos" width="150" />
+					<h:column rendered="#{defaultBean.idEmpresa > 0}" >			
+						<span class="signup-button"> Novo no UniPesquisa?
+							<a href="VerificaEmailCandidatoSA.jsf?idEmpresa=#{param['idEmpresa']}" id="link-signup" class="g-button g-button-red" >
+								Crie sua conta
+							</a>
+						</span>
+					</h:column>
+				</div>
+				
+			</div>
+			<div class="main content clearfix">
+				<div>
+					<div class="mail-about-section">
+						<div class="mail-about-col-left">
+							<h5 class="mail-about-heading">Política de Privacidade</h5>
+							<p class="mail-about-text">
+ 
+Quando você compartilha informações conosco, por exemplo, criando uma Conta do UniPesquisas para sua 
+Universidade, podemos tornar os serviços da Universidade ainda melhores – oferecer os melhores cursos 
+sejam eles de extensão, graduação ou pós-graduação. Quando você usa nossos serviços, queremos ser 
+claros quanto ao modo como estamos usando suas informações e ao modo como você pode proteger sua privacidade.
+<br/><br/> 
+Nossa Política de Privacidade explica:<br/> 
+- Quais informações coletamos e por que as coletamos.<br/> 
+- Como usamos essas informações. <br/>
+- As opções que oferecemos, incluindo o modo de acessar e atualizar informações.<br/>
+ <br/>
+Tentamos manter tudo o mais simples possível. Sua privacidade é importante para o UniPesquisas, portanto, sendo 
+você um usuário novo ou antigo do UniPesquisas, por favor reserve um tempo para conhecer nossas práticas. E, se 
+você tiver alguma dúvida, entre em contato conosco.<br/>
+ <br/>
+Informações que coletamos<br/>
+ <br/>
+Coletamos informações para fornecer serviços melhores a todos nossos usuários – desde descobrir coisas básicas, 
+como seus dados pessoais até coisas mais complexas, como informações que envolvem seus gostos pessoais, 
+experiências pessoais, projetos futuros e objetivos pessoais.
+ <br/><br/>
+Coletamos informações de uma única maneira:<br/> 
+- Informações fornecidas por você. Por exemplo, através de questionários respondidos pelo website da 
+UniPesquisas e também através de mensagens SMS enviadas para seu número de celular. Nossos serviços 
+exigem que você se inscreva em uma Conta do UniPesqusias. Quando você abre essa conta, pedimos 
+informações pessoais, como seu nome, endereço de e-mail, número de telefone entre outros. Se você 
+quiser aproveitar ao máximo os recursos que a sua Universidadede tem a oferecer, você deve preencher 
+o máximo de dados possíveis e responder todas as pesquisas disponíveis.
+ <br/><br/>
+Informações do dispositivo<br/><br/> 
+
+Podemos coletar informações específicas do dispositivo (como seu modelo de hardware, versão do sistema 
+operacional, identificadores exclusivos de produtos e informações de rede móvel, inclusive número de 
+telefone). O UniPesquisas pode associar seus identificadores de dispositivo ou número de telefone com 
+sua Conta do UniPesquisas.
+<br/><br/> 
+Informações de registro<br/><br/> 
+
+Quando você usa nossos serviços, podemos coletar e armazenar automaticamente determinadas informações 
+em registros do servidor. Isso pode incluir:<br/>
+- detalhes de como você usou nosso serviço. <br/>
+- informações de registro de telefonia, como o número de seu telefone, número de quem chama, números 
+de encaminhamentos, horário e data de chamadas, duração das chamadas, informações de identificador de 
+SMS e tipos de chamadas.<br/>
+- Endereço de protocolo de Internet<br/> 
+- informações de evento de dispositivo como problemas, atividade de sistema, configurações de hardware, 
+tipo de navegador, idioma do navegador, data e horário de sua solicitação e URL de referência.<br/>
+- cookies que podem identificar exclusivamente seu navegador ou sua Conta do UniPesquisas.<br/><br/>
+ 
+Cookies e identificadores anônimos <br/><br/>
+
+Usamos várias tecnologias para coletar e armazenar informações quando você visita um serviço do UniPesquisas 
+e isso pode incluir o envio de um ou mais cookies ou identificadores anônimos para seu dispositivo. Também 
+usamos cookies e identificadores anônimos quando você interage com serviços que oferecemos a nossos parceiros.
+<br/><br/>
+
+ 
+Como usamos as informações que coletamos<br/><br/>
+ 
+Usamos as informações que coletamos para fornecer estatísticas para sua Universidade a fim de melhor lhe 
+atender dentro da Instituição de ensino.
+ <br/><br/>
+Ao entre em contado com o UniPesquisas, podemos manter um registro de sua comunicação para ajudar a 
+resolver qualquer problema que você possa ter. Podemos usar seu endereço de e-mail para informá-lo sobre 
+nossos serviços, como aviso sobre as próximas mudanças ou melhorias como também para divulgar informações 
+relevantes ao seu perfil.
+<br/><br/> 
+Solicitaremos sua autorização antes de usar informações para outros fins que não os definidos nesta Política 
+de Privacidade.
+<br/><br/>  
+Informações que compartilhamos<br/><br/>
+ 
+Não compartilhamos informações pessoais com outras empresas que não seja a sua Universidade que você se 
+cadastrou, organizações e indivíduos externos ao UniPesquisas, salvo em uma das seguintes circunstâncias:<br/><br/>
+- Com sua autorização<br/> 
+Compartilharemos informações pessoais com empresas, organizações ou indivíduos externos ao UniPesquisas e 
+a Universidade em que você tenha se cadastrado quando tivermos sua autorização para isso. Solicitamos 
+autorização para compartilhamento de quaisquer informações sensíveis de caráter pessoal.
+ <br/>
+- Com administradores de contas<br/><br/> 
+
+Se sua Conta do UniPesquisas for administrada por um administrador de contas, então seu administrador de 
+contas representado por sua Universidade que fornecem suporte de usuário a sua pessoa terão acesso às 
+informações de sua Conta do UniPesqusias (inclusive dados de e-mail e outros dados). Seu administrador 
+de contas pode ser capaz de:<br/>
+- visualizar estatísticas de sua conta, como estatísticas relacionadas a respostas dadas por você.<br/>
+- alterar a senha de sua conta.<br/> 
+- suspender ou encerrar o acesso a sua conta.<br/> 
+- acessar ou reter informações armazenadas como parte de sua conta.<br/> 
+- receber informações de sua conta para satisfazer qualquer legislação, regulação, processo legal ou 
+solicitação governamental aplicável.<br/>
+- restringir sua capacidade de excluir ou editar informações ou configurações de privacidade.<br/><br/>
+ 
+ 
+- Por motivos legais<br/><br/> 
+
+Compartilharemos informações pessoais com empresas, organizações ou indivíduos externos ao UniPesquisas 
+se acreditarmos, de boa-fé, que o acesso, uso, conservação ou divulgação das informações seja razoavelmente 
+necessário para:<br/>
+- cumprir qualquer legislação, regulamentação, processo legal ou solicitação governamental aplicável.<br/>
+- cumprir Termos de Serviço aplicáveis, inclusive investigação de possíveis violações.<br/>
+- detectar, impedir ou abordar de alguma outra forma fraude, questões técnicas ou de segurança.<br/>
+- proteger contra dano aos direitos, a propriedade ou a segurança do UniPesqusias, nossos usuários ou o 
+público, conforme solicitado ou permitido por lei.<br/><br/>
+
+ 
+Podemos compartilhar informações de identificação não pessoais agregadas publicamente e com nossos 
+parceiros – como sites de editores, anunciantes ou sites relacionados. Por exemplo, podemos compartilhar 
+informações publicamente para mostrar tendências sobre o uso geral de nossos serviços.<br/><br/>
+ 
+Se o UniPesquisas estiver envolvido em uma fusão, aquisição ou venda de ativos, continuaremos a garantir 
+a confidencialidade de qualquer informação pessoal e avisaremos os usuários afetados antes que as 
+informações pessoais sejam transferidas ou sejam submetidas a uma política de privacidade diferente.<br/><br/>
+ 
+Segurança das informações<br/><br/>
+ 
+Trabalhamos com afinco para proteger o UniPesquisas e nossos usuários de acesso não autorizado ou 
+alteração, divulgação ou destruição não autorizada das informações que detemos. Especificamente:<br/>
+- Criptografamos muitos de nossos serviços usando SSL.<br/> 
+- Analisamos nossa coleta de informações, práticas de armazenamento e processamento, inclusive medidas 
+de segurança física, para proteção contra acesso não autorizado aos sistemas.<br/>
+- Restringimos o acesso a informações pessoais por parte de empregados, contratados e representantes 
+do UniPesquisas que necessitam saber essas informações para processá-las para nós, e que estão sujeitos 
+a rigorosas obrigações contratuais de confidencialidade, podendo ser processados ou dispensados se deixarem 
+de cumprir tais obrigações.<br/><br/>
+ 
+Execução<br/><br/>
+ 
+Revisamos regularmente nosso cumprimento com a Política de Privacidade. Aderimos também a várias 
+estruturas auto-reguladoras. Quando recebemos reclamações formais por escrito, entramos em contato com 
+o autor da reclamação para acompanhamento. Trabalhamos com autoridades reguladoras apropriadas, inclusive 
+autoridades locais de proteção de dados para resolver quaisquer reclamações referentes à transferência de 
+dados pessoais que não podemos resolver diretamente com nossos usuários.<br/><br/>
+ 
+Alterações<br/><br/>
+ 
+Nossa Política de Privacidade pode ser alterada de tempos em tempos. Nós não reduziremos seus direitos 
+nesta Política de Privacidade sem seu consentimento explícito. Publicaremos quaisquer alterações da 
+política de privacidade nesta página e, se as alterações forem significativas, forneceremos um aviso 
+com mais destaque(incluindo, para alguns serviços, notificação por e-mail das alterações da política de 
+privacidade). 
+<br/><br/>
+</p>
+						</div>
+						<div class="mail-about-col-space"></div>
+					</div>
+				</div>
+
+			</div>
+			<div class="google-footer-bar">
+				<div class="footer content clearfix">
+					<ul>
+						<li>© 2013 EngSoftware</li>
+						<li><a href="">Política de Privacidade</a></li>
+						<li><a href="">Termos de Uso</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+	</h:form>
+</h:body>
+</html>

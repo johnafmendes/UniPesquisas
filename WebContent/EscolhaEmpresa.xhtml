@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="Template.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">UniPesquisas - Seleção de Universidade</ui:define>
+
+	<ui:define name="conteudo">
+		<p:panel id="corpo" header="UniPesquisas - Seleção de Universidade">
+			<div id="divCorpo" style="padding: 7px;">
+				<p:dataTable id="dataTable" var="e" value="#{empresaBean.listaEmpresasPorCandidato}"
+				selectionMode="single" selection="#{empresaBean.empresa}" 
+				rowKey="#{e.idempresa}">
+					<f:facet name="header">  
+		            	Universidades
+		        	</f:facet>
+		
+					<p:column headerText="Universidades">
+						<h:outputText value="#{e.nome}" />
+					</p:column>
+		
+					<p:column style="width: 80px;" headerText="Ações">
+						<p:commandButton actionListener="#{empresaBean.selecionar(e.idempresa)}" title="Selecionar" value="Selecionar" icon="ui-icon-check" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="false" style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="false"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Selecionar</b>: Usado para escolher qual Universidade deseja responder as pesquisas.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="TemplateSemAutenticacao.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Erro ao Criar Nova Senha</ui:define>
+
+	<ui:define name="conteudo">
+		<p:panel id="corpo" header="Erro ao Criar Nova Senha">
+		<div id="divCorpo" style="padding: 7px;">
+		<p:outputLabel value="Não foi poassível criar a nova senha. Solicite a criação de uma nova senha novamente clicando no link abaixo:" />
+		<br/>
+		<br/>
+		<a href="NovaSenha.jsf">Criar nova Senha</a>
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="false"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="admin/acaoDecorator.xhtml">
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="false"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			xxx
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

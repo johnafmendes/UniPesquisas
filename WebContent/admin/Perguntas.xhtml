@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Perguntas</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar, pesquisar, limpar, dataTable">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Gerenciamento de Perguntas">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<h:panelGrid columns="3" id="grid">
+			
+			<p:outputLabel value="ID:" style="float: right;" />
+			<p:inputText value="#{perguntaBean.pergunta.idpergunta}" id="id" readonly="true" style="width: 60px;"/>	
+			<p:message id="idMessage" for="id" />
+
+			<p:outputLabel value="Pergunta:" style="float: right;" for="pergunta" />
+			<p:inputTextarea id="pergunta" value="#{perguntaBean.pergunta.pergunta}"
+				required="#{param['validation']=='true'}" style="width: 350px; height: 80px;" 
+				maxlength="255" rows="10" autoResize="false"/>
+			<p:message id="perguntaMessage" for="pergunta" />
+
+			<p:outputLabel value="Alternativa A:" style="float: right;" for="alta" />
+			<p:inputTextarea id="alta" value="#{perguntaBean.pergunta.alta}"
+				required="#{param['validation']=='true'}" style="width: 350px; height: 80px;" 
+				maxlength="255" rows="10" autoResize="false"/>
+			<p:message id="altaMessage" for="alta" />
+			
+			<p:outputLabel value="Alternativa B:" style="float: right;" for="altb" />
+			<p:inputTextarea id="altb" value="#{perguntaBean.pergunta.altb}"
+				required="#{param['validation']=='true'}" style="width: 350px; height: 80px;" 
+				maxlength="255" rows="10" autoResize="false"/>
+			<p:message id="altbMessage" for="altb" />
+			
+			<p:outputLabel value="Alternativa C:" style="float: right;" for="altc" />
+			<p:inputTextarea id="altc" value="#{perguntaBean.pergunta.altc}"
+				style="width: 350px; height: 80px;" 
+				maxlength="255" rows="10" autoResize="false"/>
+			<p:message id="altcMessage" for="altc" />
+			
+			<p:outputLabel value="Alternativa D:" style="float: right;" for="altd" />
+			<p:inputTextarea id="altd" value="#{perguntaBean.pergunta.altd}"
+				style="width: 350px; height: 80px;" 
+				maxlength="255" rows="10" autoResize="false"/>
+			<p:message id="altdMessage" for="altd" />
+			
+			<p:outputLabel value="Alternativa E:" style="float: right;" for="alte" />
+			<p:inputTextarea id="alte" value="#{perguntaBean.pergunta.alte}"
+				style="width: 350px; height: 80px;" 
+				maxlength="255" rows="10" autoResize="false"/>
+			<p:message id="alteMessage" for="alte" />
+			
+			<p:outputLabel value="Tipo:" style="float: right;" for="tipo" />
+			<p:selectOneRadio id="tipo" value="#{perguntaBean.pergunta.tipo}" 
+				required="#{param['validation']=='true'}" >
+				<f:selectItem itemLabel="Única Opção" itemValue="UnicaOpcao" />  
+            	<f:selectItem itemLabel="Múltipla Opções" itemValue="MultiplaOpcoes" />  	
+			</p:selectOneRadio>
+			<p:message id="tipoMessage" for="tipo" />
+
+		</h:panelGrid>
+		
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+
+		<h:panelGrid columns="2" id="grid2">
+			<p:outputLabel value="Pesquisar Perguntas por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa" value="#{perguntaBean.tipoPesquisaPergunta}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Titulo Pergunta" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoPergunta" value="#{perguntaBean.idTituloPergunta}" style="width: 350px;" />
+			<p:commandButton actionListener="#{perguntaBean.pesquisarPergunta}" title="Buscar" id="pesquisar" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTable" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{perguntaBean.listarTudo}" id="limpar" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTable" onclick="atualizarSessao();" />
+		</h:column>
+		
+		<p:dataTable id="dataTable" var="p" value="#{perguntaBean.listaPerguntas}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40">
+			<f:facet name="header">  
+            	Perguntas
+        	</f:facet>
+
+			<p:column headerText="Código" style="width: 60px;">
+				<h:outputText value="#{p.idpergunta}" />
+			</p:column>
+			
+			<p:column headerText="Pergunta">
+				<h:outputText value="#{p.pergunta}" />
+			</p:column>
+			
+			<p:column style="width: 100px;" headerText="Tipo">
+				<h:outputText value="#{p.tipo}" />
+			</p:column>
+			
+			<p:column style="width: 80px;" headerText="Ações">
+				<p:commandButton actionListener="#{perguntaBean.alterar(p.idpergunta)}" title="Alterar" icon="ui-icon-pencil" update=":form:grid" onclick="atualizarSessao();" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton action="#{perguntaBean.excluir(p.idpergunta)}" title="Excluir" onclick="return excluir(); atualizarSessao();" icon="ui-icon-trash" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" update="grid, messages" action="#{perguntaBean.limpar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk" update="grid, messages, dataTable" action="#{perguntaBean.salvar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Novo</b>: Usado para limpar os campos para serem preenchidos por novos dados.
+			<br/>
+			- <b>Botão Salvar</b>: Usado para gravar os dados no banco de dados.
+			<br/>
+			- <b>Botão Editar</b>: Usado para poder alterar se o estudante esta ou não matriculado no curso.
+			<br/>
+			- <b>Botão Excluir</b>: Usado para excluir o registro do banco de dados. Caso uma mensagem de Impossível Excluir
+			apareça, isso ocorre quando o registro esta vinculado a outros dados, o que impossibilita a sua devida exclusão.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

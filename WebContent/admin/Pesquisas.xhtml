@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Pesquisas</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar, dataTable, pesquisar, limpar">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Pesquisas">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<h:panelGrid columns="3" id="grid">
+			
+			<p:outputLabel value="ID:" style="float: right;" />
+			<p:inputText value="#{pesquisaBean.pesquisa.idpesquisa}" id="id" readonly="true" style="width: 60px;"/>	
+			<p:message id="idMessage" for="id" />
+
+			<p:outputLabel value="Título:" style="float: right;" for="titulo" />
+			<p:inputText id="titulo" value="#{pesquisaBean.pesquisa.titulo}" maxlength="255"
+				required="#{param['validation']=='true'}" style="width: 350px;" />
+			<p:message id="tituloMessage" for="titulo" />
+
+			<p:outputLabel value="Descrição:" style="float: right;" for="descricao" />
+			<p:inputTextarea id="descricao" value="#{pesquisaBean.pesquisa.descricao}"
+				required="#{param['validation']=='true'}" style="width: 350px; height: 200px;" 
+				maxlength="5000" rows="10" counter="caracteres" autoResize="false"/>
+			<p:message id="descricaoMessage" for="descricao" />
+
+			<p:outputLabel value="Restantes" />
+			<p:outputLabel value="" id="caracteres" />
+			<p:outputLabel value="" />
+			
+			<p:outputLabel value="Data:" style="float: right;" for="data" />
+			<p:calendar id="data" value="#{pesquisaBean.pesquisa.data}" navigator="true" 
+				required="#{param['validation']=='true'}" pattern="dd/MM/yyyy" />
+			<p:message id="dataMessage" for="data" />
+			
+			<p:outputLabel value="Status:" style="float: right;" for="status" />
+			<p:selectOneRadio id="status" value="#{pesquisaBean.pesquisa.status}" 
+				required="#{param['validation']=='true'}" >
+				<f:selectItem itemLabel="Ativo" itemValue="1" />  
+            	<f:selectItem itemLabel="Inativo" itemValue="0" />  	
+			</p:selectOneRadio>
+			<p:message id="statusMessage" for="status" />
+
+		</h:panelGrid>
+		
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+		
+		<h:panelGrid columns="2" id="grid2">
+			<p:outputLabel value="Pesquisar Pesquisas por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa" value="#{pesquisaBean.tipoPesquisaPesquisa}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Título" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoPesquisa" value="#{pesquisaBean.idTituloPesquisa}" style="width: 350px;" />
+			<p:commandButton actionListener="#{pesquisaBean.pesquisarPesquisa}" title="Buscar" id="pesquisar" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTable" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{pesquisaBean.listarTudo}" id="limpar" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTable" onclick="atualizarSessao();" />
+		</h:column>
+
+		<p:dataTable id="dataTable" var="p" value="#{pesquisaBean.listaPesquisas}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" >
+			<f:facet name="header">  
+            	Pesquisas
+        	</f:facet>
+
+			<p:column headerText="Código" style="width: 60px;">
+				<h:outputText value="#{p.idpesquisa}" />
+			</p:column>
+			
+			<p:column headerText="Data" style="width: 80px;" >
+				<h:outputText value="#{p.data}" >
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			
+			<p:column headerText="Título">
+				<h:outputText value="#{p.titulo}" />
+			</p:column>
+
+			<p:column headerText="Usuário">
+				<h:outputText value="#{p.usuario.nome}" />
+			</p:column>
+			
+			<p:column style="width: 80px;" headerText="Ações">
+				<p:commandButton actionListener="#{pesquisaBean.alterar(p.idpesquisa)}" title="Alterar" icon="ui-icon-pencil" update=":form:grid" onclick="atualizarSessao();" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton action="#{pesquisaBean.excluir(p.idpesquisa)}" title="Excluir" onclick="return excluir(); atualizarSessao();" icon="ui-icon-trash" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" update="grid, messages" action="#{pesquisaBean.limpar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk" update="grid, messages, dataTable" action="#{pesquisaBean.salvar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Novo</b>: Usado para limpar os campos para serem preenchidos por novos dados.
+			<br/>
+			- <b>Botão Salvar</b>: Usado para gravar os dados no banco de dados.
+			<br/>
+			- <b>Botão Editar</b>: Usado para poder alterar se o estudante esta ou não matriculado no curso.
+			<br/>
+			- <b>Botão Excluir</b>: Usado para excluir o registro do banco de dados. Caso uma mensagem de Impossível Excluir
+			apareça, isso ocorre quando o registro esta vinculado a outros dados, o que impossibilita a sua devida exclusão.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

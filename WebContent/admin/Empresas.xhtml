@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Gerenciamento de Empresas</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar, criarLoginAcesso, enviarEmailBoasVindasEmpresa, dataTable">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Gerenciamento de Empresas">
+		<div id="divCorpo" style="padding: 7px;">
+		
+<!-- 			<h:inputText value="#{empresaBean.empresa.idempresa}" id="idhidden" /> -->
+		<h:panelGrid columns="3" id="grid">
+			
+			<p:outputLabel value="ID:" style="float: right;" />
+			<p:inputText value="#{empresaBean.empresa.idempresa}" id="id" readonly="true" style="width: 60px;"/>	
+			<p:message id="idMessage" for="id" />
+
+			<p:outputLabel value="Instituição:" style="float: right;" />
+			<p:inputText id="nome" value="#{empresaBean.empresa.nome}" maxlength="50"
+				required="#{param['validation']=='true'}" style="width: 400px;" rendered="true"/>
+			<p:message id="nomeMessage" for="nome" />
+
+			<p:outputLabel value="Endereço:" style="float: right;" for="endereco" />
+			<p:inputText id="endereco" value="#{empresaBean.empresa.endereco}" required="#{param['validation']=='true'}" 
+			style="width: 400px;" maxlength="50" />
+			<p:message id="enderecoMessage" for="endereco" />
+
+			<p:outputLabel value="Bairro:" style="float: right;" for="bairro" />
+			<p:inputText id="bairro" value="#{empresaBean.empresa.bairro}"
+				required="#{param['validation']=='true'}" style="width: 300px;" maxlength="50"/>
+			<p:message id="bairroMessage" for="bairro" />
+
+			<p:outputLabel value="Cidade:" style="float: right;" for="cidade" />
+			<p:inputText id="cidade" value="#{empresaBean.empresa.cidade}"
+				required="#{param['validation']=='true'}" style="width: 300px;" maxlength="50"/>
+			<p:message id="cidadeMessage" for="cidade" />
+
+			<p:outputLabel value="Estado:" style="float: right;" for="estado" />
+			<p:inputText id="estado" value="#{empresaBean.empresa.estado}"
+				required="#{param['validation']=='true'}" style="width: 40px;" maxlength="2"/>
+			<p:message id="estadoMessage" for="estado" />
+
+			<p:outputLabel value="CEP:" style="float: right;" for="cep" />
+			<p:inputMask id="cep" value="#{empresaBean.empresa.cep}"
+				mask="99.999-999" required="#{param['validation']=='true'}" style="width: 100px;" />
+			<p:message id="cepMessage" for="cep" />
+
+			<p:outputLabel value="Site:" style="float: right;" for="site" />
+			<p:inputText id="site" value="#{empresaBean.empresa.site}"
+				required="#{param['validation']=='true'}" style="width: 400px;" maxlength="255"/>
+			<p:message id="siteMessage" for="site" />
+
+			<p:outputLabel value="e-Mail:" style="float: right;" for="email" />
+			<p:inputText id="email" value="#{empresaBean.empresa.email}"
+				required="#{param['validation']=='true'}" style="width: 400px;" maxlength="255"/>
+			<p:message id="emailMessage" for="email" />
+
+			<p:outputLabel value="Telefone:" style="float: right;" for="telefone" />
+			<h:column>
+				<p:inputText id="ddd" value="#{empresaBean.empresa.ddd}"
+					required="#{param['validation']=='true'}" style="width: 20px;" maxlength="2"/>
+				<p:inputText id="telefone" value="#{empresaBean.empresa.telefone}"
+					required="#{param['validation']=='true'}" style="width: 100px;" maxlength="9"/>
+			</h:column>
+			<h:column>
+				<p:message id="telefoneMessage" for="telefone" />
+				<p:message id="dddMessage" for="ddd" />
+			</h:column>
+
+			<p:outputLabel value="Responsável:" style="float: right;"
+				for="responsavel" />
+			<p:inputText id="responsavel" maxlength="50"
+				value="#{empresaBean.empresa.responsavel}" required="#{param['validation']=='true'}"
+				style="width: 400px;" />
+			<p:message id="responsavelMessage" for="responsavel" />
+
+			<p:outputLabel value="Status:" style="float: right;" for="status" />
+			<p:selectOneRadio id="status" value="#{empresaBean.empresa.status}" 
+				required="#{param['validation']=='true'}" >
+				<f:selectItem itemLabel="Ativa" itemValue="1" />  
+		          	<f:selectItem itemLabel="Inativa" itemValue="0" />  	
+			</p:selectOneRadio>
+			<p:message id="statusMessage" for="status" />
+			
+			<p:outputLabel value="Logo:" style="float: right;" for="logo" />
+			<p:fileUpload mode="advanced" update="messages, logoMarca" multiple="false"
+				sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" auto="false"
+				id="logo" showButtons="false" fileUploadListener="#{empresaBean.onUpload}" />
+			<p:message id="logoMessage" for="logo" />
+			
+			<p:outputLabel value="Logomarca:" style="float: right;" for="logoMarca" />
+			<h:graphicImage name="#{empresaBean.empresa.logomarca}" id="logoMarca" library="logos" />
+			<p:message id="logoMarcaMessage" for="logoMarca" />
+			
+		</h:panelGrid>
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+
+		<p:dataTable id="dataTable" var="e" value="#{empresaBean.listaEmpresas}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" >
+			<f:facet name="header">  
+            	Empresas  
+        	</f:facet>
+
+			<p:column style="width: 60px;">
+				<f:facet name="header">
+					<h:outputText value="Código" />
+				</f:facet>
+				<h:outputText value="#{e.idempresa}" />
+			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Nome" />
+				</f:facet>
+				<h:outputText value="#{e.nome}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Responsável" />
+				</f:facet>
+				<h:outputText value="#{e.responsavel}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Telefone" />
+				</f:facet>
+				<h:outputText value="#{e.ddd} #{e.telefone}" />
+			</p:column>
+
+			<p:column style="width: 80px;">
+				<f:facet name="header">
+					<h:outputText value="Ações" />
+				</f:facet>
+				<p:commandButton actionListener="#{empresaBean.alterar(e.idempresa)}" title="Alterar" icon="ui-icon-pencil" update=":form:grid" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton action="#{empresaBean.excluir(e.idempresa)}" title="Excluir" onclick="return excluir(); atualizarSessao();" icon="ui-icon-trash" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" update="grid, messages" action="#{empresaBean.limpar}" 
+					onclick="atualizarSessao();" >
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk" update="grid, messages, dataTable" 
+					action="#{empresaBean.salvar}" onclick="atualizarSessao();" >
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+				<p:commandButton id="criarLoginAcesso" value="Criar Login" icon="ui-icon-person" 
+					action="#{usuarioBean.criarLogin(empresaBean.empresa.idempresa, empresaBean.empresa.email, empresaBean.empresa.responsavel)}" 
+					onclick="atualizarSessao();" update="messages" >
+				</p:commandButton>
+				<p:commandButton id="enviarEmailBoasVindasEmpresa" value="Enviar Email Boas Vindas" icon="ui-icon-mail-closed" 
+					action="#{empresaBean.enviarEmailBoasVindasEmpresa(empresaBean.empresa.idempresa, empresaBean.empresa.email, empresaBean.empresa.responsavel)}" 
+					onclick="atualizarSessao();" update="messages">
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			xxx
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

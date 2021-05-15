@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="Template.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">UniPesquisas - Pesquisa</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="responder">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Pesquisas">
+			<div id="divCorpo" style="padding: 7px;">
+				
+			<p:outputLabel value="Pergunta:" />
+			<p:outputLabel value="#{pesquisaPerguntaBean.pergunta.pergunta}" id="pergunta" styleClass="pergunta" />	
+	
+			<p:selectManyCheckbox value="#{pesquisaPerguntaBean.selectedRespostas}"
+				layout="pageDirection" required="true" id="alternativasABCDE"  
+				rendered="#{pesquisaPerguntaBean.pergunta.tipo == 'MultiplaOpcoes' and 
+				pesquisaPerguntaBean.pergunta.alta != '' and 
+				 pesquisaPerguntaBean.pergunta.altb != '' and
+				 pesquisaPerguntaBean.pergunta.altc != '' and
+				 pesquisaPerguntaBean.pergunta.altd != '' and
+				 pesquisaPerguntaBean.pergunta.alte != ''}">  
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.alta}" itemValue="a" />  
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altb}" itemValue="b" />  
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altc}" itemValue="c" />  
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altd}" itemValue="d" />
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.alte}" itemValue="e" />
+        	</p:selectManyCheckbox>  
+        	<p:message id="alternativasABCDEMessage" for="alternativasABCDE" />
+        	
+        	<p:selectManyCheckbox value="#{pesquisaPerguntaBean.selectedRespostas}" 
+				layout="pageDirection" required="true" id="alternativasAB"  
+				rendered="#{pesquisaPerguntaBean.pergunta.tipo == 'MultiplaOpcoes' and 
+				(pesquisaPerguntaBean.pergunta.alta != '' and 
+				 pesquisaPerguntaBean.pergunta.altb != '' and
+				 pesquisaPerguntaBean.pergunta.altc == '' and
+				 pesquisaPerguntaBean.pergunta.altd == '' and
+				 pesquisaPerguntaBean.pergunta.alte == '')}">  
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.alta}" itemValue="a" />  
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altb}" itemValue="b" />  
+        	</p:selectManyCheckbox>  
+        	<p:message id="alternativasABMessage" for="alternativasAB" />
+        	
+        	<p:selectManyCheckbox value="#{pesquisaPerguntaBean.selectedRespostas}" 
+				layout="pageDirection" required="true" id="alternativasABC"  
+				rendered="#{pesquisaPerguntaBean.pergunta.tipo == 'MultiplaOpcoes' and 
+				(pesquisaPerguntaBean.pergunta.alta != '' and 
+				 pesquisaPerguntaBean.pergunta.altb != '' and
+				 pesquisaPerguntaBean.pergunta.altc != '' and
+				 pesquisaPerguntaBean.pergunta.altd == '' and
+				 pesquisaPerguntaBean.pergunta.alte == '')}">  
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.alta}" itemValue="a" />  
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altb}" itemValue="b" />  
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altc}" itemValue="c" />
+        	</p:selectManyCheckbox>  
+        	<p:message id="alternativasABCMessage" for="alternativasABC" />
+        	
+        	<p:selectManyCheckbox value="#{pesquisaPerguntaBean.selectedRespostas}" 
+				layout="pageDirection" required="true" id="alternativasABCD"  
+				rendered="#{pesquisaPerguntaBean.pergunta.tipo == 'MultiplaOpcoes' and 
+				(pesquisaPerguntaBean.pergunta.alta != '' and 
+				 pesquisaPerguntaBean.pergunta.altb != '' and
+				 pesquisaPerguntaBean.pergunta.altc != '' and
+				 pesquisaPerguntaBean.pergunta.altd != '' and
+				 pesquisaPerguntaBean.pergunta.alte == '')}">  
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.alta}" itemValue="a" />  
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altb}" itemValue="b" />  
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altc}" itemValue="c" />
+            	<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altd}" itemValue="d" />
+        	</p:selectManyCheckbox>  
+        	<p:message id="alternativasABCDMessage" for="alternativasABCD" />
+			
+			<p:selectOneRadio id="opcoesABCDE" value="#{pesquisaPerguntaBean.resposta}"
+				layout="pageDirection" required="true"
+				rendered="#{pesquisaPerguntaBean.pergunta.tipo == 'UnicaOpcao' and 
+				(pesquisaPerguntaBean.pergunta.alta != '' and 
+				pesquisaPerguntaBean.pergunta.altb != '' and
+				pesquisaPerguntaBean.pergunta.altc != '' and
+				pesquisaPerguntaBean.pergunta.altd != '' and
+				pesquisaPerguntaBean.pergunta.alte != '')}" >
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.alta}" itemValue="a" />  
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altb}" itemValue="b" />  
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altc}" itemValue="c" />  
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altd}" itemValue="d" />
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.alte}" itemValue="e" />
+    		</p:selectOneRadio>
+    		<p:message id="opcoesABCDEMessage" for="opcoesABCDE" />
+    		
+    		<p:selectOneRadio id="opcoesAB" value="#{pesquisaPerguntaBean.resposta}"
+				layout="pageDirection" required="true"
+				rendered="#{pesquisaPerguntaBean.pergunta.tipo == 'UnicaOpcao' and 
+				(pesquisaPerguntaBean.pergunta.alta != '' and 
+				pesquisaPerguntaBean.pergunta.altb != '' and
+				pesquisaPerguntaBean.pergunta.altc == '' and
+				pesquisaPerguntaBean.pergunta.altd == '' and
+				pesquisaPerguntaBean.pergunta.alte == '')}" >
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.alta}" itemValue="a" />  
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altb}" itemValue="b" />  
+    		</p:selectOneRadio>
+    		<p:message id="opcoesABMessage" for="opcoesAB" />
+    		
+    		<p:selectOneRadio id="opcoesABC" value="#{pesquisaPerguntaBean.resposta}"
+				layout="pageDirection" required="true"
+				rendered="#{pesquisaPerguntaBean.pergunta.tipo == 'UnicaOpcao' and 
+				(pesquisaPerguntaBean.pergunta.alta != '' and 
+				pesquisaPerguntaBean.pergunta.altb != '' and
+				pesquisaPerguntaBean.pergunta.altc != '' and
+				pesquisaPerguntaBean.pergunta.altd == '' and
+				pesquisaPerguntaBean.pergunta.alte == '')}" >
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.alta}" itemValue="a" />  
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altb}" itemValue="b" />  
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altc}" itemValue="c" />  
+    		</p:selectOneRadio>
+    		<p:message id="opcoesABCMessage" for="opcoesABC" />
+    		  
+    		<p:selectOneRadio id="opcoesABCD" value="#{pesquisaPerguntaBean.resposta}"
+				layout="pageDirection" required="true"
+				rendered="#{pesquisaPerguntaBean.pergunta.tipo == 'UnicaOpcao' and 
+				(pesquisaPerguntaBean.pergunta.alta != '' and 
+				pesquisaPerguntaBean.pergunta.altb != '' and
+				pesquisaPerguntaBean.pergunta.altc != '' and
+				pesquisaPerguntaBean.pergunta.altd != '' and
+				pesquisaPerguntaBean.pergunta.alte == '')}" >
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.alta}" itemValue="a" />  
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altb}" itemValue="b" />  
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altc}" itemValue="c" />  
+        		<f:selectItem itemLabel="#{pesquisaPerguntaBean.pergunta.altd}" itemValue="d" />
+    		</p:selectOneRadio>
+    		<p:message id="opcoesABCDMessage" for="opcoesABCD" />
+    		
+			</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true" style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="admin/acaoDecorator.xhtml">
+				<p:commandButton value="Responder e Próximo" icon="ui-icon-disk" 
+					update="corpo, messages" action="#{pesquisaPerguntaBean.salvarEContinuar}" 
+					onclick="atualizarSessao();" id="responder" />
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="false"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Responder e Próximo</b>: Usado para salvar a resposta e chamar a próxima pergunta da pesquisa.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

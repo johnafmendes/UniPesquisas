@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="TemplateSemAutenticacao.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Estudantes</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="salvar">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Estudantes">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<h:panelGrid columns="3" id="grid">
+			<ui:decorate template="admin/CandidatoDecorator.xhtml" />
+		</h:panelGrid>
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="admin/acaoDecorator.xhtml">
+				<p:commandButton value="Salvar e Próximo" icon="ui-icon-disk" update="grid, messages" 
+					action="#{candidatoBean.salvarEContinuar}" onclick="atualizarSessao();"
+					id="salvar">
+					<f:param name="validation" value="true" />
+					<f:param name="idEmpresa" value="#{param['idEmpresa']}"/>
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Salvar e Próximo</b>: Usado para gravar os dados no banco de dados.
+			<br/>
+			- <b>Campo Manter Senha</b>: Usado para permitir alterar os dados sem que seja necessário digitar a senha novamente.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

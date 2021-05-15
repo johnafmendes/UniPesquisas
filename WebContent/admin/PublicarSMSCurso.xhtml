@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Publicar SMS Marketing por Curso</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar, dataTable, pesquisar, pesquisar1, pesquisar2, limpar, limpar1, limpar2, dataTableSMSs, dataTableCursos">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Publicar SMS Marketing por Curso">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<p:outputLabel value="Status:" for="status" />
+		<p:selectOneListbox id="status" value="#{publicarSMSMarketingCursoBean.idStatusCandidato}" 
+			style="width: 350px; height:100px;"	>
+			<f:selectItems value="#{publicarSMSMarketingCursoBean.listaStatusCandidato}" var="s" itemValue="#{s.idstatuscandidato}" 
+				itemLabel="#{s.status}" />
+		</p:selectOneListbox>
+				
+		<h:panelGrid columns="2" id="grid2">
+			<p:outputLabel value="Pesquisar SMS por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa" value="#{publicarSMSMarketingCursoBean.tipoPesquisaSMS}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Assunto" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoSMS" value="#{publicarSMSMarketingCursoBean.idTituloAssunto}" style="width: 350px;" />
+			<p:commandButton actionListener="#{publicarSMSMarketingCursoBean.pesquisarSMS}" title="Buscar" id="pesquisar" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTableSMSs" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{publicarSMSMarketingCursoBean.listarTudoSMS}" id="limpar" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTableSMSs" onclick="atualizarSessao();" />
+		</h:column>
+		
+		<p:dataTable id="dataTableSMSs" var="e" value="#{publicarSMSMarketingCursoBean.listaSMSMarketing}"
+			paginator="true" rows="10" selectionMode="single" selection="#{publicarSMSMarketingCursoBean.smsm}" 
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" rowKey="#{e.idsmsmarketing}">
+			<f:facet name="header">  
+            	SMS's
+        	</f:facet>
+
+			<p:column style="width: 60px;" headerText="Código">
+				<h:outputText value="#{e.idsmsmarketing}" />
+			</p:column>
+
+			<p:column headerText="Assunto">
+				<h:outputText value="#{e.assunto}" />
+			</p:column>
+
+			<p:column style="width: 90px;" headerText="Data">
+				<h:outputText value="#{e.data}" >
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			
+		</p:dataTable>
+			
+		<h:panelGrid columns="2" id="grid3">
+			<p:outputLabel value="Pesquisar Curso por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa1" value="#{publicarSMSMarketingCursoBean.tipoPesquisaCurso}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Curso" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoCurso" value="#{publicarSMSMarketingCursoBean.idTituloCurso}" style="width: 350px;" />
+			<p:commandButton actionListener="#{publicarSMSMarketingCursoBean.pesquisarCurso}" title="Buscar" id="pesquisar1" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTableCursos" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{publicarSMSMarketingCursoBean.listarTudoCurso}" id="limpar1" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTableCursos" onclick="atualizarSessao();" />
+		</h:column>
+		
+		<p:dataTable id="dataTableCursos" var="c" value="#{publicarSMSMarketingCursoBean.listaCursos}"
+			paginator="true" rows="10" selectionMode="single" selection="#{publicarSMSMarketingCursoBean.curso}" 
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" rowKey="#{c.idcurso}">
+			<f:facet name="header">  
+            	Cursos
+        	</f:facet>
+
+			<p:column style="width: 60px;" headerText="Código">
+				<h:outputText value="#{c.idcurso}" />
+			</p:column>
+
+			<p:column headerText="Curso">
+				<h:outputText value="#{c.curso}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+
+		<h:panelGrid columns="2" id="grid4">
+			<p:outputLabel value="Pesquisar Publicações por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa2" value="#{publicarSMSMarketingCursoBean.tipoPesquisaPublicacao}" >
+				<f:selectItem itemLabel="Cód SMS" itemValue="1" />  
+	      		<f:selectItem itemLabel="Assunto" itemValue="0" /> 
+	      		<f:selectItem itemLabel="Cód Curso" itemValue="2" />
+	      		<f:selectItem itemLabel="Curso" itemValue="3" />
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoPublicacao" value="#{publicarSMSMarketingCursoBean.idTituloPublicacao}" style="width: 350px;" />
+			<p:commandButton actionListener="#{publicarSMSMarketingCursoBean.pesquisarPublicacao}" title="Buscar" id="pesquisar2" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTable" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{publicarSMSMarketingCursoBean.listarTudoPublicacao}" id="limpar2" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTable" onclick="atualizarSessao();" />
+		</h:column>
+		
+		<p:dataTable id="dataTable" var="ec" value="#{publicarSMSMarketingCursoBean.listaSMSMarketingCurso}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" >
+			<f:facet name="header">  
+            	SMS/Curso Publicados
+        	</f:facet>
+
+			<p:column headerText="Cód. SMS" style="width: 60px;">
+				<h:outputText value="#{ec.smsmarketing.idsmsmarketing}" />
+			</p:column>
+			
+			<p:column headerText="Assunto SMS">
+				<h:outputText value="#{ec.smsmarketing.assunto}" />
+			</p:column>
+
+			<p:column headerText="Cód. Cur." style="width: 60px;">
+				<h:outputText value="#{ec.curso.idcurso}" />
+			</p:column>
+			
+			<p:column headerText="Curso">
+				<h:outputText value="#{ec.curso.curso}" />
+			</p:column>			
+			
+			<p:column headerText="Status">
+				<h:outputText value="#{ec.statuscandidato.status}" />
+			</p:column>
+
+		</p:dataTable>
+		
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" update="messages" 
+					action="#{publicarSMSMarketingCursoBean.limpar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Publicar" icon="ui-icon-check" update="messages, dataTable" 
+					action="#{publicarSMSMarketingCursoBean.salvar}" onclick="return confirmar(); atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Novo</b>: Usado para limpar os campos para serem preenchidos por novos dados.
+			<br/>
+			- <b>Botão Publicar</b>: Usado para agendar o envio dos SMS's.
+			<br/>
+			- <b>Botão Pesquisar</b>: Usado para poder pesquisar os dados referente ao campo SMS e Curso.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

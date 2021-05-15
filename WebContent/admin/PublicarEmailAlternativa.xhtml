@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="adminTemplate.xhtml">
+	<ui:define name="logo">Logo</ui:define>
+
+	<ui:define name="titulo">Publicar Email Marketing por Alternativa</ui:define>
+
+	<ui:define name="conteudo">
+		<p:blockUI block="form" trigger="novo, salvar, pesquisar, pesquisar1, pesquisar2, limpar, limpar1, limpar2, dataTableEmails, dataTablePesquisas">  
+	    	Carregando...<br /><br /><br />  
+	    	<p:graphicImage name="loader2.gif" library="images"/>  
+	    </p:blockUI>
+		<p:panel id="corpo" header="Publicar Email Marketing por Alternativa">
+		<div id="divCorpo" style="padding: 7px;">
+		
+		<p:outputLabel value="Status:" for="status" />
+		<p:selectOneListbox id="status" value="#{publicarEmailMarketingAlternativaBean.idStatusCandidato}" 
+			style="width: 350px; height:100px;"	>
+			<f:selectItem itemValue="0" itemLabel="Todos Status" />
+			<f:selectItems value="#{publicarEmailMarketingAlternativaBean.listaStatusCandidato}" var="s" itemValue="#{s.idstatuscandidato}" 
+				itemLabel="#{s.status}" />
+		</p:selectOneListbox>
+				
+		<h:panelGrid columns="2" id="grid2">
+			<p:outputLabel value="Pesquisar E-Mail por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa" value="#{publicarEmailMarketingAlternativaBean.tipoPesquisaEmail}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Assunto" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoEmail" value="#{publicarEmailMarketingAlternativaBean.idTituloAssunto}" style="width: 350px;" />
+			<p:commandButton actionListener="#{publicarEmailMarketingAlternativaBean.pesquisarEmail}" title="Buscar" id="pesquisar" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTableEmails" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{publicarEmailMarketingAlternativaBean.listarTudoEmail}" id="limpar" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTableEmails" onclick="atualizarSessao();" />
+		</h:column>
+		
+		<p:dataTable id="dataTableEmails" var="e" value="#{publicarEmailMarketingAlternativaBean.listaEmailMarketing}"
+			paginator="true" rows="10" selectionMode="single" selection="#{publicarEmailMarketingAlternativaBean.em}" 
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" rowKey="#{e.idemailmarketing}">
+			<f:facet name="header">  
+            	Emails
+        	</f:facet>
+
+			<p:column style="width: 60px;" headerText="Código">
+				<h:outputText value="#{e.idemailmarketing}" />
+			</p:column>
+
+			<p:column headerText="Assunto">
+				<h:outputText value="#{e.assunto}" />
+			</p:column>
+
+			<p:column style="width: 90px;" headerText="Data">
+				<h:outputText value="#{e.data}" >
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			
+		</p:dataTable>
+			
+		<h:panelGrid columns="2" id="grid3">
+			<p:outputLabel value="Pesquisar Pesquisa por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa1" value="#{publicarEmailMarketingAlternativaBean.tipoPesquisaPesquisa}" >
+				<f:selectItem itemLabel="Código" itemValue="1" />  
+	      		<f:selectItem itemLabel="Título" itemValue="0" /> 
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoPesquisa" value="#{publicarEmailMarketingAlternativaBean.idTituloPesquisa}" style="width: 350px;" />
+			<p:commandButton actionListener="#{publicarEmailMarketingAlternativaBean.pesquisarPesquisa}" title="Buscar" id="pesquisar1" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTablePesquisas" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{publicarEmailMarketingAlternativaBean.listarTudoPesquisa}" id="limpar1" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTablePesquisas" onclick="atualizarSessao();" />
+		</h:column>
+		
+		<p:dataTable id="dataTablePesquisas" var="p" value="#{publicarEmailMarketingAlternativaBean.listaPesquisas}"
+			paginator="true" rows="10" selectionMode="single" selection="#{publicarEmailMarketingAlternativaBean.pesquisa}"  
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" rowKey="#{p.idpesquisa}">
+			<f:facet name="header">  
+            	Pesquisas
+        	</f:facet>
+
+			<p:column style="width: 60px;" headerText="Código">
+				<h:outputText value="#{p.idpesquisa}" />
+			</p:column>
+
+			<p:column headerText="Título">
+				<h:outputText value="#{p.titulo}" />
+			</p:column>
+
+			<p:column style="width: 90px;" headerText="Data">
+				<h:outputText value="#{p.data}" >
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			
+			<p:column style="width: 90px;" headerText="Ação">
+				<p:commandButton id="filtrar" value="Filtrar" icon="ui-icon-search" 
+					action="#{publicarEmailMarketingAlternativaBean.filtrarPerguntas(p.idpesquisa)}" 
+					update=":form:dataTablePerguntas, :form:messages, :form:gridPergunta"
+					onclick="atualizarSessao();"/>
+			</p:column>
+			
+		</p:dataTable>
+			
+		<p:dataTable id="dataTablePerguntas" var="p" value="#{publicarEmailMarketingAlternativaBean.listaPerguntas}"
+			paginator="true" rows="10" selectionMode="single" selection="#{publicarEmailMarketingAlternativaBean.pergunta}" 
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}  
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" rowKey="#{p.idpergunta}">
+			<f:facet name="header">  
+            	Perguntas da Pesquisa: #{publicarEmailMarketingAlternativaBean.idPesquisa}
+        	</f:facet>
+
+			<p:column style="width: 60px;" headerText="Código">
+				<h:outputText value="#{p.idpergunta}" />
+			</p:column>
+
+			<p:column headerText="Pergunta">
+				<h:outputText value="#{p.pergunta}" />
+			</p:column>
+
+			<p:column style="width: 90px;" headerText="Tipo">
+				<h:outputText value="#{p.tipo}" />
+			</p:column>
+			
+			<p:column style="width: 90px;" headerText="Ação">
+				<p:commandButton id="filtrar" value="Filtrar" icon="ui-icon-search" 
+					action="#{publicarEmailMarketingAlternativaBean.carregarPergunta(p.idpergunta)}" 
+					update=":form:gridPergunta, :form:messages, :form:gridPergunta"
+					onclick="atualizarSessao();"/>
+			</p:column>
+		</p:dataTable>
+			
+		<h:panelGrid columns="2" id="gridPergunta">
+			<p:outputLabel value="Pergunta:" style="float: right;" />
+			<p:outputLabel id="pergunta" value="#{publicarEmailMarketingAlternativaBean.pergunta.pergunta}"/>
+
+			<p:outputLabel value="Alternativas:" style="float: right;" />
+			<p:selectOneRadio id="alternativaABCDE" value="#{publicarEmailMarketingAlternativaBean.alternativa}" 
+				layout="pageDirection" rendered="#{publicarEmailMarketingAlternativaBean.pergunta.alta != '' and 
+				publicarEmailMarketingAlternativaBean.pergunta.altb != '' and
+				publicarEmailMarketingAlternativaBean.pergunta.altc != '' and
+				publicarEmailMarketingAlternativaBean.pergunta.altd != '' and
+				publicarEmailMarketingAlternativaBean.pergunta.alte != ''}">
+				<f:selectItem itemLabel="a) #{publicarEmailMarketingAlternativaBean.pergunta.alta}" itemValue="a" />  
+           		<f:selectItem itemLabel="b) #{publicarEmailMarketingAlternativaBean.pergunta.altb}" itemValue="b" />  	
+           		<f:selectItem itemLabel="c) #{publicarEmailMarketingAlternativaBean.pergunta.altc}" itemValue="c" />
+           		<f:selectItem itemLabel="d) #{publicarEmailMarketingAlternativaBean.pergunta.altd}" itemValue="d" />
+           		<f:selectItem itemLabel="e) #{publicarEmailMarketingAlternativaBean.pergunta.alte}" itemValue="e" />
+			</p:selectOneRadio>
+			
+			<p:selectOneRadio id="alternativaAB" value="#{publicarEmailMarketingAlternativaBean.alternativa}" 
+				layout="pageDirection" rendered="#{publicarEmailMarketingAlternativaBean.pergunta.alta != '' and 
+				publicarEmailMarketingAlternativaBean.pergunta.altb != '' and
+				publicarEmailMarketingAlternativaBean.pergunta.altc == '' and
+				publicarEmailMarketingAlternativaBean.pergunta.altd == '' and
+				publicarEmailMarketingAlternativaBean.pergunta.alte == ''}">
+				<f:selectItem itemLabel="a) #{publicarEmailMarketingAlternativaBean.pergunta.alta}" itemValue="a" />  
+           		<f:selectItem itemLabel="b) #{publicarEmailMarketingAlternativaBean.pergunta.altb}" itemValue="b" />  	
+			</p:selectOneRadio>
+			
+			<p:selectOneRadio id="alternativaABC" value="#{publicarEmailMarketingAlternativaBean.alternativa}" 
+				layout="pageDirection" rendered="#{publicarEmailMarketingAlternativaBean.pergunta.alta != '' and 
+				publicarEmailMarketingAlternativaBean.pergunta.altb != '' and
+				publicarEmailMarketingAlternativaBean.pergunta.altc != '' and
+				publicarEmailMarketingAlternativaBean.pergunta.altd == '' and
+				publicarEmailMarketingAlternativaBean.pergunta.alte == ''}">
+				<f:selectItem itemLabel="a) #{publicarEmailMarketingAlternativaBean.pergunta.alta}" itemValue="a" />  
+           		<f:selectItem itemLabel="b) #{publicarEmailMarketingAlternativaBean.pergunta.altb}" itemValue="b" />  	
+           		<f:selectItem itemLabel="c) #{publicarEmailMarketingAlternativaBean.pergunta.altc}" itemValue="c" />
+			</p:selectOneRadio>
+			
+			<p:selectOneRadio id="alternativaABCD" value="#{publicarEmailMarketingAlternativaBean.alternativa}" 
+				layout="pageDirection" rendered="#{publicarEmailMarketingAlternativaBean.pergunta.alta != '' and 
+				publicarEmailMarketingAlternativaBean.pergunta.altb != '' and
+				publicarEmailMarketingAlternativaBean.pergunta.altc != '' and
+				publicarEmailMarketingAlternativaBean.pergunta.altd != '' and
+				publicarEmailMarketingAlternativaBean.pergunta.alte == ''}">
+				<f:selectItem itemLabel="a) #{publicarEmailMarketingAlternativaBean.pergunta.alta}" itemValue="a" />  
+           		<f:selectItem itemLabel="b) #{publicarEmailMarketingAlternativaBean.pergunta.altb}" itemValue="b" />  	
+           		<f:selectItem itemLabel="c) #{publicarEmailMarketingAlternativaBean.pergunta.altc}" itemValue="c" />
+           		<f:selectItem itemLabel="d) #{publicarEmailMarketingAlternativaBean.pergunta.altd}" itemValue="d" />
+			</p:selectOneRadio>
+		</h:panelGrid>
+
+		<br />		
+		<div id="divisorLineArticle"></div>
+		<br />
+
+		<h:panelGrid columns="2" id="grid4">
+			<p:outputLabel value="Pesquisar Publicações por:" style="float: right;" />
+			<p:selectOneRadio id="tipoPesquisa2" value="#{publicarEmailMarketingAlternativaBean.tipoPesquisaPublicacao}" >
+				<f:selectItem itemLabel="Cód Email" itemValue="1" />  
+	      		<f:selectItem itemLabel="Assunto" itemValue="0" /> 
+	      		<f:selectItem itemLabel="Cód Pesquisa" itemValue="4" />
+	      		<f:selectItem itemLabel="Pesquisa" itemValue="5" />
+	      		<f:selectItem itemLabel="Cód Pergunta" itemValue="2" />
+	      		<f:selectItem itemLabel="Pergunta" itemValue="3" />
+			</p:selectOneRadio>
+		</h:panelGrid>
+		<h:column>
+			<p:inputText id="codigoPublicacao" value="#{publicarEmailMarketingAlternativaBean.idTituloPublicacao}" style="width: 350px;" />
+			<p:commandButton actionListener="#{publicarEmailMarketingAlternativaBean.pesquisarPublicacao}" title="Buscar" id="pesquisar2" 
+				value="Pesquisar" icon="ui-icon-search" update="messages, dataTable" onclick="atualizarSessao();" />
+			<p:commandButton actionListener="#{publicarEmailMarketingAlternativaBean.listarTudoPublicacao}" id="limpar2" 
+				value="Listar Tudo" icon="ui-icon-arrow-4-diag" update="dataTable" onclick="atualizarSessao();" />
+		</h:column>
+		
+		<p:dataTable id="dataTable" var="ea" value="#{publicarEmailMarketingAlternativaBean.listaEmailMarketingAlternativa}"
+			paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true"
+			paginatorAlwaysVisible="false" resizableColumns="true" paginatorPosition="bottom" 
+			rowsPerPageTemplate="10,20,40" >
+			<f:facet name="header">  
+            	Email/Alternativa Publicados
+        	</f:facet>
+
+			<p:column headerText="Data" style="width: 40px;" >
+				<h:outputText value="#{ea.emailmarketing.data}" >
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			
+			<p:column headerText="C. Email" style="width: 40px;" >
+				<h:outputText value="#{ea.emailmarketing.idemailmarketing}" />
+			</p:column>
+
+			<p:column headerText="Assunto Email">
+				<h:outputText value="#{ea.emailmarketing.assunto}" id="assunto" />
+				<p:tooltip for="assunto" value="#{ea.emailmarketing.assunto}" showEffect="fade" hideEffect="fade" />
+			</p:column>
+
+			<p:column headerText="C. Pes." style="width: 40px;" >
+				<h:outputText value="#{ea.pesquisa.idpesquisa}" />
+			</p:column>
+			
+			<p:column headerText="Pesquisa">
+				<h:outputText value="#{ea.pesquisa.titulo}" id="titulo"/>
+				<p:tooltip for="titulo" value="#{ea.pesquisa.titulo}" showEffect="fade" hideEffect="fade" />
+			</p:column>
+			
+			<p:column headerText="C. Per." style="width: 40px;" >
+				<h:outputText value="#{ea.pergunta.idpergunta}" />
+			</p:column>
+			
+			<p:column headerText="Pergunta">
+				<h:outputText value="#{ea.pergunta.pergunta}" id="pergunta" />
+				<p:tooltip for="pergunta" value="#{ea.pergunta.pergunta}" showEffect="fade" hideEffect="fade" />
+			</p:column>
+
+			<p:column style="width: 25px;" headerText="Alt.">
+				<h:outputText value="#{ea.alternativa}" />
+			</p:column>
+			
+			<p:column headerText="Status">
+				<h:outputText value="#{ea.statuscandidato.status}" />
+			</p:column>
+		</p:dataTable>
+		
+		
+		</div>
+		</p:panel>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="R1Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			<ui:decorate template="acaoDecorator.xhtml">
+				<p:commandButton id="novo" value="Novo" icon="ui-icon-document" update="messages, gridPergunta" 
+					action="#{publicarEmailMarketingAlternativaBean.limpar}" onclick="atualizarSessao();">
+					<f:param name="validation" value="false" />
+				</p:commandButton>
+				<p:commandButton id="salvar" value="Publicar" icon="ui-icon-check" update="messages, dataTable" 
+					action="#{publicarEmailMarketingAlternativaBean.salvar}" onclick="return confirmar(); atualizarSessao();">
+					<f:param name="validation" value="true" />
+				</p:commandButton>
+			</ui:decorate>
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R2Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+		</p:panel>
+	</ui:define>
+
+	<ui:define name="R3Content">
+		<p:panel rendered="true"
+			style="border: 0px; margin: 0px; padding: 0px;">
+			- <b>Botão Novo</b>: Usado para limpar os campos para serem preenchidos por novos dados.
+			<br/>
+			- <b>Botão Publicar</b>: Usado para agendar o envio dos emails.
+			<br/>
+			- <b>Botão Excluir</b>: Usado para excluir o registro do banco de dados. Caso uma mensagem de Impossível Excluir
+			apareça, isso ocorre quando o registro esta vinculado a outros dados, o que impossibilita a sua devida exclusão.
+			<br/>
+			- <b>Botão Pesquisar</b>: Usado para poder pesquisar os dados referente ao campo Email e Pesquisa.
+			<br/>
+			- <b>Botão Filtrar</b>: Usado para filtrar ou selecionar as Perguntas e Alternativas referente a uma Pesquisa.
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

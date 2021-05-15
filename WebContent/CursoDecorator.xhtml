@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<p:dialog id="modalDialog" header="Matriculado?" widgetVar="dlg2" modal="true" height="100">  
+    	<h:outputText value="Está matriculado neste curso?" />
+ 	    <p:selectOneRadio id="matriculado" value="#{candidatoCursoBean.matriculado}" >
+			<f:selectItem itemLabel="Sim" itemValue="1" />  
+       		<f:selectItem itemLabel="Não" itemValue="0" />  	
+		</p:selectOneRadio>
+		<p:commandButton id="ok" value="OK" onclick="dlg2.hide();" type="button"/>
+	</p:dialog> 
+	<p:dataTable id="dataTableCursosDisponiveis" var="cd" 
+		value="#{candidatoCursoBean.listaCursosDisponiveis}" scrollable="true" scrollHeight="200">
+		<f:facet name="header">  
+           	Cursos Disponíveis
+       	</f:facet>
+
+		<p:column headerText="Curso">
+			<h:outputText value="#{cd.curso}" />
+		</p:column>
+
+		<p:column style="width: 120px;" headerText="Matriculado?">
+			<p:commandButton id="modalDialogButton" value="Matriculado?" onclick="dlg2.show();" type="button"/>
+		</p:column>
+		
+		<p:column style="width: 115px;" headerText="Ações">
+			<p:commandButton
+				actionListener="#{candidatoCursoBean.adicionarCurso(cd.idcurso)}"
+				title="Adicionar Curso" value="Adicionar" icon="ui-icon-plus" 
+				update="dataTableCursosDisponiveis, :form:dataTableCursosSelecionados"
+				onclick="atualizarSessao();"/>
+		</p:column>
+	</p:dataTable>
+	
+	<p:dataTable id="dataTableCursosSelecionados" var="cs"
+		value="#{candidatoCursoBean.listaCursosSelecionados}">
+		<f:facet name="header">  
+           	Cursos Selecionados
+       	</f:facet>
+
+		<p:column headerText="Curso">
+			<h:outputText value="#{cs.curso.curso}" />
+		</p:column>
+
+		<p:column style="width: 80px;" headerText="Matriculado?">
+			<h:outputLabel value="Sim" rendered="#{cs.matriculado == 1}"/>
+			<h:outputLabel value="Não" rendered="#{cs.matriculado == 0}"/>
+		</p:column>
+		<p:column style="width: 40px;" headerText="Ações">
+			<p:commandButton
+				actionListener="#{candidatoCursoBean.removerCurso(cs.curso.idcurso)}"
+				title="Remover Curso" icon="ui-icon-trash" 
+				update=":form:dataTableCursosDisponiveis, :form:dataTableCursosSelecionados"
+				onclick="atualizarSessao();"/>
+		</p:column>
+	</p:dataTable>
+</ui:composition>
+</html>

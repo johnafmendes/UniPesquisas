@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="temp/jsf-api-2.3.0-m01-20140822.174056-7-javadoc.jar"/>
+	<classpathentry kind="lib" path="temp/jsf-impl-2.3.0-m01-20140822.174136-7-javadoc.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/apache-httpcomponents-httpclient.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-beanutils-1.8.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-email-1.3.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-email-1.3.1-sources.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-email-1.3.1-test-sources.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-email-1.3.1-tests.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-email-1.3.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-fileupload-1.2.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/groovy-all-2.0.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/iText-2.1.7.js2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jasperreports-5.1.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jcommon-1.0.15.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jfreechart-1.0.12.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-3.5.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/restfb-1.6.12.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/start-1.0.9.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/visural-common-0.5.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.jboss.ide.eclipse.as.core.server.runtime.runtimeTarget/WildFly 20.0 Runtime">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_251">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-8.0.25.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

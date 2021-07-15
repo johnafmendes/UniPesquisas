@@ -7,4 +7,5 @@ The software has a email marketing section to reach the target that answear the 
 
 There is an uncompleted SMS marketing, missing the Android app to send sms.
 
-
+There is localhost:8080
+There is localhost:8080/admin

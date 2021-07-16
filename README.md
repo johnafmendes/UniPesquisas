@@ -9,3 +9,6 @@ There is an uncompleted SMS marketing, missing the Android app to send sms.
 
 There is localhost:8080
 There is localhost:8080/admin
+
+To install, run the sql file called /temp/database.sql
+After that, run the sql script SQLUniPesquisas_Inserir_ao_Instalar.txt
